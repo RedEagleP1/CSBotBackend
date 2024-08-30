@@ -1,11 +1,11 @@
 namespace P1_Core
 {
-    public interface IAsyncRepository<T>
+    public interface IAsyncRepository<TEntity>
     {
-        Task Add(T entity);
-        Task Delete(T entity);
-        Task Update(T entity);
-        Task<T> GetById(int id);
-        Task<IEnumerable<T>> GetAll();
+        Task<int> Add(TEntity entity);
+        Task Delete(TEntity entity);
+        Task Update(TEntity entity);
+        Task<TEntity> GetById(int id);
+        Task<IEnumerable<TEntity>> GetAll();
     }
 }

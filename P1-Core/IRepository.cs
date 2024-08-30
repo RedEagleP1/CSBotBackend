@@ -1,11 +1,12 @@
 namespace P1_Core
 {
-    public interface IRepository<T>
+    public interface IRepository<TEntity>
     {
-        void Add(T entity);
-        void Delete(T entity);
-        void Update(T entity);
-        T GetById(int id);
-        IEnumerable<T> GetAll();
+        //TODO:CAP consider adding a queryable return type for more complex queries
+        void Add(TEntity entity);
+        void Delete(TEntity entity);
+        void Update(TEntity entity);
+        TEntity GetById(int id);
+        IEnumerable<TEntity> GetAll();
     }
 }
