@@ -7,5 +7,6 @@ namespace P1_Core
         Task Update(TEntity entity);
         Task<TEntity> GetById(int id);
         Task<IEnumerable<TEntity>> GetAll();
+        IQueryable<TEntity> Query();
     }
 }
