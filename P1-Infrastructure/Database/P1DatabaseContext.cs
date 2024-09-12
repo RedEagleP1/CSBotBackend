@@ -10,6 +10,12 @@ namespace P1_Infrastructure.Database
         public virtual DbSet<Currency> Currencies { get; set; }
         public virtual DbSet<UserCurrency> UserCurrencies { get; set; }
         public P1DatabaseContext(DbContextOptions<P1DatabaseContext> options) : base(options) { }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            
+        }
         public P1DatabaseContext() { }
     }
 }

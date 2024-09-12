@@ -11,6 +11,12 @@ builder.Services.AddSwaggerGen(c =>
 var app = builder.Build();
 
 app.UseHttpsRedirection();
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "P1_Api v1");
+    c.RoutePrefix = string.Empty; // Set Swagger UI at the app's root
+});
 app.MapControllers();
 
 app.Run();

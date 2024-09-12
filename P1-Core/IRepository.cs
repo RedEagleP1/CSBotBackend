@@ -10,14 +10,4 @@ namespace P1_Core
         IEnumerable<TEntity> GetAll();
         IQueryable<TEntity> Query();
     }
-
-    public interface IRepositoryAsync<TEntity>
-    {
-        Task AddAsync(TEntity entity);
-        Task DeleteAsync(TEntity entity);
-        Task UpdateAsync(TEntity entity);
-        Task<TEntity> GetByIdAsync(int id);
-        Task<IEnumerable<TEntity>> GetAllAsync();
-        IQueryable<TEntity> Query();
-    }
 }
