@@ -49,5 +49,9 @@ namespace P1_Infrastructure {
             }
             // TODO:CAP Throw an exception if the entity is not found
         }
+
+        public IQueryable<T> Query() {
+            return _dbSet.AsQueryable();
+        }
     }
 }

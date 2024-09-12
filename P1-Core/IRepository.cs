@@ -8,5 +8,16 @@ namespace P1_Core
         void Update(TEntity entity);
         TEntity GetById(int id);
         IEnumerable<TEntity> GetAll();
+        IQueryable<TEntity> Query();
+    }
+
+    public interface IRepositoryAsync<TEntity>
+    {
+        Task AddAsync(TEntity entity);
+        Task DeleteAsync(TEntity entity);
+        Task UpdateAsync(TEntity entity);
+        Task<TEntity> GetByIdAsync(int id);
+        Task<IEnumerable<TEntity>> GetAllAsync();
+        IQueryable<TEntity> Query();
     }
 }
