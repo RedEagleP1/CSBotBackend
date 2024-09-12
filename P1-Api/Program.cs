@@ -1,12 +1,13 @@
+using P1_Infrastructure;
+
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
+var services = builder.Services;
 
-builder.Services.AddSwaggerGen(c =>
-{
-    c.SwaggerDoc("v1", new() { Title = "P1_Api", Version = "v1" });
-});
+RegisterServices(services);
+
+services.AddInfrastructureServices(builder.Configuration);
+services.RunMigrations();
 
 var app = builder.Build();
 
@@ -20,3 +21,14 @@ app.UseSwaggerUI(c =>
 app.MapControllers();
 
 app.Run();
+
+
+static void RegisterServices(IServiceCollection services)
+{
+    services.AddControllers();
+    services.AddEndpointsApiExplorer();
+    services.AddSwaggerGen(c =>
+    {
+        c.SwaggerDoc("v1", new() { Title = "P1_Api", Version = "v1" });
+    });
+}

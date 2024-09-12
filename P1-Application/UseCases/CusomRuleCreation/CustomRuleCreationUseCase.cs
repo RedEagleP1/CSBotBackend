@@ -5,22 +5,27 @@ using P1_Core.Entities;
 namespace P1_Application.UseCases.CustomRuleCreation {
     public class CustomRuleCreationUseCase : IRequestHandler<CreateRuleCommand, int>
     {
-        private readonly IAsyncRepository<Rule> _ruleRepository;
-        public CustomRuleCreationUseCase(IAsyncRepository<Rule> ruleRepository)
+        private readonly IRepository<Rule> _ruleRepository;
+        public CustomRuleCreationUseCase(IRepository<Rule> ruleRepository)
         {
             _ruleRepository = ruleRepository;
         }
-        public Task<int> Handle(CreateRuleCommand request, CancellationToken cancellationToken)
+        public async Task<int> Handle(CreateRuleCommand request, CancellationToken cancellationToken)
         {
+
             var rule = new Rule
             {
                 Name = request.Name,
                 Description = request.Description,
                 ChannelId = request.ChannelId,
                 ActionId = request.ActionId,
-                ConditionId = request.ConditionId,
+                // TODO Need to add to join table for this condition to allow multiple conditions
+                //ConditionId = request.ConditionId,
                 RewardId = request.RewardId
             };
+            await _ruleRepository.AddAsync(rule);
+            return rule.Id;
+            
         }
 
     }
@@ -30,7 +35,8 @@ namespace P1_Application.UseCases.CustomRuleCreation {
         public string Description { get; set; }
         public int ChannelId { get; set; }
         public int ActionId { get; set; }
-        public int ConditionId { get; set; }
+        // TODO Need to add to join table for this condition to allow multiple conditions
+        // public int ConditionId { get; set; }
         public int RewardId { get; set; }
     }
 }

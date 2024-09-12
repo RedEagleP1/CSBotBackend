@@ -11,6 +11,9 @@ namespace P1_Api.Controllers
         {
             _mediator = mediator;
         }
+
+        [ProducesResponseType(200)]
+        [ProducesResponseType(500)]
         [HttpPost("add-currency")]
         public async Task<IActionResult> AddCurrencyToUser([FromBody] AddCurrencyToUserRequest request)
         {

@@ -3,16 +3,15 @@ using P1_Core.Entities.Interfaces;
 
 namespace P1_Core.Entities
 {
-    public class Rule
+    public class Rule : BaseEntity
     {
-        [Key]
-        public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public bool IsEnabled { get; set; }
         public int ConditionRuleId {get;set;}
         public int RewardId {get;set;}
         public int ChannelId {get;set;}
+        public int ActionId  {get;set;}
         public List<Condition> Conditions { get; set; }
         public virtual Reward Reward { get; set; }
         public virtual Channel Channel { get; set; }

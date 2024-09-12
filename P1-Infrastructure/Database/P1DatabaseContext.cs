@@ -14,6 +14,8 @@ namespace P1_Infrastructure.Database
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<User>().ToTable("Users");
+            modelBuilder.Entity<Currency>().ToTable("Currencies");
             
         }
         public P1DatabaseContext() { }

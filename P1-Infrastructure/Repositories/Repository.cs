@@ -1,56 +1,64 @@
-using System.Security.Cryptography.X509Certificates;
 using Microsoft.EntityFrameworkCore;
 using P1_Core;
+using P1_Core.Entities;
 using P1_Infrastructure.Database;
 
-namespace P1_Infrastructure {
-    public class Repository<T> : IRepository<T> where T : class {
-
+namespace P1_Infrastructure.Repositories
+{
+    public class Repository<T> : IRepository<T> where T : BaseEntity
+    {
         private readonly P1DatabaseContext _context;
         private readonly DbSet<T> _dbSet;
-        public Repository(P1DatabaseContext context) {
+        public Repository(P1DatabaseContext context)
+        {
             _context = context;
             _dbSet = context.Set<T>();
         }
 
-        public void Add(T entity) {
-            _dbSet.Add(entity);
-            _context.SaveChanges();
+        public async Task<int> AddAsync(T entity)
+        {
+            await _dbSet.AddAsync(entity);
+            await _context.SaveChangesAsync();
+            return entity.Id;
         }
 
-        public void Delete(T entity) {
-            var foundEntity = _dbSet.Find(entity);
-            if (foundEntity != null) {
+        public async Task DeleteAsync(T entity)
+        {
+            var foundEntity = await _dbSet.FindAsync(entity);
+            if (foundEntity != null)
+            {
                 _dbSet.Remove(foundEntity);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
-            // TODO:CAP Throw an exception if the entity is not found
         }
 
-        public IEnumerable<T> GetAll() {
-            return _dbSet;
-            // TODO:CAP consider checking if set is empty now and throwing an exception instead of allowing caller to handle empty set
+        public async Task<IEnumerable<T>> GetAllAsync()
+        {
+            var entities = await _dbSet.ToListAsync();
+            return entities;
         }
 
-        public T GetById(int id) {
-            var foundEntity = _dbSet.Find(id);
-            if (foundEntity != null) {
+        public async Task<T> GetByIdAsync(int id)
+        {
+            var foundEntity = await _dbSet.FindAsync(id);
+            if (foundEntity != null)
+            {
                 return foundEntity;
             }
-            // TODO:CAP Throw an exception if the entity is not found, this should be application specific exception
             throw new Exception("Entity not found");
         }
 
-        public void Update(T entity) {
-            var foundEntity = _dbSet.Find(entity);
-            if (foundEntity != null) {
+        public async Task UpdateAsync(T entity)
+        {
+            var foundEntity = await _dbSet.FindAsync(entity);
+            if (foundEntity != null)
+            {
                 _dbSet.Update(entity);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
-            // TODO:CAP Throw an exception if the entity is not found
         }
-
-        public IQueryable<T> Query() {
+        public IQueryable<T> Query()
+        {
             return _dbSet.AsQueryable();
         }
     }

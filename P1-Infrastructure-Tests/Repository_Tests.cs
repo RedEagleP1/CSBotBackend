@@ -1,7 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Moq;
+using P1_Core.Entities;
 using P1_Infrastructure;
 using P1_Infrastructure.Database;
+using P1_Infrastructure.Repositories;
 
 namespace P1_Infrastructure_Tests {
     public class RepositoryTests {
@@ -20,7 +22,7 @@ namespace P1_Infrastructure_Tests {
         [Test]
         public void Add_ShouldAddEntity() {
             var entity = new TestEntity();
-            _repository.Add(entity);
+            _repository.AddAsync(entity);
             _mockDbSet.Verify(m => m.Add(It.IsAny<TestEntity>()), Times.Once());
             _mockContext.Verify(m => m.SaveChanges(), Times.Once());
         }
@@ -29,7 +31,7 @@ namespace P1_Infrastructure_Tests {
         public void Delete_ShouldRemoveEntity() {
             var entity = new TestEntity();
             _mockDbSet.Setup(m => m.Find(It.IsAny<object[]>())).Returns(entity);
-            _repository.Delete(entity);
+            _repository.DeleteAsync(entity);
             _mockDbSet.Verify(m => m.Remove(It.IsAny<TestEntity>()), Times.Once());
             _mockContext.Verify(m => m.SaveChanges(), Times.Once());
         }
@@ -38,7 +40,7 @@ namespace P1_Infrastructure_Tests {
         public void Delete_ShouldThrowExceptionIfEntityNotFound() {
             var entity = new TestEntity();
             _mockDbSet.Setup(m => m.Find(It.IsAny<object[]>())).Returns((TestEntity)null);
-            Assert.Throws<Exception>(() => _repository.Delete(entity));
+            Assert.Throws<Exception>(() => _repository.DeleteAsync(entity));
         }
 
         [Test]
@@ -48,29 +50,29 @@ namespace P1_Infrastructure_Tests {
             _mockDbSet.As<IQueryable<TestEntity>>().Setup(m => m.Expression).Returns(data.Expression);
             _mockDbSet.As<IQueryable<TestEntity>>().Setup(m => m.ElementType).Returns(data.ElementType);
             _mockDbSet.As<IQueryable<TestEntity>>().Setup(m => m.GetEnumerator()).Returns(data.GetEnumerator());
-            var result = _repository.GetAll();
-            Assert.AreEqual(2, result.Count());
+            var result = _repository.GetAllAsync();
+            Assert.That(result.Result.Count(), Is.EqualTo(2));
         }
 
         [Test]
         public void GetById_ShouldReturnEntity() {
             var entity = new TestEntity();
             _mockDbSet.Setup(m => m.Find(It.IsAny<object[]>())).Returns(entity);
-            var result = _repository.GetById(1);
-            Assert.AreEqual(entity, result);
+            var result = _repository.GetByIdAsync(1);
+            Assert.That(result.Result, Is.EqualTo(entity));
         }
 
         [Test]
         public void GetById_ShouldThrowExceptionIfEntityNotFound() {
             _mockDbSet.Setup(m => m.Find(It.IsAny<object[]>())).Returns((TestEntity)null);
-            Assert.Throws<Exception>(() => _repository.GetById(1));
+            Assert.Throws<Exception>(() => _repository.GetByIdAsync(1));
         }
 
         [Test]
         public void Update_ShouldUpdateEntity() {
             var entity = new TestEntity();
             _mockDbSet.Setup(m => m.Find(It.IsAny<object[]>())).Returns(entity);
-            _repository.Update(entity);
+            _repository.UpdateAsync(entity);
             _mockDbSet.Verify(m => m.Update(It.IsAny<TestEntity>()), Times.Once());
             _mockContext.Verify(m => m.SaveChanges(), Times.Once());
         }
@@ -79,11 +81,11 @@ namespace P1_Infrastructure_Tests {
         public void Update_ShouldThrowExceptionIfEntityNotFound() {
             var entity = new TestEntity();
             _mockDbSet.Setup(m => m.Find(It.IsAny<object[]>())).Returns((TestEntity)null);
-            Assert.Throws<Exception>(() => _repository.Update(entity));
+            Assert.Throws<Exception>(() => _repository.UpdateAsync(entity));
         }
     }
 
-    public class TestEntity {
-        public int Id { get; set; }
+    public class TestEntity : BaseEntity 
+    {
     }
 }

@@ -1,7 +1,9 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using P1_Core.Entities.Interfaces;
 
 namespace P1_Core.Entities
 {
+    [Table("Rewards")]
     public class Reward : IReward
     {
         public int Amount { get; set; }

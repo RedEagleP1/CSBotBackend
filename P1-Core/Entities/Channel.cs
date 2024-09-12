@@ -1,7 +1,8 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace P1_Core.Entities {
-    public class Channel {
+    public class Channel : BaseEntity
+    {
         public int Id { get; set; }
         //TODO is there a channel Id or type, some descriminant value to use?
         public string Name { get; set; }

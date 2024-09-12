@@ -1,8 +1,7 @@
 namespace P1_Core.Entities
 {
-    public class User
+    public class User : BaseEntity
     {
-        public int Id { get; set; }
         public ulong DiscordId { get; set; }
         public string Name { get; set; }
         public virtual ICollection<Currency> Currencies { get; set; }

@@ -1,15 +1,15 @@
 using MediatR;
-using P1_Core;
 using P1_Core.Entities;
 using Microsoft.EntityFrameworkCore;
+using P1_Core;
 
 namespace P1_Application.UseCases.AddCurrencyToUser
 {
     public class AddCurrencyToUserUseCase: IRequestHandler<AddCurrencyToUserRequest>
     {
-        private IRepositoryAsync<User> _userRepository;
-        private IRepositoryAsync<Currency> _currencyRepository;
-        public AddCurrencyToUserUseCase(IRepositoryAsync<User> userRepository, IRepositoryAsync<Currency> currencyRepository)
+        private IRepository<User> _userRepository;
+        private IRepository<Currency> _currencyRepository;
+        public AddCurrencyToUserUseCase(IRepository<User> userRepository, IRepository<Currency> currencyRepository)
         {
             _userRepository = userRepository;
             _currencyRepository = currencyRepository;

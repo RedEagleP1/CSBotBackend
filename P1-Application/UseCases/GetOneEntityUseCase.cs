@@ -1,20 +1,21 @@
 using MediatR;
 using P1_Core;
+using P1_Core.Entities;
 
 namespace P1_Application.UseCases
 {
-    public class GetOneEntity<T> : IRequestHandler<GetOneEntityRequest<T>, GetOneEntityResponse<T>> where T : class
+    public class GetOneEntity<T> : IRequestHandler<GetOneEntityRequest<T>, GetOneEntityResponse<T>> where T : BaseEntity
     {
-        protected readonly IAsyncRepository<T> _repository;
+        protected readonly IRepository<T> _repository;
 
-        public GetOneEntity(IAsyncRepository<T> repository)
+        public GetOneEntity(IRepository<T> repository)
         {
             _repository = repository;
         }
 
         public async Task<GetOneEntityResponse<T>> Handle(GetOneEntityRequest<T> request, CancellationToken cancellationToken)
         {
-            var entity = await _repository.GetById(request.Id);
+            var entity = await _repository.GetByIdAsync(request.Id);
             return new GetOneEntityResponse<T>(entity);
         }
     }
