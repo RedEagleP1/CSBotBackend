@@ -8,7 +8,6 @@ namespace P1_Core.Entities
         public virtual ICollection<UserCurrency> UserCurrencies { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
-        
 
     }
     

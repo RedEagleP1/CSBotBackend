@@ -2,16 +2,24 @@ using P1_Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var services = builder.Services;
+builder.Services.AddAuthentication();
+builder.Services.AddAuthorizationBuilder();
 
-RegisterServices(services);
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new() { Title = "P1_Api", Version = "v1" });
+});
 
-services.AddInfrastructureServices(builder.Configuration);
-services.RunMigrations();
+builder.Services.AddInfrastructureServices(builder.Configuration);
+builder.Services.RunMigrations();
 
 var app = builder.Build();
 
 app.UseHttpsRedirection();
+app.UseAuthentication();
+app.UseAuthorization();
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
@@ -21,14 +29,3 @@ app.UseSwaggerUI(c =>
 app.MapControllers();
 
 app.Run();
-
-
-static void RegisterServices(IServiceCollection services)
-{
-    services.AddControllers();
-    services.AddEndpointsApiExplorer();
-    services.AddSwaggerGen(c =>
-    {
-        c.SwaggerDoc("v1", new() { Title = "P1_Api", Version = "v1" });
-    });
-}

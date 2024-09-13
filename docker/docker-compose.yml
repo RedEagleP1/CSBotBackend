@@ -6,7 +6,7 @@ services:
     image: mysql
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: 'p1database!'
+      MYSQL_ROOT_PASSWORD: P1database!
     ports: 
       - "3306:3306"
     expose:

@@ -1,7 +1,11 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using P1_Core.Entities;
 using P1_Infrastructure.Database;
+using P1_Infrastructure.Identity;
 
 namespace P1_Infrastructure
 {
@@ -10,7 +14,12 @@ namespace P1_Infrastructure
         public static void AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<P1DatabaseContext>(options =>
-                options.UseMySql(ServerVersion.AutoDetect(configuration.GetConnectionString("DefaultConnection"))));
+                options.UseMySql(configuration.GetConnectionString("DefaultConnection"),
+                ServerVersion.AutoDetect(configuration.GetConnectionString("DefaultConnection"))));
+
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<P1DatabaseContext>()
+                .AddDefaultTokenProviders();
         }
 
         public static void RunMigrations(this IServiceCollection services)
