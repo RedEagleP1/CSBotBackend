@@ -5,10 +5,9 @@ namespace P1_Core.Entities {
     public class Condition: ICondition 
     { 
         public int Id { get; set; }
-        public Action Action { get; set; }
-        public Channel Channel { get; set; }
+        public virtual ICollection<Rule> Rules { get; set; }
 
-        public bool IsSatisfied(User user, Action action, Channel channel)
+        public bool IsSatisfied(User user, Action action)
         {
             //TODO imeplement this interface
             throw new NotImplementedException();

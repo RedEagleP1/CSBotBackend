@@ -8,13 +8,8 @@ namespace P1_Core.Entities
         public string Name { get; set; }
         public string Description { get; set; }
         public bool IsEnabled { get; set; }
-        public int ConditionRuleId {get;set;}
-        public int RewardId {get;set;}
-        public int ChannelId {get;set;}
-        public int ActionId  {get;set;}
-        public List<Condition> Conditions { get; set; }
-        public virtual Reward Reward { get; set; }
-        public virtual Channel Channel { get; set; }
+        public virtual ICollection<Condition> Conditions { get; set; }
+        public virtual ICollection<Result> Results { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
     }
