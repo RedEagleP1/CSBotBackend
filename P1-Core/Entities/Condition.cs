@@ -1,9 +1,10 @@
 using P1_Core.Entities.Interfaces;
 
-namespace P1_Core.Entities {
+namespace P1_Core.Entities
+{
 
-    public class Condition: ICondition 
-    { 
+    public class Condition : BaseEntity, ICondition
+    {
         public int Id { get; set; }
         public virtual ICollection<Rule> Rules { get; set; }
 

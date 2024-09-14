@@ -24,10 +24,10 @@ namespace P1_Application.UseCases
 
     public class UpdateOneEntityRequest<T> : IRequest where T : class
     {
+        public T Entity { get; }
         public UpdateOneEntityRequest(T entity)
         {
             Entity = entity;
         }
-        public T Entity { get; }
     }
 }

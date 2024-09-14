@@ -5,7 +5,7 @@ using P1_Core;
 
 namespace P1_Application.UseCases.AddCurrencyToUser
 {
-    public class AddCurrencyToUserUseCase: IRequestHandler<AddCurrencyToUserRequest>
+    public class AddCurrencyToUserUseCase : IRequestHandler<AddCurrencyToUserRequest>
     {
         private IRepository<User> _userRepository;
         private IRepository<Currency> _currencyRepository;
@@ -17,7 +17,7 @@ namespace P1_Application.UseCases.AddCurrencyToUser
         public async Task Handle(AddCurrencyToUserRequest request, CancellationToken cancellationToken)
         {
             // we need to get the user to ensure that it's now a tracked entity in EF
-            var userQuery = await _userRepository.Query().Include(u => u.UserCurrencies).FirstOrDefaultAsync(u => u.Id == request.UserId);
+            var userQuery = await _userRepository.Query().Include(u => u.UserCurrencies).FirstOrDefaultAsync(u => u.Id == request.UserId, cancellationToken: cancellationToken);
             //TODO come back to this and clean it up
             if (userQuery.UserCurrencies.Any(u => u.Currency.Id == request.CurrencyId))
             {
@@ -42,7 +42,8 @@ namespace P1_Application.UseCases.AddCurrencyToUser
         }
     }
 
-    public class AddCurrencyToUserRequest : IRequest {
+    public class AddCurrencyToUserRequest : IRequest
+    {
         public AddCurrencyToUserRequest(int userId, int currencyId, int amount)
         {
             UserId = userId;
@@ -53,5 +54,5 @@ namespace P1_Application.UseCases.AddCurrencyToUser
         public int CurrencyId { get; }
         public int Amount { get; }
     }
-    
+
 }

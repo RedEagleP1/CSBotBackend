@@ -2,7 +2,8 @@ using MediatR;
 using P1_Core;
 using P1_Core.Entities;
 
-namespace P1_Application.UseCases.CustomRuleCreation {
+namespace P1_Application.UseCases.CustomRuleCreation
+{
     public class CustomRuleCreationUseCase : IRequestHandler<CreateRuleCommand, int>
     {
         private readonly IRepository<Rule> _ruleRepository;
@@ -25,12 +26,13 @@ namespace P1_Application.UseCases.CustomRuleCreation {
             };
             await _ruleRepository.AddAsync(rule);
             return rule.Id;
-            
+
         }
 
     }
 
-    public class CreateRuleCommand : IRequest<int>{
+    public class CreateRuleCommand : IRequest<int>
+    {
         public string Name { get; set; }
         public string Description { get; set; }
         public int ChannelId { get; set; }
