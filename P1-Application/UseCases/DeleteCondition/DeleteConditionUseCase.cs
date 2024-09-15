@@ -22,9 +22,21 @@ namespace P1_Application.UseCases.DeleteCondition
             return deleteCondition.Id;
         }
 
-        public class DeleteConditionRequest : IRequest<int>
+    }
+
+
+    public class DeleteConditionRequest : IRequest<int>
+    {
+        public int Id { get; set; }
+    }
+
+    public class DeleteConditionResponse
+    {
+        public int Id { get; set; }
+
+        public DeleteConditionResponse(int id)
         {
-            public int Id { get; set; }
+            Id = id;
         }
     }
 }

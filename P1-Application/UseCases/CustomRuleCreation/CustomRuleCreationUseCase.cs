@@ -31,6 +31,7 @@ namespace P1_Application.UseCases.CustomRuleCreation
 
     }
 
+
     public class CreateRuleCommand : IRequest<int>
     {
         public string Name { get; set; }

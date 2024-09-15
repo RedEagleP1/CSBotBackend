@@ -26,7 +26,7 @@ namespace P1_Api.Controllers
             catch (Exception e)
             {
                 // TODO clean this up and throw more specific exception
-                _logger.LogError(e, "Error creating condition");
+                _logger.LogError(e, $"An error occurred while creating condition: \"{e.Message}\"");
                 return BadRequest();
             }
         }
@@ -44,7 +44,7 @@ namespace P1_Api.Controllers
             catch (Exception e)
             {
                 // TODO clean this up and throw more specific exception
-                _logger.LogError(e, $"Error getting condition with Id {request.Id}");
+                _logger.LogError(e, $"An error occurred while getting the condition with Id {request.Id}. \"{e.Message}\"");
                 return BadRequest();
             }
         }
@@ -62,7 +62,7 @@ namespace P1_Api.Controllers
             catch (Exception e)
             {
                 // TODO clean this up and throw more specific exception
-                _logger.LogError(e, "Error getting all conditions");
+                _logger.LogError(e, $"An error occurred while getting all conditions: \"{e.Message}\"");
                 return BadRequest();
             }
         }
@@ -80,7 +80,7 @@ namespace P1_Api.Controllers
             catch (Exception e)
             {
                 // TODO clean this up and throw more specific exception
-                _logger.LogError(e, "Error updating condition");
+                _logger.LogError(e, $"An error occurred while updating the condition with id {request.Condition.Id}. \"{e.Message}\"");
                 return BadRequest();
             }
         }
@@ -98,7 +98,7 @@ namespace P1_Api.Controllers
             catch (Exception e)
             {
                 // TODO clean this up and throw more specific exception
-                _logger.LogError(e, $"Error deleting condition with Id {request.Condition.Id}");
+                _logger.LogError(e, $"An error occurred while deleting condition with Id {request.Condition.Id}");
                 return BadRequest();
             }
         }
@@ -126,6 +126,12 @@ namespace P1_Api.Controllers
     }
 
     public class DeleteConditionRequest
+    {
+        public Condition Condition { get; set; }
+    }
+
+
+    public class GetConditionResponse
     {
         public Condition Condition { get; set; }
     }

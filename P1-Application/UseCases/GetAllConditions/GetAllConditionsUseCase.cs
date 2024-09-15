@@ -24,6 +24,7 @@ namespace P1_Application.UseCases.GetCondition
         }
     }
 
+
     public class GetAllConditionsRequest : IRequest<List<Condition>>
     {
 
