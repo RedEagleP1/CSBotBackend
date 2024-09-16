@@ -29,7 +29,7 @@ namespace P1_Api.Tests.Controllers
         public async Task AddCurrencyToUser_ReturnsOk_WhenMediatorSucceeds()
         {
             // Arrange
-            var request = new AddCurrencyToUserRequest(1,11,2);
+            var request = new AddCurrencyToUserRequest(1, 11, 2);
             _mockMediator.Setup(m => m.Send(It.IsAny<AddCurrencyToUserRequest>(), default));
 
             // Act
@@ -42,10 +42,10 @@ namespace P1_Api.Tests.Controllers
         }
 
         [Test]
-        public async Task AddCurrencyToUser_ReturnsStatusCode500_WhenExceptionIsThrown()
+        public async Task AddCurrencyToUser_ReturnsStatusCode400_WhenExceptionIsThrown()
         {
             // Arrange
-            var request = new AddCurrencyToUserRequest(1,11,2);
+            var request = new AddCurrencyToUserRequest(1, 11, 2);
             _mockMediator.Setup(m => m.Send(It.IsAny<AddCurrencyToUserRequest>(), default)).ThrowsAsync(new Exception("Test exception"));
 
             // Act
@@ -54,7 +54,7 @@ namespace P1_Api.Tests.Controllers
             // Assert
             Assert.IsInstanceOf<StatusCodeResult>(result);
             var statusCodeResult = result as StatusCodeResult;
-            Assert.AreEqual(500, statusCodeResult.StatusCode);
+            Assert.AreEqual(400, statusCodeResult.StatusCode);
         }
     }
 }

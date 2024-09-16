@@ -15,7 +15,7 @@ namespace P1_Api.Controllers
         }
 
         [ProducesResponseType(200)]
-        [ProducesResponseType(500)]
+        [ProducesResponseType(400)]
         [HttpPost("add-currency")]
         public async Task<IActionResult> AddCurrencyToUser([FromBody] AddCurrencyToUserRequest request)
         {
@@ -36,7 +36,7 @@ namespace P1_Api.Controllers
         {
             return Ok();
         }
-        
+
     }
-    
+
 }

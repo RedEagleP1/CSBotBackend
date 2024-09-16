@@ -17,13 +17,13 @@ namespace P1_Application.UseCases.DeleteRule
 
         public async Task<int> Handle(DeleteRuleRequest request, CancellationToken cancellationToken)
         {
-            var deleteRule = _RuleRepository.DeleteAsync(request.Id);
+            var deleteRule = _RuleRepository.DeleteAsync(request.Rule);
             return deleteRule.Id;
         }
 
         public class DeleteRuleRequest : IRequest<int>
         {
-            public int Id { get; set; }
+            public Rule Rule { get; set; }
         }
     }
 }

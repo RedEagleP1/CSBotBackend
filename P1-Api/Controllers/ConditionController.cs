@@ -14,7 +14,7 @@ namespace P1_Api.Controllers
         }
 
         [ProducesResponseType(200)]
-        [ProducesResponseType(500)]
+        [ProducesResponseType(400)]
         [HttpPost("create-condition")]
         public async Task<IActionResult> CreateCondition([FromBody] CreateConditionRequest request)
         {
@@ -32,7 +32,7 @@ namespace P1_Api.Controllers
         }
 
         [ProducesResponseType(200)]
-        [ProducesResponseType(500)]
+        [ProducesResponseType(400)]
         [HttpPost("get-condition")]
         public async Task<IActionResult> GetCondition([FromBody] GetConditionRequest request)
         {
@@ -50,9 +50,9 @@ namespace P1_Api.Controllers
         }
 
         [ProducesResponseType(200)]
-        [ProducesResponseType(500)]
+        [ProducesResponseType(400)]
         [HttpPost("get-all-conditions")]
-        public async Task<IActionResult> GetAllConditions([FromBody] GetConditionRequest request)
+        public async Task<IActionResult> GetAllConditions([FromBody] GetAllConditionsRequest request)
         {
             try
             {
@@ -68,7 +68,7 @@ namespace P1_Api.Controllers
         }
 
         [ProducesResponseType(200)]
-        [ProducesResponseType(500)]
+        [ProducesResponseType(400)]
         [HttpPost("update-condition")]
         public async Task<IActionResult> UpdateCondition([FromBody] UpdateConditionRequest request)
         {
@@ -86,7 +86,7 @@ namespace P1_Api.Controllers
         }
 
         [ProducesResponseType(200)]
-        [ProducesResponseType(500)]
+        [ProducesResponseType(400)]
         [HttpPost("delete-condition")]
         public async Task<IActionResult> DeleteCondition([FromBody] DeleteConditionRequest request)
         {
@@ -117,7 +117,7 @@ namespace P1_Api.Controllers
 
     public class GetAllConditionsRequest
     {
-        public List<Condition> Conditions { get; set; }
+
     }
 
     public class UpdateConditionRequest
