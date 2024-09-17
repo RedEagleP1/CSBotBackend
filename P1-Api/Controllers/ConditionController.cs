@@ -5,6 +5,7 @@ using P1_Api.Models;
 using P1_Api.Controllers.Models;
 using P1_Application.UseCases.Conditions.CreateCondition;
 using AutoMapper;
+using P1_Application.UseCases.Conditions.GetCondition;
 namespace P1_Api.Controllers
 {
     public class ConditionController : BaseController
@@ -38,17 +39,17 @@ namespace P1_Api.Controllers
 
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        [HttpGet("get-condition")]
-        public async Task<IActionResult> GetCondition([FromBody] GetConditionRequestModel request)
+        [HttpGet("get-condition/{id}")]
+        public async Task<IActionResult> GetCondition([FromRoute] int id)
         {
             try
             {
-                await _mediator.Send(request);
-                return Ok();
+                var response = await _mediator.Send(new GetConditionQuery { Id = id });
+                return Ok(response);
             }
             catch (P1Exception e)
             {
-                _logger.LogError(e, $"An error occurred while getting the condition with Id {request.Id}. \"{e.Message}\"");
+                _logger.LogError(e, $"An error occurred while getting the condition with Id {id}. \"{e.Message}\"");
                 return BadRequest();
             }
         }
@@ -56,7 +57,7 @@ namespace P1_Api.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
         [HttpGet("get-all-conditions")]
-        public async Task<IActionResult> GetAllConditions([FromBody] GetConditionRequestModel request)
+        public async Task<IActionResult> GetAllConditions([FromBody] GetAllConditionsRequestModel request)
         {
             try
             {
