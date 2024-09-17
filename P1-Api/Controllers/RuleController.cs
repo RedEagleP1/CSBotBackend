@@ -2,12 +2,13 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using P1_Core.Entities;
 
-namespace P1_Api.Controllers {
+namespace P1_Api.Controllers
+{
 
-    public class CreateRuleController : BaseController
+    public class RuleController : BaseController
     {
         private readonly IMediator _mediator;
-        public CreateRuleController(ILogger<CreateRuleController> logger, IMediator mediator) : base(logger)
+        public RuleController(ILogger<RuleController> logger, IMediator mediator) : base(logger)
         {
             _mediator = mediator;
         }
@@ -30,11 +31,6 @@ namespace P1_Api.Controllers {
             }
         }
 
-        public async Task<IActionResult> GetRule()
-        {
-            return Ok();
-        }
-        
     }
 
     public class CreateRuleRequest

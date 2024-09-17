@@ -22,9 +22,9 @@ namespace P1_Infrastructure.Repositories
             return entity.Id;
         }
 
-        public async Task DeleteAsync(T entity)
+        public async Task DeleteAsync(int id)
         {
-            var foundEntity = await _dbSet.FindAsync(entity);
+            var foundEntity = await _dbSet.FindAsync(id);
             if (foundEntity != null)
             {
                 _dbSet.Remove(foundEntity);
