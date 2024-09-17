@@ -17,12 +17,7 @@ namespace P1_Application.UseCases.CustomRuleCreation
             var rule = new Rule
             {
                 Name = request.Name,
-                Description = request.Description,
-                ChannelId = request.ChannelId,
-                ActionId = request.ActionId,
-                // TODO Need to add to join table for this condition to allow multiple conditions
-                //ConditionId = request.ConditionId,
-                RewardId = request.RewardId
+                Description = request.Description
             };
             await _ruleRepository.AddAsync(rule);
             return rule.Id;

@@ -31,11 +31,6 @@ namespace P1_Api.Controllers
             }
         }
 
-        public async Task<IActionResult> GetRule()
-        {
-            return Ok();
-        }
-
     }
 
     public class CreateRuleRequest

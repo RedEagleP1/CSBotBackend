@@ -33,7 +33,7 @@ namespace P1_Api.Controllers
 
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        [HttpPost("get-condition")]
+        [HttpGet("get-condition")]
         public async Task<IActionResult> GetCondition([FromBody] GetConditionRequest request)
         {
             try
@@ -51,7 +51,7 @@ namespace P1_Api.Controllers
 
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        [HttpPost("get-all-conditions")]
+        [HttpGet("get-all-conditions")]
         public async Task<IActionResult> GetAllConditions([FromBody] GetConditionRequest request)
         {
             try
@@ -69,7 +69,7 @@ namespace P1_Api.Controllers
 
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        [HttpPost("update-condition")]
+        [HttpPut("update-condition")]
         public async Task<IActionResult> UpdateCondition([FromBody] UpdateConditionRequest request)
         {
             try
@@ -87,7 +87,7 @@ namespace P1_Api.Controllers
 
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        [HttpPost("delete-condition")]
+        [HttpDelete("delete-condition")]
         public async Task<IActionResult> DeleteCondition([FromBody] DeleteConditionRequest request)
         {
             try
