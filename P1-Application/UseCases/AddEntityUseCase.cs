@@ -1,13 +1,14 @@
 using MediatR;
 using P1_Core;
+using P1_Core.Entities;
 
 namespace P1_Application.UseCases
 {
-    public class AddEntityUseCase<T> : IRequestHandler<AddOneEntityRequest<T>, AddOneEntityResponse> where T : class
+    public class AddEntityUseCase<T> : IRequestHandler<AddOneEntityRequest<T>, AddOneEntityResponse> where T : BaseEntity
     {
-        protected readonly IAsyncRepository<T> _repository;
+        protected readonly IRepository<T> _repository;
 
-        public AddEntityUseCase(IAsyncRepository<T> repository)
+        public AddEntityUseCase(IRepository<T> repository)
         {
             _repository = repository;
         }
@@ -15,7 +16,7 @@ namespace P1_Application.UseCases
         public async Task<AddOneEntityResponse> Handle(AddOneEntityRequest<T> request, CancellationToken cancellationToken)
         {
             var entity = request.Entity;
-            var result = await _repository.Add(entity);
+            var result = await _repository.AddAsync(entity);
             return new AddOneEntityResponse(result);
         }
     }

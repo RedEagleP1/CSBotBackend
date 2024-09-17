@@ -1,6 +1,6 @@
 namespace P1_Core.Entities
 {
-    public class Currency
+    public class Currency : BaseEntity
     {
         public int Id { get; set; }
         public virtual ICollection<User> Users { get; set; }

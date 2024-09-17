@@ -1,5 +1,7 @@
+using System.Net;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using P1_Application.UseCases.AddCurrencyToUser;
 
 namespace P1_Api.Controllers
@@ -11,6 +13,9 @@ namespace P1_Api.Controllers
         {
             _mediator = mediator;
         }
+
+        [ProducesResponseType(200)]
+        [ProducesResponseType(500)]
         [HttpPost("add-currency")]
         public async Task<IActionResult> AddCurrencyToUser([FromBody] AddCurrencyToUserRequest request)
         {
@@ -23,9 +28,15 @@ namespace P1_Api.Controllers
             {
                 // TODO clean this up and throw more specific exception
                 _logger.LogError(e, "Error adding currency to user");
-                return StatusCode(500);
+                return BadRequest();
             }
         }
+
+        public async Task<IActionResult> GetCurrencyForUser()
+        {
+            return Ok();
+        }
+        
     }
     
 }

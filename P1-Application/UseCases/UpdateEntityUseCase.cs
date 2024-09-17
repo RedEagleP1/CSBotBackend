@@ -1,15 +1,16 @@
 
 using MediatR;
 using P1_Core;
+using P1_Core.Entities;
 
 namespace P1_Application.UseCases
 {
 
-    public class UpdateEntityUseCase<T> : IRequestHandler<UpdateOneEntityRequest<T>> where T : class
+    public class UpdateEntityUseCase<T> : IRequestHandler<UpdateOneEntityRequest<T>> where T : BaseEntity
     {
-        protected readonly IAsyncRepository<T> _repository;
+        protected readonly IRepository<T> _repository;
 
-        public UpdateEntityUseCase(IAsyncRepository<T> repository)
+        public UpdateEntityUseCase(IRepository<T> repository)
         {
             _repository = repository;
         }
@@ -17,7 +18,7 @@ namespace P1_Application.UseCases
         public async Task Handle(UpdateOneEntityRequest<T> request, CancellationToken cancellationToken)
         {
             var entity = request.Entity;
-            await _repository.Update(entity);
+            await _repository.UpdateAsync(entity);
         }
     }
 

@@ -1,13 +1,14 @@
 using MediatR;
 using P1_Core;
+using P1_Core.Entities;
 
 namespace P1_Application.UseCases
 {
-    public class GetQueryableUseCase<T> : IRequestHandler<GetQueryableRequest<T>, GetQueryableResponse<T>> where T : class
+    public class GetQueryableUseCase<T> : IRequestHandler<GetQueryableRequest<T>, GetQueryableResponse<T>> where T : BaseEntity
     {
-        protected readonly IAsyncRepository<T> _repository;
+        protected readonly IRepository<T> _repository;
 
-        public GetQueryableUseCase(IAsyncRepository<T> repository)
+        public GetQueryableUseCase(IRepository<T> repository)
         {
             _repository = repository;
         }
