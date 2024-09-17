@@ -14,7 +14,7 @@ namespace P1_Api.Controllers
         }
 
         [ProducesResponseType(200)]
-        [ProducesResponseType(500)]
+        [ProducesResponseType(400)]
         [HttpPost("create-condition")]
         public async Task<IActionResult> CreateCondition([FromBody] CreateConditionRequest request)
         {
@@ -117,7 +117,7 @@ namespace P1_Api.Controllers
 
     public class GetAllConditionsRequest
     {
-        public List<Condition> Conditions { get; set; }
+
     }
 
     public class UpdateConditionRequest

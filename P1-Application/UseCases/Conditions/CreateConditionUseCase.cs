@@ -3,7 +3,7 @@ using P1_Core;
 using P1_Core.Entities;
 
 
-namespace P1_Application.UseCases.CreateCondition
+namespace P1_Application.UseCases.Conditions
 {
 
     public class CreateConditionUseCase : IRequestHandler<CreateConditionRequest, int>

@@ -2,7 +2,7 @@ using MediatR;
 using P1_Core;
 using P1_Core.Entities;
 
-namespace P1_Application.UseCases.DeleteCondition
+namespace P1_Application.UseCases.Conditions
 {
     public class DeleteConditionUseCase
     {
@@ -17,7 +17,7 @@ namespace P1_Application.UseCases.DeleteCondition
 
         public async Task<int> Handle(DeleteConditionRequest request, CancellationToken cancellationToken)
         {
-            var deleteCondition = _conditionRepository.DeleteAsync(request.Id);
+            var deleteCondition = _conditionRepository.DeleteAsync(request.Condition);
             return deleteCondition.Id;
         }
 
@@ -26,6 +26,6 @@ namespace P1_Application.UseCases.DeleteCondition
 
     public class DeleteConditionRequest : IRequest<int>
     {
-        public int Id { get; set; }
+        public Condition Condition { get; set; }
     }
 }

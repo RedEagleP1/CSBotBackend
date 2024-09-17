@@ -2,7 +2,7 @@ using MediatR;
 using P1_Core;
 using P1_Core.Entities;
 
-namespace P1_Application.UseCases.GetCondition
+namespace P1_Application.UseCases.Conditions
 {
 
     public class GetConditionUseCase : IRequestHandler<GetConditionRequest, Condition>
