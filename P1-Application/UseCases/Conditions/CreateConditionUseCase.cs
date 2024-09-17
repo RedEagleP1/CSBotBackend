@@ -25,8 +25,19 @@ namespace P1_Application.UseCases.CreateCondition
         }
     }
 
+
     public class CreateConditionRequest : IRequest<int>
     {
         public Condition Condition { get; set; }
+    }
+
+    public class CreateConditionResponse
+    {
+        public int Id { get; set; }
+
+        public CreateConditionResponse(int id)
+        {
+            Id = id;
+        }
     }
 }
