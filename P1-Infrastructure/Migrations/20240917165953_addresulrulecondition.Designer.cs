@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using P1_Infrastructure.Database;
 
@@ -11,9 +12,11 @@ using P1_Infrastructure.Database;
 namespace P1_Infrastructure.Migrations
 {
     [DbContext(typeof(P1DatabaseContext))]
-    partial class P1DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20240917165953_addresulrulecondition")]
+    partial class addresulrulecondition
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

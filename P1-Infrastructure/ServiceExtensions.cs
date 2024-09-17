@@ -6,6 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using P1_Core.Entities;
 using P1_Infrastructure.Database;
 using P1_Infrastructure.Identity;
+using P1_Core;
+using P1_Infrastructure.Repositories;
 
 namespace P1_Infrastructure
 {
@@ -20,6 +22,8 @@ namespace P1_Infrastructure
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<P1DatabaseContext>()
                 .AddDefaultTokenProviders();
+
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         }
 
         public static void RunMigrations(this IServiceCollection services)

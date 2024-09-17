@@ -38,7 +38,6 @@ namespace P1_Api.Controllers
             }
         }
 
-<<<<<<< HEAD
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
         [HttpPost("get-rule")]
@@ -110,8 +109,6 @@ namespace P1_Api.Controllers
                 return BadRequest();
             }
         }
-=======
->>>>>>> development
     }
 
 

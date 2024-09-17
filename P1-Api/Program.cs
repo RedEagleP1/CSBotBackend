@@ -1,9 +1,12 @@
 using System.ComponentModel;
 using System.Text;
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using P1_Api.Util;
+using P1_Application.UseCases;
 using P1_Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,6 +32,13 @@ builder.Services.AddAuthentication(options => {
         // IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:SecretKey"]))
     };
 });
+
+builder.Services.AddMediatR(config => {
+    config.RegisterServicesFromAssembly(typeof(UpdateEntityUseCase<>).Assembly);
+});
+
+builder.Services.AddAutoMapper(typeof(Profiles));
+
 builder.Services.AddAuthorizationBuilder();
 
 builder.Services.AddControllers();
