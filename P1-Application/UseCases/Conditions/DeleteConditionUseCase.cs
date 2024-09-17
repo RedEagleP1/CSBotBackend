@@ -18,7 +18,6 @@ namespace P1_Application.UseCases.DeleteCondition
         public async Task<int> Handle(DeleteConditionRequest request, CancellationToken cancellationToken)
         {
             var deleteCondition = _conditionRepository.DeleteAsync(request.Id);
-            var result = await _mediator.Send(deleteCondition, cancellationToken);
             return deleteCondition.Id;
         }
 
@@ -28,15 +27,5 @@ namespace P1_Application.UseCases.DeleteCondition
     public class DeleteConditionRequest : IRequest<int>
     {
         public int Id { get; set; }
-    }
-
-    public class DeleteConditionResponse
-    {
-        public int Id { get; set; }
-
-        public DeleteConditionResponse(int id)
-        {
-            Id = id;
-        }
     }
 }
