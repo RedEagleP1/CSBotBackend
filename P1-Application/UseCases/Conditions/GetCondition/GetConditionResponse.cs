@@ -1,11 +1,15 @@
+using P1_Core.Entities;
 using MediatR;
 
 namespace P1_Application.UseCases.Conditions.GetCondition
 {
     public class GetConditionResponse : IRequest
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public Condition Condition { get; private set; }
+
+        public GetConditionResponse(Condition condition)
+        {
+            Condition = condition;
+        }
     }
 }

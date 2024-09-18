@@ -2,10 +2,10 @@ using MediatR;
 using P1_Core;
 using P1_Core.Entities;
 
-namespace P1_Application.UseCases.Conditions
+namespace P1_Application.UseCases.Conditions.UpdateCondition
 {
 
-    public class UpdateConditionUseCase : IRequestHandler<UpdateConditionRequest, int>
+    public class UpdateConditionUseCase : IRequestHandler<UpdateConditionCommand, UpdateConditionResponse>
     {
         private readonly IRepository<Condition> _conditionRepository;
         private readonly IMediator _mediator;
@@ -16,16 +16,14 @@ namespace P1_Application.UseCases.Conditions
             _mediator = mediator;
         }
 
-        public async Task<int> Handle(UpdateConditionRequest request, CancellationToken cancellationToken)
+        public async Task<UpdateConditionResponse> Handle(UpdateConditionCommand request, CancellationToken cancellationToken)
         {
             await _conditionRepository.UpdateAsync(request.Condition);
             //await _mediator.Send(updateEntity, cancellationToken);
-            return request.Condition.Id;
+
+            return new UpdateConditionResponse(request.Condition);
         }
     }
 
-    public class UpdateConditionRequest : IRequest<int>
-    {
-        public Condition Condition { get; set; }
-    }
+
 }
