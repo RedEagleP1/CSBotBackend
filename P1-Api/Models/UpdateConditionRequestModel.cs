@@ -4,6 +4,6 @@ namespace P1_Api.Models
 {
 	public class UpdateConditionRequestModel
 	{
-		Condition Condition { get; set; }
+		public Condition Condition { get; set; }
 	}
 }

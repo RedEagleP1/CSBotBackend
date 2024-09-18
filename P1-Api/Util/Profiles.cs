@@ -13,10 +13,8 @@ namespace P1_Api.Util
         public Profiles()
         {
             CreateMap<CreateConditionCommand, CreateConditionRequestModel>().ReverseMap();
-            CreateMap<GetConditionQuery, GetConditionRequestModel>().ReverseMap();
             CreateMap<GetAllConditionsQuery, GetAllConditionsRequestModel>().ReverseMap();
             CreateMap<UpdateConditionCommand, UpdateConditionRequestModel>().ReverseMap();
-            CreateMap<DeleteConditionCommand, DeleteConditionRequestModel>().ReverseMap();
         }
     }
 }
