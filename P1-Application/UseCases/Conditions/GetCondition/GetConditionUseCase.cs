@@ -26,9 +26,4 @@ namespace P1_Application.UseCases.Conditions.GetCondition
         }
 
     }
-
-    public class GetConditionRequest : IRequest<Condition>
-    {
-        public int Id { get; set; }
-    }
 }

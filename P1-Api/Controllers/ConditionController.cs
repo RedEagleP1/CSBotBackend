@@ -6,6 +6,8 @@ using P1_Api.Controllers.Models;
 using P1_Application.UseCases.Conditions.CreateCondition;
 using AutoMapper;
 using P1_Application.UseCases.Conditions.GetCondition;
+using P1_Application.UseCases;
+using P1_Core.Entities;
 namespace P1_Api.Controllers
 {
     public class ConditionController : BaseController
@@ -45,6 +47,23 @@ namespace P1_Api.Controllers
             try
             {
                 var response = await _mediator.Send(new GetConditionQuery { Id = id });
+                return Ok(response);
+            }
+            catch (P1Exception e)
+            {
+                _logger.LogError(e, $"An error occurred while getting the condition with Id {id}. \"{e.Message}\"");
+                return BadRequest();
+            }
+        }
+
+        [ProducesResponseType(200)]
+        [ProducesResponseType(500)]
+        [HttpGet("get-condition-test/{id}")]
+        public async Task<IActionResult> GetConditionTest([FromRoute] int id)
+        {
+            try
+            {
+                var response = await _mediator.Send(new GetOneEntityRequest<Condition>(id));
                 return Ok(response);
             }
             catch (P1Exception e)

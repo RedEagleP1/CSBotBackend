@@ -16,18 +16,18 @@ namespace P1_Application.UseCases
         public async Task<GetOneEntityResponse<T>> Handle(GetOneEntityRequest<T> request, CancellationToken cancellationToken)
         {
             var entity = await _repository.GetByIdAsync(request.Id);
-            return new GetOneEntityResponse<T>(entity);
+            return new GetOneEntityResponse<T>(entity.Id);
         }
     }
 
     public class GetOneEntityResponse<T> where T : class
     {
-        public GetOneEntityResponse(T entity)
+        public GetOneEntityResponse(int id)
         {
-            Entity = entity;
+            Id = id;
         }
 
-        public T Entity { get; }
+        public int Id { get; }
     }
 
     public class GetOneEntityRequest<T> : IRequest<GetOneEntityResponse<T>> where T : class
