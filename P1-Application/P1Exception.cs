@@ -1,4 +1,4 @@
-using Castle.Core.Logging;
+using Microsoft.Extensions.Logging;
 
 namespace P1_Application
 {
@@ -6,7 +6,7 @@ namespace P1_Application
     {
         public P1Exception(ILogger logger, string message) : base(message)
         {
-            logger.Error(message);
+            logger.LogError(message);
         }
     }
 }

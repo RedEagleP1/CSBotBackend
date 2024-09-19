@@ -2,10 +2,10 @@ using MediatR;
 using P1_Core;
 using P1_Core.Entities;
 
-namespace P1_Application.UseCases.Conditions
+namespace P1_Application.UseCases.Conditions.GetAllConditions
 {
 
-    public class GetAllConditionsUseCase : IRequestHandler<GetAllConditionsRequest, List<Condition>>
+    public class GetAllConditionsUseCase : IRequestHandler<GetAllConditionsQuery, GetAllConditionsResponse>
     {
         private readonly IRepository<Condition> _conditionRepository;
         private readonly IMediator _mediator;
@@ -16,17 +16,14 @@ namespace P1_Application.UseCases.Conditions
             _mediator = mediator;
         }
 
-        public async Task<List<Condition>> Handle(GetAllConditionsRequest request, CancellationToken cancellationToken)
+        public async Task<GetAllConditionsResponse> Handle(GetAllConditionsQuery request, CancellationToken cancellationToken)
         {
             List<Condition> getAllConditions = (List<Condition>)await _conditionRepository.GetAllAsync();
             await _mediator.Send(getAllConditions, cancellationToken);
-            return getAllConditions;
+            return new GetAllConditionsResponse(getAllConditions);
         }
     }
 
 
-    public class GetAllConditionsRequest : IRequest<List<Condition>>
-    {
 
-    }
 }

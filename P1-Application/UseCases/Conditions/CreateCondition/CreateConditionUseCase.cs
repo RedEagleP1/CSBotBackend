@@ -1,4 +1,5 @@
 using MediatR;
+using P1_Application.UseCases;
 using P1_Application.UseCases.Conditions.CreateCondition;
 using P1_Core;
 using P1_Core.Entities;
@@ -18,12 +19,15 @@ namespace P1_Application.UseCases.Conditions.CreateCondition
 
         public async Task<CreateConditionResponse> Handle(CreateConditionCommand request, CancellationToken cancellationToken)
         {
-            var addedEntityId = await _conditionRepository.AddAsync(new Condition
+            AddOneEntityRequest<Condition> addRequest = new AddOneEntityRequest<Condition>(new Condition
             {
                 Name = request.Name,
-                Description = request.Description
+                Description = request.Description,
             });
-            return new CreateConditionResponse(addedEntityId);
+
+            AddOneEntityResponse response = new AddEntityUseCase<Condition>(_conditionRepository).Handle(addRequest, cancellationToken).Result;
+
+            return new CreateConditionResponse(response.Id);
         }
 
     }

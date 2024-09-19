@@ -16,19 +16,13 @@ namespace P1_Application.UseCases.Conditions.GetCondition
 
         public async Task<GetConditionResponse> Handle(GetConditionQuery request, CancellationToken cancellationToken)
         {
-            var getCondition = await _conditionRepository.GetByIdAsync(request.Id);
-            return new GetConditionResponse
-            {
-                Id = getCondition.Id,
-                Name = getCondition.Name,
-                Description = getCondition.Description
-            };
+            GetOneEntityRequest<Condition> getRequest = new GetOneEntityRequest<Condition>(request.Id);
+
+            GetOneEntityResponse<Condition> response = new GetOneEntityUseCase<Condition>(_conditionRepository).Handle(getRequest, cancellationToken).Result;
+
+            return new GetConditionResponse(response.Entity);
         }
 
     }
 
-    public class GetConditionRequest : IRequest<Condition>
-    {
-        public int Id { get; set; }
-    }
 }

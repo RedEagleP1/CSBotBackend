@@ -4,11 +4,11 @@ using P1_Core.Entities;
 
 namespace P1_Application.UseCases
 {
-    public class GetOneEntityUseCase<T> : IRequestHandler<GetOneEntityRequest<T>, GetOneEntityResponse<T>> where T : BaseEntity
+    public class GetAllEntitiesUseCase<T> : IRequestHandler<GetOneEntityRequest<T>, GetOneEntityResponse<T>> where T : BaseEntity
     {
         protected readonly IRepository<T> _repository;
 
-        public GetOneEntityUseCase(IRepository<T> repository)
+        public GetAllEntitiesUseCase(IRepository<T> repository)
         {
             _repository = repository;
         }
@@ -20,23 +20,21 @@ namespace P1_Application.UseCases
         }
     }
 
-    public class GetOneEntityResponse<T> where T : class
+    public class GetAllEntitiesResponse<T> where T : class
     {
-        public GetOneEntityResponse(T entity)
+        public T Entity { get; }
+
+        public GetAllEntitiesResponse(T entity)
         {
             Entity = entity;
         }
 
-        public T Entity { get; }
     }
 
-    public class GetOneEntityRequest<T> : IRequest<GetOneEntityResponse<T>> where T : class
+    public class GetAllEntitiesRequest<T> : IRequest<GetOneEntityResponse<T>> where T : class
     {
-        public int Id { get; }
-
-        public GetOneEntityRequest(int id)
+        public GetAllEntitiesRequest()
         {
-            Id = id;
         }
     }
 }

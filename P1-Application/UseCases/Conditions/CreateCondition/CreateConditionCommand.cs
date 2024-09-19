@@ -6,6 +6,5 @@ namespace P1_Application.UseCases.Conditions.CreateCondition
     {
         public string Name { get; set; }
         public string Description { get; set; }
-        
     }
 }
