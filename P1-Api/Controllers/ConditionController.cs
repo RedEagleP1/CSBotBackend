@@ -1,11 +1,10 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using P1_Application;
-using P1_Api.Models;
+using P1_Api.Models.Conditions;
 using P1_Application.UseCases.Conditions.CreateCondition;
 using P1_Application.UseCases.Conditions.GetAllConditions;
 using P1_Application.UseCases.Conditions.UpdateCondition;
-using P1_Application.UseCases.Conditions.DeleteCondition;
 using AutoMapper;
 using System.Diagnostics;
 using P1_Application.UseCases;
@@ -108,7 +107,7 @@ namespace P1_Api.Controllers
             }
             catch (P1Exception e)
             {
-                _logger.LogError(e, $"An error occurred while deleting condition with Id {id}");
+                _logger.LogError(e, $"An error occurred while deleting the condition with Id {id}");
                 return BadRequest();
             }
         }
