@@ -1,5 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using P1_Application.UseCases;
 using P1_Core.Entities;
 
 namespace P1_Api.Controllers
@@ -11,6 +13,25 @@ namespace P1_Api.Controllers
         public RuleController(ILogger<RuleController> logger, IMediator mediator) : base(logger)
         {
             _mediator = mediator;
+        }
+
+        [HttpGet("evaluate-rule/{userId}/{ruleId}")]
+        public async Task<IActionResult> EvaluateRule([FromRoute] int ruleId, [FromRoute] int userId) {
+            //TODO move this to a usecase
+            var query = await _mediator.Send(new GetQueryableRequest<Rule>());
+            var rule = query.Queryable.Include(r => r.Conditions).Include(r => r.Results).FirstOrDefault(r => r.Id == ruleId);
+            // ruleservice.EvaluateConditions(rule.Conditions);
+            // if true ruleservice.ApplyRewards(rule.Rewards, user);
+            if (rule == null)
+            {
+                return NotFound();
+            }
+
+            //condition.Type == "Age" && condition.Value == "18" && condition.Operator == ">" && user.Age > 18
+
+            //condition.value condition.operator obj.value;
+
+            return Ok(rule);
         }
 
         [ProducesResponseType(200)]

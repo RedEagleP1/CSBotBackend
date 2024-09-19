@@ -4,11 +4,11 @@ using P1_Core.Entities;
 
 namespace P1_Application.UseCases
 {
-    public class GetOneEntity<T> : IRequestHandler<GetOneEntityRequest<T>, GetOneEntityResponse<T>> where T : BaseEntity
+    public class GetOneEntityUseCase<T> : IRequestHandler<GetOneEntityRequest<T>, GetOneEntityResponse<T>> where T : BaseEntity
     {
         protected readonly IRepository<T> _repository;
 
-        public GetOneEntity(IRepository<T> repository)
+        public GetOneEntityUseCase(IRepository<T> repository)
         {
             _repository = repository;
         }
@@ -16,21 +16,21 @@ namespace P1_Application.UseCases
         public async Task<GetOneEntityResponse<T>> Handle(GetOneEntityRequest<T> request, CancellationToken cancellationToken)
         {
             var entity = await _repository.GetByIdAsync(request.Id);
-            return new GetOneEntityResponse<T>(entity.Id);
+            return new GetOneEntityResponse<T>(entity);
         }
     }
 
-    public class GetOneEntityResponse<T> where T : class
+    public class GetOneEntityResponse<T> : IRequest where T : BaseEntity
     {
-        public GetOneEntityResponse(int id)
+        public GetOneEntityResponse(T entity)
         {
-            Id = id;
+            Entity = entity;
         }
 
-        public int Id { get; }
+        public T Entity { get; }
     }
 
-    public class GetOneEntityRequest<T> : IRequest<GetOneEntityResponse<T>> where T : class
+    public class GetOneEntityRequest<T> : IRequest<GetOneEntityResponse<T>> where T : BaseEntity
     {
         public int Id { get; }
 

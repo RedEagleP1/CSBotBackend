@@ -9,7 +9,7 @@ namespace P1_Core.Entities
         public string Description { get; set; }
         public virtual ICollection<Rule> Rules { get; set; }
 
-        public bool IsSatisfied(User user, Action action)
+        public bool IsSatisfied()
         {
             //TODO imeplement this interface
             throw new NotImplementedException();
