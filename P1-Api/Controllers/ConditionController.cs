@@ -1,11 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using P1_Application;
-using P1_Api.Models;
-using P1_Application.UseCases.Conditions.CreateCondition;
-using P1_Application.UseCases.Conditions.GetAllConditions;
-using P1_Application.UseCases.Conditions.UpdateCondition;
-using P1_Application.UseCases.Conditions.DeleteCondition;
+using P1_Api.Models.Conditions;
 using AutoMapper;
 using System.Diagnostics;
 using P1_Application.UseCases;
@@ -28,12 +24,11 @@ namespace P1_Api.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
         [HttpPost("create-condition")]
-        public async Task<IActionResult> CreateCondition([FromBody] CreateConditionRequestModel request)
+        public async Task<IActionResult> CreateCondition([FromBody] AddOneEntityRequest<Condition> request)
         {
             try
             {
-                var requestMapped = _mapper.Map<CreateConditionCommand>(request);
-                var response = await _mediator.Send(requestMapped);
+                var response = await _mediator.Send(request);
                 return Ok(response != null ? response : null);
             }
             catch (P1Exception e)
@@ -68,7 +63,7 @@ namespace P1_Api.Controllers
         {
             try
             {
-                var response = await _mediator.Send(new GetAllConditionsQuery());
+                var response = await _mediator.Send(new GetAllEntitiesRequest<Condition>());
                 return Ok(response);
             }
             catch (P1Exception e)
@@ -81,17 +76,16 @@ namespace P1_Api.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
         [HttpPut("update-condition")]
-        public async Task<IActionResult> UpdateCondition([FromBody] UpdateConditionRequestModel request)
+        public async Task<IActionResult> UpdateCondition([FromBody] UpdateOneEntityRequest<Condition> request)
         {
             try
             {
-                var requestMapped = _mapper.Map<UpdateConditionCommand>(request);
-                await _mediator.Send(requestMapped);
+                await _mediator.Send(request);
                 return Ok();
             }
             catch (P1Exception e)
             {
-                _logger.LogError(e, $"An error occurred while updating the condition with id {request.Condition.Id}. \"{e.Message}\"");
+                _logger.LogError(e, $"An error occurred while updating the condition with id {request.Entity.Id}. \"{e.Message}\"");
                 return BadRequest();
             }
         }
@@ -108,7 +102,7 @@ namespace P1_Api.Controllers
             }
             catch (P1Exception e)
             {
-                _logger.LogError(e, $"An error occurred while deleting condition with Id {id}");
+                _logger.LogError(e, $"An error occurred while deleting the condition with Id {id}");
                 return BadRequest();
             }
         }

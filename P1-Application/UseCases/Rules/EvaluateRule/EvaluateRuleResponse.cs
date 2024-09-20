@@ -1,14 +1,15 @@
 using MediatR;
+using P1_Core.Entities;
 
 namespace P1_Application.UseCases.Rules.EvaluateRule
 {
     public class EvaluateRuleResponse : IRequest
     {
-        public int Id { get; set; }
+        public Rule Rule { get; }
 
-        public EvaluateRuleResponse(int id)
+        public EvaluateRuleResponse(Rule rule)
         {
-            Id = id;
+            Rule = rule;
         }
     }
 }

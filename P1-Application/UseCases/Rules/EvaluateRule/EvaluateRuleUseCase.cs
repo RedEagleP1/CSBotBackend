@@ -4,24 +4,31 @@ using P1_Core.Entities;
 
 namespace P1_Application.UseCases.Rules.EvaluateRule
 {
-
     public class EvaluateRuleUseCase : IRequestHandler<EvaluateRuleCommand, EvaluateRuleResponse>
     {
-        private readonly IMediator _mediator;
-        private readonly IRepository<Rule> _ruleRepository;
+        private readonly IRepository<Rule> _RuleRepository;
 
-        public EvaluateRuleUseCase(IMediator mediator, IRepository<Rule> ruleRepository)
+
+        public EvaluateRuleUseCase(IRepository<Rule> ruleRepository)
         {
-            _mediator = mediator;
-            _ruleRepository = ruleRepository;
+            _RuleRepository = ruleRepository;
         }
 
         public async Task<EvaluateRuleResponse> Handle(EvaluateRuleCommand request, CancellationToken cancellationToken)
         {
-            
-            
-            return rule.Id;
+            // Find the rule.
+            //var rule = query.Queryable.Include(r => r.Conditions).Include(r => r.Results).FirstOrDefault(r => r.Id == ruleId);
+            var rule = await _RuleRepository.GetByIdAsync(request.RuleId);
+            if (rule == null)
+                return new EvaluateRuleResponse(null);
+
+            // ruleservice.EvaluateConditions(rule.Conditions);
+            // if true ruleservice.ApplyRewards(rule.Rewards, user);
+
+            return new EvaluateRuleResponse(rule);
         }
+
     }
+
 
 }

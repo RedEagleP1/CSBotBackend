@@ -1,6 +1,6 @@
 using P1_Core.Entities;
 
-namespace P1_Api.Models
+namespace P1_Api.Models.Conditions
 {
 	public class UpdateConditionRequestModel
 	{

@@ -12,12 +12,12 @@ using System;
 using System.Threading.Tasks;
 using System.Data.Common;
 using AutoMapper;
+using P1_Api.Models.Conditions;
 using P1_Application.UseCases.Conditions.CreateCondition;
-using P1_Application.UseCases.Conditions.GetCondition;
 using P1_Application.UseCases.Conditions.GetAllConditions;
 using P1_Application.UseCases.Conditions.UpdateCondition;
-using P1_Application.UseCases.Conditions.DeleteCondition;
 using Microsoft.AspNetCore.Http.HttpResults;
+using P1_Application.UseCases;
 
 namespace P1_Api.Tests.Controllers
 {
@@ -93,7 +93,7 @@ namespace P1_Api.Tests.Controllers
         public async Task GetCondition_ReturnsStatusCode400_WhenExceptionIsThrown()
         {
             // Arrange
-            _mockMediator.Setup(m => m.Send(It.IsAny<int>(), default)).ThrowsAsync(new P1Exception(_mockLogger.Object, "Test exception"));
+            _mockMediator.Setup(m => m.Send(It.IsAny<GetOneEntityRequest<Condition>>(), default)).ThrowsAsync(new P1Exception(_mockLogger.Object, "Test exception"));
 
             // Act
             var result = await _controller.GetCondition(0);
@@ -113,7 +113,7 @@ namespace P1_Api.Tests.Controllers
             _mockMapper.Setup(m => m.Map<GetAllConditionsQuery>(request)).Returns(new GetAllConditionsQuery());
 
             // Act
-            var result = await _controller.GetAllConditions(request);
+            var result = await _controller.GetAllConditions();
 
             // Assert
             Assert.IsInstanceOf<OkObjectResult>(result);
@@ -130,7 +130,7 @@ namespace P1_Api.Tests.Controllers
             _mockMapper.Setup(m => m.Map<GetAllConditionsQuery>(request)).Returns(new GetAllConditionsQuery());
 
             // Act
-            var result = await _controller.GetAllConditions(request);
+            var result = await _controller.GetAllConditions();
 
             // Assert
             Assert.IsInstanceOf<StatusCodeResult>(result);
