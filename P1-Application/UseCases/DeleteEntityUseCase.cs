@@ -5,7 +5,7 @@ using P1_Core.Entities;
 
 namespace P1_Application.UseCases
 {
-    public class DeleteEntityUseCase<T> : IRequestHandler<DeleteOneEntityRequest<T>, DeleteOneEntityResponse<T>> where T : BaseEntity
+    public class DeleteEntityUseCase<T> : IRequestHandler<DeleteOneEntityRequest<T>> where T : BaseEntity
     {
         protected readonly IRepository<T> _repository;
 
@@ -14,30 +14,18 @@ namespace P1_Application.UseCases
             _repository = repository;
         }
 
-        public async Task<DeleteOneEntityResponse<T>> Handle(DeleteOneEntityRequest<T> request, CancellationToken cancellationToken)
+        public async Task Handle(DeleteOneEntityRequest<T> request, CancellationToken cancellationToken)
         {
-            var entity = request.Entity;
-            await _repository.DeleteAsync(entity);
-            return new DeleteOneEntityResponse<T>(entity);
+            await _repository.DeleteAsync(request.Id);
         }
     }
 
-    public class DeleteOneEntityResponse<T> where T : class
+    public class DeleteOneEntityRequest<T> : IRequest where T : BaseEntity
     {
-        public T Entity { get; set; }
-
-        public DeleteOneEntityResponse(T entity)
+        public int Id { get; set; }
+        public DeleteOneEntityRequest(int id)
         {
-            Entity = entity;
-        }
-    }
-
-    public class DeleteOneEntityRequest<T> : IRequest<DeleteOneEntityResponse<T>> where T : class
-    {
-        public T Entity { get; }
-        public DeleteOneEntityRequest(T entity)
-        {
-            Entity = entity;
+            Id = id;
         }
     }
 }

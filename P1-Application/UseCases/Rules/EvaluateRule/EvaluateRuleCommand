@@ -1,9 +1,0 @@
-
-namespace P1_Application.UseCases.Rules.EvaluateRule
-{
-    public class EvaluateRuleRequest : IRequest<int>
-    {
-        public int UserId { get; set; }
-        public int RuleId { get; set; }
-    }
-}

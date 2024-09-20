@@ -17,14 +17,9 @@ namespace P1_Api.Controllers
     {
         private readonly IMediator _mediator;
 
-        private readonly IMapper _mapper;
-
-
-        public RuleController(ILogger<RuleController> logger, IMediator mediator, IMapper mapper) : base(logger)
+        public RuleController(ILogger<RuleController> logger, IMediator mediator) : base(logger)
         {
             _mediator = mediator;
-
-            _mapper = mapper;
         }
 
         [ProducesResponseType(200)]
@@ -33,8 +28,6 @@ namespace P1_Api.Controllers
         public async Task<IActionResult> EvaluateRule([FromRoute] int userId, [FromRoute] int ruleId)
         {
             var result = await _mediator.Send(new EvaluateRuleCommand { UserId = userId, RuleId = ruleId });
-
-
             return Ok();
         }
 
@@ -113,7 +106,7 @@ namespace P1_Api.Controllers
         {
             try
             {
-                await _mediator.Send(id);
+                await _mediator.Send(new DeleteOneEntityRequest<Rule>(id));
                 return Ok();
             }
             catch (P1Exception e)
