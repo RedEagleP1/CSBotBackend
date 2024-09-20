@@ -2,7 +2,7 @@ using MediatR;
 using P1_Core;
 using P1_Core.Entities;
 
-namespace P1_Application.UseCases.GetRule
+namespace P1_Application.UseCases.GetAllRules
 {
 
     public class GetAllRulesUseCase : IRequestHandler<GetAllRulesRequest, List<Rule>>

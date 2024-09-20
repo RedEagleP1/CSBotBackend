@@ -15,8 +15,10 @@ namespace P1_Api.Controllers
             _mediator = mediator;
         }
 
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
         [HttpGet("evaluate-rule/{userId}/{ruleId}")]
-        public async Task<IActionResult> EvaluateRule([FromRoute] int ruleId, [FromRoute] int userId) {
+        public async Task<IActionResult> EvaluateRule([FromRoute] int userId, [FromRoute] int ruleId) {
             //TODO move this to a usecase
             var query = await _mediator.Send(new GetQueryableRequest<Rule>());
             var rule = query.Queryable.Include(r => r.Conditions).Include(r => r.Results).FirstOrDefault(r => r.Id == ruleId);

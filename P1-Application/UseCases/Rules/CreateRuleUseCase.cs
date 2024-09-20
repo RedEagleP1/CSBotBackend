@@ -7,12 +7,10 @@ namespace P1_Application.UseCases.CreateRule
 
     public class CreateRuleUseCase : IRequestHandler<CreateRuleRequest, int>
     {
-        private readonly IMediator _mediator;
         private readonly IRepository<Rule> _ruleRepository;
 
-        public CreateRuleUseCase(IMediator mediator, IRepository<Rule> ruleRepository)
+        public CreateRuleUseCase(IRepository<Rule> ruleRepository)
         {
-            _mediator = mediator;
             _ruleRepository = ruleRepository;
         }
 

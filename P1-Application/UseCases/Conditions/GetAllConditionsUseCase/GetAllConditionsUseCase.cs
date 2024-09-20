@@ -9,7 +9,7 @@ namespace P1_Application.UseCases.Conditions.GetAllConditions
     {
         private readonly IRepository<Condition> _conditionRepository;
 
-        public GetAllConditionsUseCase(IMediator mediator, IRepository<Condition> conditionRepository)
+        public GetAllConditionsUseCase(IRepository<Condition> conditionRepository)
         {
             _conditionRepository = conditionRepository;
         }
