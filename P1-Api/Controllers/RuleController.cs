@@ -25,9 +25,9 @@ namespace P1_Api.Controllers
         [ProducesResponseType(200)]
         //[ProducesResponseType(500)]
         [HttpGet("evaluate-rule/{userId}/{ruleId}")]
-        public async Task<IActionResult> EvaluateRule([FromRoute] int userId, [FromRoute] int ruleId)
+        public async Task<IActionResult> EvaluateRule([FromRoute] int userId, [FromRoute] IEnumerable<int> ruleId)
         {
-            var result = await _mediator.Send(new EvaluateRuleCommand { UserId = userId, RuleId = ruleId });
+            await _mediator.Send(new EvaluateRuleCommand { UserId = userId, RuleId = ruleId });
             return Ok();
         }
 

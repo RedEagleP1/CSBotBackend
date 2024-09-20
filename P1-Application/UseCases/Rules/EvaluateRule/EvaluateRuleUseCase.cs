@@ -22,15 +22,18 @@ namespace P1_Application.UseCases.Rules.EvaluateRule
         {
             var query = _RuleRepository.Query();
             // Find the rule.
-            var rules = GetRules(request.RuleIds);
+            var rules = GetRules(request.RuleId);
             // var rule = await _RuleRepository.GetByIdAsync(request.RuleId);
             foreach (var rule in rules)
             {
                 var success = _RuleService.EvaluateConditions(rule.Conditions);
                 if (!success) return;
             }
+
             //todo apply rewards and save the data
             // if true ruleservice.ApplyRewards(rule.Rewards, user);
+
+
         }
 
         private IList<Rule> GetRules(IEnumerable<int> ruleIds)
