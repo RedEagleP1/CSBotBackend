@@ -13,5 +13,5 @@ namespace P1_Core.Entities
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
     }
-    
+
 }

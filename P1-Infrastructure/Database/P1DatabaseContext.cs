@@ -11,8 +11,9 @@ namespace P1_Infrastructure.Database
     {
         public virtual DbSet<Result> Results { get; set; }
         public virtual DbSet<Rule> Rules { get; set; }
-        public virtual DbSet<Condition> Conditions { get; set; }
-        public P1DatabaseContext(DbContextOptions<P1DatabaseContext> options) : base(options) { 
+        public virtual DbSet<Rule> Conditions { get; set; }
+        public P1DatabaseContext(DbContextOptions<P1DatabaseContext> options) : base(options)
+        {
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

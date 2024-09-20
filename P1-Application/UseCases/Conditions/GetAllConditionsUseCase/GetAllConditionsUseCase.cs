@@ -9,18 +9,16 @@ namespace P1_Application.UseCases.Conditions.GetAllConditions
     {
         private readonly IRepository<Condition> _conditionRepository;
 
-        public GetAllConditionsUseCase(IMediator mediator, IRepository<Condition> conditionRepository)
+        public GetAllConditionsUseCase(IRepository<Condition> conditionRepository)
         {
             _conditionRepository = conditionRepository;
         }
 
         public async Task<GetAllConditionsResponse> Handle(GetAllConditionsQuery request, CancellationToken cancellationToken)
         {
-            List<Condition> getAllConditions = (List<Condition>) await _conditionRepository.GetAllAsync();
+            List<Condition> getAllConditions = (List<Condition>)await _conditionRepository.GetAllAsync();
             return new GetAllConditionsResponse(getAllConditions);
         }
     }
-
-
 
 }
