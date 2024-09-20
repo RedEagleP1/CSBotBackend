@@ -11,7 +11,6 @@ namespace P1_Application.UseCases.Rules.EvaluateRule
         private readonly IRepository<Rule> _RuleRepository;
         private readonly RuleService _RuleService;
 
-
         public EvaluateRuleUseCase(IRepository<Rule> ruleRepository, RuleService ruleservice)
         {
             _RuleRepository = ruleRepository;
@@ -20,10 +19,8 @@ namespace P1_Application.UseCases.Rules.EvaluateRule
 
         public async Task Handle(EvaluateRuleCommand request, CancellationToken cancellationToken)
         {
-            var query = _RuleRepository.Query();
             // Find the rule.
             var rules = GetRules(request.RuleId);
-            // var rule = await _RuleRepository.GetByIdAsync(request.RuleId);
             foreach (var rule in rules)
             {
                 var success = _RuleService.EvaluateConditions(rule.Conditions);
