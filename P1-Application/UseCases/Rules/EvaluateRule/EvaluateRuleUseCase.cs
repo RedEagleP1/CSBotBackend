@@ -1,31 +1,41 @@
 using MediatR;
+using Microsoft.EntityFrameworkCore;
+using P1_Application.Services;
 using P1_Core;
 using P1_Core.Entities;
 
 namespace P1_Application.UseCases.Rules.EvaluateRule
 {
-    public class EvaluateRuleUseCase : IRequestHandler<EvaluateRuleCommand, EvaluateRuleResponse>
+    public class EvaluateRuleUseCase : IRequestHandler<EvaluateRuleCommand>
     {
         private readonly IRepository<Rule> _RuleRepository;
+        private readonly RuleService _RuleService;
 
 
-        public EvaluateRuleUseCase(IRepository<Rule> ruleRepository)
+        public EvaluateRuleUseCase(IRepository<Rule> ruleRepository, RuleService ruleservice)
         {
             _RuleRepository = ruleRepository;
+            _RuleService = ruleservice;
         }
 
-        public async Task<EvaluateRuleResponse> Handle(EvaluateRuleCommand request, CancellationToken cancellationToken)
+        public async Task Handle(EvaluateRuleCommand request, CancellationToken cancellationToken)
         {
+            var query = _RuleRepository.Query();
             // Find the rule.
-            //var rule = query.Queryable.Include(r => r.Conditions).Include(r => r.Results).FirstOrDefault(r => r.Id == ruleId);
-            var rule = await _RuleRepository.GetByIdAsync(request.RuleId);
-            if (rule == null)
-                return new EvaluateRuleResponse(null);
-
-            // ruleservice.EvaluateConditions(rule.Conditions);
+            var rules = GetRules(request.RuleIds);
+            // var rule = await _RuleRepository.GetByIdAsync(request.RuleId);
+            foreach (var rule in rules)
+            {
+                var success = _RuleService.EvaluateConditions(rule.Conditions);
+                if (!success) return;
+            }
+            //todo apply rewards and save the data
             // if true ruleservice.ApplyRewards(rule.Rewards, user);
+        }
 
-            return new EvaluateRuleResponse(rule);
+        private IList<Rule> GetRules(IEnumerable<int> ruleIds)
+        {
+            return _RuleRepository.Query().Include(r => r.Conditions).Include(r => r.Rewards).Where(r => ruleIds.Contains(r.Id)).ToList();
         }
 
     }

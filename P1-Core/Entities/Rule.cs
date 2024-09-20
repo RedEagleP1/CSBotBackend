@@ -10,6 +10,7 @@ namespace P1_Core.Entities
         public bool IsEnabled { get; set; }
         public virtual ICollection<Condition> Conditions { get; set; }
         public virtual ICollection<Result> Results { get; set; }
+        public virtual ICollection<Reward> Rewards { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
     }
