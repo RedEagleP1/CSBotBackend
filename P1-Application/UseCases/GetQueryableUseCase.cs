@@ -15,7 +15,7 @@ namespace P1_Application.UseCases
 
         public Task<GetQueryableResponse<T>> Handle(GetQueryableRequest<T> request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return Task.FromResult(new GetQueryableResponse<T> { Queryable = _repository.Query() });
         }
 
         public IQueryable<T> Query()
@@ -30,5 +30,6 @@ namespace P1_Application.UseCases
 
     public class GetQueryableResponse<T> where T : class
     {
+        public IQueryable<T> Queryable { get; set; }
     }
 }

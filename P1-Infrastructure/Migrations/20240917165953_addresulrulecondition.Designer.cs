@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using P1_Infrastructure.Database;
 
@@ -11,9 +12,11 @@ using P1_Infrastructure.Database;
 namespace P1_Infrastructure.Migrations
 {
     [DbContext(typeof(P1DatabaseContext))]
-    partial class P1DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20240917165953_addresulrulecondition")]
+    partial class addresulrulecondition
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -177,60 +180,17 @@ namespace P1_Infrastructure.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
-
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<int>("UpdatedBy")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.ToTable("Condition");
-                });
-
-            modelBuilder.Entity("P1_Core.Entities.Item", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<int>("UpdatedBy")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Item");
+                    b.ToTable("Conditions");
                 });
 
             modelBuilder.Entity("P1_Core.Entities.Result", b =>
@@ -244,10 +204,8 @@ namespace P1_Infrastructure.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
-
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("Name")
@@ -256,13 +214,6 @@ namespace P1_Infrastructure.Migrations
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime(6)");
-
-                    b.Property<int>("UpdatedBy")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Value")
-                        .IsRequired()
-                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
@@ -280,44 +231,6 @@ namespace P1_Infrastructure.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("longtext");
-
-                    b.Property<bool>("IsEnabled")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<int>("UpdatedBy")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Rule");
-                });
-
-            modelBuilder.Entity("P1_Core.Entities.Trigger", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -332,97 +245,9 @@ namespace P1_Infrastructure.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int>("UpdatedBy")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.ToTable("Triggers");
-                });
-
-            modelBuilder.Entity("P1_Core.Entities.User", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
-
-                    b.Property<ulong>("DiscordId")
-                        .HasColumnType("bigint unsigned");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<int>("UpdatedBy")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("P1_Core.Entities.UserItem", b =>
-                {
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ItemId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<int>("UpdatedBy")
-                        .HasColumnType("int");
-
-                    b.HasKey("UserId", "ItemId");
-
-                    b.HasIndex("ItemId");
-
-                    b.ToTable("UserItem");
-                });
-
-            modelBuilder.Entity("P1_Core.Entities.UserMetaData", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<int>("UpdatedBy")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserMetaData");
+                    b.ToTable("Rules");
                 });
 
             modelBuilder.Entity("P1_Infrastructure.Identity.ApplicationUser", b =>
@@ -437,8 +262,8 @@ namespace P1_Infrastructure.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("longtext");
 
-                    b.Property<ulong>("DiscordId")
-                        .HasColumnType("bigint unsigned");
+                    b.Property<int>("DiscordId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -476,9 +301,6 @@ namespace P1_Infrastructure.Migrations
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("varchar(256)");
@@ -491,8 +313,6 @@ namespace P1_Infrastructure.Migrations
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("AspNetUsers", (string)null);
                 });
@@ -510,21 +330,6 @@ namespace P1_Infrastructure.Migrations
                     b.HasIndex("RulesId");
 
                     b.ToTable("ResultRule");
-                });
-
-            modelBuilder.Entity("RuleTrigger", b =>
-                {
-                    b.Property<int>("RulesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TriggersId")
-                        .HasColumnType("int");
-
-                    b.HasKey("RulesId", "TriggersId");
-
-                    b.HasIndex("TriggersId");
-
-                    b.ToTable("RuleTrigger");
                 });
 
             modelBuilder.Entity("ConditionRule", b =>
@@ -593,47 +398,6 @@ namespace P1_Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("P1_Core.Entities.UserItem", b =>
-                {
-                    b.HasOne("P1_Core.Entities.Item", "Item")
-                        .WithMany("UserItems")
-                        .HasForeignKey("ItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("P1_Core.Entities.User", "User")
-                        .WithMany("UserItems")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Item");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("P1_Core.Entities.UserMetaData", b =>
-                {
-                    b.HasOne("P1_Core.Entities.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("P1_Infrastructure.Identity.ApplicationUser", b =>
-                {
-                    b.HasOne("P1_Core.Entities.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("ResultRule", b =>
                 {
                     b.HasOne("P1_Core.Entities.Result", null)
@@ -647,31 +411,6 @@ namespace P1_Infrastructure.Migrations
                         .HasForeignKey("RulesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("RuleTrigger", b =>
-                {
-                    b.HasOne("P1_Core.Entities.Rule", null)
-                        .WithMany()
-                        .HasForeignKey("RulesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("P1_Core.Entities.Trigger", null)
-                        .WithMany()
-                        .HasForeignKey("TriggersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("P1_Core.Entities.Item", b =>
-                {
-                    b.Navigation("UserItems");
-                });
-
-            modelBuilder.Entity("P1_Core.Entities.User", b =>
-                {
-                    b.Navigation("UserItems");
                 });
 #pragma warning restore 612, 618
         }

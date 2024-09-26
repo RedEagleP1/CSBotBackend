@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using P1_Application.Boundaries;
 
 namespace P1_Api.Controllers
 {
@@ -7,10 +8,17 @@ namespace P1_Api.Controllers
     public class BaseController : ControllerBase
     {
         protected readonly ILogger<BaseController> _logger;
+        protected readonly ApplicationContext _context;
 
-        public BaseController(ILogger<BaseController> logger)
+        public BaseController(ILogger<BaseController> logger, ApplicationContext context)
         {
             _logger = logger;
+            _context = context;
+        }
+
+        protected void setUserId(int Id)
+        {
+            _context.UserId = Id;
         }
     }
 }

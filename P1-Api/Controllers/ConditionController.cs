@@ -1,31 +1,39 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using P1_Application;
+using P1_Api.Models.Conditions;
+using AutoMapper;
+using System.Diagnostics;
+using P1_Application.UseCases;
 using P1_Core.Entities;
+using P1_Application.Exceptions;
+using P1_Application.Boundaries;
 
 namespace P1_Api.Controllers
 {
     public class ConditionController : BaseController
     {
         private readonly IMediator _mediator;
+        private readonly IMapper _mapper;
 
-        public ConditionController(ILogger<ConditionController> logger, IMediator mediator) : base(logger)
+        public ConditionController(ILogger<ConditionController> logger, IMediator mediator, IMapper mapper, ApplicationContext context) : base(logger, context)
         {
             _mediator = mediator;
+            _mapper = mapper;
         }
 
         [ProducesResponseType(200)]
-        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
         [HttpPost("create-condition")]
-        public async Task<IActionResult> CreateCondition([FromBody] CreateConditionRequest request)
+        public async Task<IActionResult> CreateCondition([FromBody] AddOneEntityRequest<Condition> request)
         {
             try
             {
-                await _mediator.Send(request);
-                return Ok();
+                var response = await _mediator.Send(request);
+                return Ok(response != null ? response : null);
             }
-            catch (Exception e)
+            catch (P1Exception e)
             {
-                // TODO clean this up and throw more specific exception
                 _logger.LogError(e, $"An error occurred while creating condition: \"{e.Message}\"");
                 return BadRequest();
             }
@@ -33,35 +41,34 @@ namespace P1_Api.Controllers
 
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        [HttpGet("get-condition")]
-        public async Task<IActionResult> GetCondition([FromBody] GetConditionRequest request)
+        [HttpGet("get-condition/{id}")]
+        public async Task<IActionResult> GetCondition([FromRoute] int id)
         {
             try
             {
-                await _mediator.Send(request);
-                return Ok();
+                var response = await _mediator.Send(new GetOneEntityRequest<Condition>(id));
+                return Ok(response);
             }
-            catch (Exception e)
+            catch (P1Exception e)
             {
-                // TODO clean this up and throw more specific exception
-                _logger.LogError(e, $"An error occurred while getting the condition with Id {request.Id}. \"{e.Message}\"");
+                _logger.LogError(e, $"An error occurred while getting the condition with Id {id}. \"{e.Message}\"");
                 return BadRequest();
             }
         }
 
+
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
         [HttpGet("get-all-conditions")]
-        public async Task<IActionResult> GetAllConditions([FromBody] GetConditionRequest request)
+        public async Task<IActionResult> GetAllConditions()
         {
             try
             {
-                await _mediator.Send(request);
-                return Ok();
+                var response = await _mediator.Send(new GetAllEntitiesRequest<Condition>());
+                return Ok(response);
             }
-            catch (Exception e)
+            catch (P1Exception e)
             {
-                // TODO clean this up and throw more specific exception
                 _logger.LogError(e, $"An error occurred while getting all conditions: \"{e.Message}\"");
                 return BadRequest();
             }
@@ -70,17 +77,16 @@ namespace P1_Api.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
         [HttpPut("update-condition")]
-        public async Task<IActionResult> UpdateCondition([FromBody] UpdateConditionRequest request)
+        public async Task<IActionResult> UpdateCondition([FromBody] UpdateOneEntityRequest<Condition> request)
         {
             try
             {
                 await _mediator.Send(request);
                 return Ok();
             }
-            catch (Exception e)
+            catch (P1Exception e)
             {
-                // TODO clean this up and throw more specific exception
-                _logger.LogError(e, $"An error occurred while updating the condition with id {request.Condition.Id}. \"{e.Message}\"");
+                _logger.LogError(e, $"An error occurred while updating the condition with id {request.Entity.Id}. \"{e.Message}\"");
                 return BadRequest();
             }
         }
@@ -88,51 +94,19 @@ namespace P1_Api.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
         [HttpDelete("delete-condition")]
-        public async Task<IActionResult> DeleteCondition([FromBody] DeleteConditionRequest request)
+        public async Task<IActionResult> DeleteCondition([FromRoute] int id)
         {
             try
             {
-                await _mediator.Send(request);
+                await _mediator.Send(id);
                 return Ok();
             }
-            catch (Exception e)
+            catch (P1Exception e)
             {
-                // TODO clean this up and throw more specific exception
-                _logger.LogError(e, $"An error occurred while deleting condition with Id {request.Condition.Id}");
+                _logger.LogError(e, $"An error occurred while deleting the condition with Id {id}");
                 return BadRequest();
             }
         }
 
-    }
-
-    public class CreateConditionRequest
-    {
-        public Condition Condition { get; set; }
-    }
-
-    public class GetConditionRequest
-    {
-        public int Id { get; set; }
-    }
-
-    public class GetAllConditionsRequest
-    {
-
-    }
-
-    public class UpdateConditionRequest
-    {
-        public Condition Condition { get; set; }
-    }
-
-    public class DeleteConditionRequest
-    {
-        public Condition Condition { get; set; }
-    }
-
-
-    public class GetConditionResponse
-    {
-        public Condition Condition { get; set; }
     }
 }

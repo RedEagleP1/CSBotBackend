@@ -40,7 +40,7 @@ namespace P1_Infrastructure_Tests
             var entity = new TestEntity();
             _mockDbSet.Setup(m => m.Find(It.IsAny<object[]>())).Returns(entity);
 
-            await _repository.DeleteAsync(entity);
+            await _repository.DeleteAsync(entity.Id);
 
             _mockDbSet.Verify(m => m.Remove(It.IsAny<TestEntity>()), Times.Once());
             _mockContext.Verify(m => m.SaveChanges(), Times.Once());
@@ -52,7 +52,7 @@ namespace P1_Infrastructure_Tests
             var entity = new TestEntity();
             _mockDbSet.Setup(m => m.Find(It.IsAny<object[]>())).Returns((TestEntity)null);
 
-            Assert.Throws<Exception>(async () => await _repository.DeleteAsync(entity));
+            Assert.Throws<Exception>(async () => await _repository.DeleteAsync(entity.Id));
         }
 
         [Test]

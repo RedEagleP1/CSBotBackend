@@ -1,9 +1,14 @@
 using System.ComponentModel;
 using System.Text;
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using P1_Api.Util;
+using P1_Application.UseCases;
+using P1_Application;
+using P1_Core.Entities;
 using P1_Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,6 +34,13 @@ builder.Services.AddAuthentication(options => {
         // IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:SecretKey"]))
     };
 });
+builder.Services.AddMediatR(config => {
+    config.RegisterServicesFromAssemblies(typeof(UpdateEntityUseCase<>).Assembly, typeof(BaseEntity).Assembly);
+    config.RegisterGenericHandlers = true;
+});
+
+builder.Services.AddAutoMapper(typeof(Profiles));
+
 builder.Services.AddAuthorizationBuilder();
 
 builder.Services.AddControllers();
@@ -58,6 +70,7 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 builder.Services.AddInfrastructureServices(builder.Configuration);
+builder.Services.AddApplicationServices();
 builder.Services.RunMigrations();
 
 var app = builder.Build();
