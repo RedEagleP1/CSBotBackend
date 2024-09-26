@@ -1,0 +1,52 @@
+name: Build Application
+
+on:
+  push:
+    branches:
+      - main
+jobs: 
+  build:
+    runs-on: windows-latest
+    steps:
+        - name: Checkout code
+          uses: actions/checkout@v4
+
+        - name: Install .NET SDK
+          uses: actions/setup-dotnet@v4
+          with:
+            dotnet-version: 8.0.x
+    
+        # Add  MSBuild to the PATH: https://github.com/microsoft/setup-msbuild
+        - name: Setup MSBuild.exe
+          uses: microsoft/setup-msbuild@v2
+
+        - name: Build Application
+          run: dotnet build --configuration Release
+
+        - name: FTP Deploy
+          uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+          with:
+            # ftp server
+            server: ftp.p1om.com
+            # ftp username
+            username: Wolfy@p1om.com
+            # ftp password
+            password: ${{secrets.FTPPASS}}
+            # protocol to deploy with - ftp, ftps, or ftps-legacy
+            protocol: ftps
+            # Folder to upload from, must end with trailing slash /
+            local-dir: P1-Api/bin/Release/net8.0/
+            # Path to upload to on the server. Must end with trailing slash /
+            server-dir: /home/p1oadmin/p1bot
+
+        - name: SSH Deploy
+          uses: appleboy/ssh-action@master
+          with:
+            host: ${{secrets.IP}}
+            username:       
+            key: ${{secrets.SSHPASS}}
+            script: |
+              cd /home/p1oadmin/p1bot
+              dotnet run P1-Api.dll
+              exit
+          
