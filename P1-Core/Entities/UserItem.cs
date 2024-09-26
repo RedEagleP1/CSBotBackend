@@ -7,7 +7,7 @@ namespace P1_Core.Entities
     {
 
         public int UserId { get; set; }
-
+        
         public int ItemId { get; set; }
 
         [ForeignKey("UserId")]
@@ -15,6 +15,8 @@ namespace P1_Core.Entities
 
         [ForeignKey("ItemId")]
         public virtual Item Item { get; set; }
+
+        public int Quantity { get; set; }
 
         // Hiding the inherited Id property so that we can use the UserId and ItemId as the composite key
         [NotMapped]

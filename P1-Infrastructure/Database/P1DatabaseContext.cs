@@ -1,4 +1,5 @@
 using Castle.Core.Logging;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -21,12 +22,14 @@ namespace P1_Infrastructure.Database
 
         private readonly ApplicationContext _customContext;
         private readonly ILogger<P1DatabaseContext> _logger;
+        private readonly IHttpContextAccessor _accessor;
         public P1DatabaseContext(DbContextOptions<P1DatabaseContext> options, 
         ApplicationContext customContext, 
-        ILogger<P1DatabaseContext> logger) : base(options)
+        ILogger<P1DatabaseContext> logger, IHttpContextAccessor accessor) : base(options)
         {
             _customContext = customContext;
             _logger = logger;
+            _accessor = accessor;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -42,6 +45,8 @@ namespace P1_Infrastructure.Database
             .WithMany(r => r.Conditions);
 
             modelBuilder.Entity<UserItem>().HasKey(ui => new { ui.UserId, ui.ItemId });
+
+            modelBuilder.Entity<ItemResult>().HasKey(ir => new { ir.ItemId, ir.ResultId });
 
         }
 

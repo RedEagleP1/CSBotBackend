@@ -5,7 +5,6 @@ namespace P1_Infrastructure.Identity
 {
     public class ApplicationUser : IdentityUser
     {
-        public ulong DiscordId { get; set; }
         public User User {get;set;}
     }
 }

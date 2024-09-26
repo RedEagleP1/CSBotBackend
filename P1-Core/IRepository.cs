@@ -1,5 +1,4 @@
 using P1_Core.Entities;
-using P1_Core.Entities.Interfaces;
 
 namespace P1_Core
 {
