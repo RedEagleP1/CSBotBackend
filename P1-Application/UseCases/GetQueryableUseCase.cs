@@ -15,7 +15,6 @@ namespace P1_Application.UseCases
 
         public Task<GetQueryableResponse<T>> Handle(GetQueryableRequest<T> request, CancellationToken cancellationToken)
         {
-            //TODO check that this dosen't execute a query since we are getting the result
             return Task.FromResult(new GetQueryableResponse<T> { Queryable = _repository.Query() });
         }
 

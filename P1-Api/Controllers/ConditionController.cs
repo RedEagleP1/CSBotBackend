@@ -6,6 +6,8 @@ using AutoMapper;
 using System.Diagnostics;
 using P1_Application.UseCases;
 using P1_Core.Entities;
+using P1_Application.Exceptions;
+using P1_Application.Boundaries;
 
 namespace P1_Api.Controllers
 {
@@ -14,10 +16,9 @@ namespace P1_Api.Controllers
         private readonly IMediator _mediator;
         private readonly IMapper _mapper;
 
-        public ConditionController(ILogger<ConditionController> logger, IMediator mediator, IMapper mapper) : base(logger)
+        public ConditionController(ILogger<ConditionController> logger, IMediator mediator, IMapper mapper, ApplicationContext context) : base(logger, context)
         {
             _mediator = mediator;
-
             _mapper = mapper;
         }
 

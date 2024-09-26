@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using P1_Api.Models.Rules;
 using P1_Application;
+using P1_Application.Boundaries;
+using P1_Application.Exceptions;
 using P1_Application.UseCases;
 using P1_Application.UseCases.Rules.EvaluateRule;
 
@@ -17,17 +19,22 @@ namespace P1_Api.Controllers
     {
         private readonly IMediator _mediator;
 
-        public RuleController(ILogger<RuleController> logger, IMediator mediator) : base(logger)
+        public RuleController(ILogger<RuleController> logger, IMediator mediator, ApplicationContext context) : base(logger, context)
         {
             _mediator = mediator;
         }
 
         [ProducesResponseType(200)]
         //[ProducesResponseType(500)]
-        [HttpGet("evaluate-rule/{userId}/{ruleId}")]
-        public async Task<IActionResult> EvaluateRule([FromRoute] int userId, [FromRoute] IEnumerable<int> ruleId)
+        [HttpPost("evaluate-rule/{userId}")]
+        public async Task<IActionResult> EvaluateRule([FromRoute] int userId, [FromBody] IEnumerable<int> ruleId)
         {
-            await _mediator.Send(new EvaluateRuleCommand { UserId = userId, RuleId = ruleId });
+            try {
+                await _mediator.Send(new EvaluateRuleCommand { UserId = userId, RuleId = ruleId });
+            } catch (P1Exception e) {
+                _logger.LogError(e, $"An error occurred while evaluating the rule with Id {ruleId}. \"{e.Message}\"");
+                return BadRequest(e.Message);
+            }
             return Ok();
         }
 
@@ -101,7 +108,7 @@ namespace P1_Api.Controllers
 
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        [HttpDelete("delete-condition")]
+        [HttpDelete("delete-condition/{id}")]
         public async Task<IActionResult> DeleteCondition([FromRoute] int id)
         {
             try

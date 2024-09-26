@@ -7,6 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using P1_Api.Util;
 using P1_Application.UseCases;
+using P1_Application;
 using P1_Core.Entities;
 using P1_Infrastructure;
 
@@ -69,6 +70,7 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 builder.Services.AddInfrastructureServices(builder.Configuration);
+builder.Services.AddApplicationServices();
 builder.Services.RunMigrations();
 
 var app = builder.Build();

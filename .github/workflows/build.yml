@@ -42,7 +42,7 @@ jobs:
         - name: SSH Deploy
           uses: appleboy/ssh-action@master
           with:
-            host: 50.28.58.139
+            host: ${{secrets.IP}}
             username:       
             key: ${{secrets.SSHPASS}}
             script: |

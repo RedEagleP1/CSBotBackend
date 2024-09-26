@@ -8,22 +8,14 @@ namespace P1_Application.Services
         public bool EvaluateConditions(ICollection<Condition> conditions)
         {
 
-            foreach (var condition in conditions)
-            {
-                if (condition.IsSatisfied())
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        public void ApplyRewards(ICollection<Reward> rewards, User user)
-        {
-            foreach (var reward in rewards)
-            {
-                reward.Apply(user);
-            }
+            // foreach (var condition in conditions)
+            // {
+            //     if (!condition.IsSatisfied())
+            //     {
+            //         return false;
+            //     }
+            // }
+            return true;
         }
     }
 }

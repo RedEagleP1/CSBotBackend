@@ -9,6 +9,5 @@ namespace P1_Api.Models.Rules
 		public string Description { get; set; }
 		public bool IsEnabled { get; set; }
 		public ICollection<Condition> Conditions { get; set; }
-		public ICollection<Result> Results { get; set; }
 	}
 }
