@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using P1_Api.ErrorHandling;
 using P1_Api.Util;
 using P1_Application.UseCases;
 using P1_Application;
@@ -18,14 +19,14 @@ using ILogger = Serilog.ILogger;
 // Setup the logger.
 var logger = new LoggerConfiguration()
     .WriteTo.Console()
-    .WriteTo.File("../Logs/P1-Application.log").
-    CreateLogger();
+    .WriteTo.File("../Logs/P1-Application.log", rollingInterval: RollingInterval.Day)
+    .CreateLogger();
 
-logger.Information("Hello World!");
+logger.Information("Starting up...");
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddSingleton<ILogger>(logger);
+builder.Logging.AddSerilog(logger);
 
 builder.Services.AddAuthentication(options =>
 {
@@ -94,6 +95,7 @@ builder.Services.RunMigrations();
 
 var app = builder.Build();
 
+app.UseMiddleware<ExceptionBarrierMiddleware>();
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
