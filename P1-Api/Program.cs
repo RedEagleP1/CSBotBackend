@@ -95,6 +95,8 @@ builder.Services.RunMigrations();
 
 var app = builder.Build();
 
+app.UseSerilogRequestLogging();
+
 app.UseMiddleware<ExceptionBarrierMiddleware>();
 app.UseHttpsRedirection();
 app.UseAuthentication();
