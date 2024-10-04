@@ -9,11 +9,12 @@ using P1_Api.ErrorHandling;
 using P1_Api.Util;
 using P1_Application.UseCases;
 using P1_Application;
-using P1_Core.Entities;
+using P1_Core.Interfaces;
 using P1_Infrastructure;
 using Serilog;
 
 using ILogger = Serilog.ILogger;
+using P1_Core.Services;
 
 
 // Setup the logger.
@@ -27,6 +28,8 @@ logger.Information("Starting up...");
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Logging.AddSerilog(logger);
+builder.Services.AddSingleton<Serilog.Extensions.Hosting.DiagnosticContext>(); // Add this line
+builder.Services.AddSingleton(typeof(ILogger), logger);
 
 builder.Services.AddAuthentication(options =>
 {

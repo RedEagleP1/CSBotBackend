@@ -5,7 +5,7 @@ using P1_Api.Models.Conditions;
 using AutoMapper;
 using System.Diagnostics;
 using P1_Application.UseCases;
-using P1_Core.Entities;
+using P1_Core.Interfaces;
 using P1_Application.Exceptions;
 using P1_Application.Boundaries;
 

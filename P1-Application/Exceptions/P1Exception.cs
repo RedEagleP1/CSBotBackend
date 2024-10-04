@@ -1,4 +1,4 @@
-using Microsoft.Extensions.Logging;
+using ILogger = Serilog.ILogger;
 
 namespace P1_Application.Exceptions
 {
@@ -9,7 +9,7 @@ namespace P1_Application.Exceptions
         public P1Exception(ILogger logger, string message) : base(message)
         {
             _logger = logger;
-            logger.LogError(message);
+            logger.Error(message);
         }
     }
 }

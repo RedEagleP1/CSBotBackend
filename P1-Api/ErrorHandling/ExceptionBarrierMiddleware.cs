@@ -19,13 +19,13 @@ namespace P1_Api.ErrorHandling
             _logger = logger;
         }
 
-        public async Task<IActionResult> InvokeAsync(HttpContext context)
+        public async Task<HttpResponse> InvokeAsync(HttpContext context)
         {
             try
             {
                 // Call the next middleware in the pipeline
                 await _nextOp(context);
-                return (IActionResult)context.Response;
+                return context.Response;
             }
             catch (Exception e)
             {
@@ -34,7 +34,7 @@ namespace P1_Api.ErrorHandling
             }
         }
 
-        private async Task<IActionResult> HandleExceptionAsync(HttpContext context, Exception e)
+        private async Task<HttpResponse> HandleExceptionAsync(HttpContext context, Exception e)
         {
             // First, log the exception
             _logger.LogError(e, "An unhandled exception occurred during the request.");
@@ -58,7 +58,7 @@ namespace P1_Api.ErrorHandling
 
             // Return the error message response
             await context.Response.WriteAsync(result);
-            return (IActionResult)context.Response;
+            return context.Response;
         }
     }
 }

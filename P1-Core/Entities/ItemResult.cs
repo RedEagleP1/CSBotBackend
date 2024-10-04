@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace P1_Core.Entities
+namespace P1_Core.Interfaces
 {
     public class ItemResult : BaseEntity
     {
@@ -10,7 +10,7 @@ namespace P1_Core.Entities
 
         [Required]
         public int Quantity { get; set; }
-        
+
         [ForeignKey("ItemId")]
         public virtual Item Item { get; set; }
         [ForeignKey("ResultId")]

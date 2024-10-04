@@ -1,6 +1,6 @@
 using MediatR;
 using P1_Core;
-using P1_Core.Entities;
+using P1_Core.Interfaces;
 
 namespace P1_Application.UseCases
 {
@@ -30,7 +30,7 @@ namespace P1_Application.UseCases
         }
     }
 
-    public class AddOneEntityRequest<T>: IRequest<AddOneEntityResponse> where T : class
+    public class AddOneEntityRequest<T> : IRequest<AddOneEntityResponse> where T : class
     {
         public T Entity { get; }
         public AddOneEntityRequest(T entity)
