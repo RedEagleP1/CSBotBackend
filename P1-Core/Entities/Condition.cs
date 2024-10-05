@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace P1_Core.Interfaces
+namespace P1_Core.Entities
 {
 
     public class Condition : BaseEntity

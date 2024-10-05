@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Update;
 using Microsoft.Extensions.Logging;
 using P1_Application.Boundaries;
+using P1_Core.Entities;
 using P1_Core.Interfaces;
 using P1_Infrastructure.Identity;
 

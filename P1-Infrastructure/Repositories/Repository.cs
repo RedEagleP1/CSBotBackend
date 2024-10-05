@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using P1_Core;
+using P1_Core.Entities;
 using P1_Core.Interfaces;
 using P1_Infrastructure.Database;
 
