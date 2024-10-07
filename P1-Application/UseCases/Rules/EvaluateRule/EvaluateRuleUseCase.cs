@@ -1,6 +1,5 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using P1_Application.Services;
 using P1_Core;
 using P1_Core.Entities;
 using P1_Core.Services;
@@ -33,11 +32,6 @@ namespace P1_Application.UseCases.Rules.EvaluateRule
             _RuleService.EvaluateRule(request.)
             // ApplyRewards(user, rules);
             await _UserRepository.UpdateAsync(user);
-        }
-
-        private async ApplyRewards(User user, Rule rule)
-        {
-            foreach (Condition condition)
         }
 
         private IList<Rule> GetRules(IEnumerable<int> ruleIds)
