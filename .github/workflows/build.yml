@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - feature/initialsetup
 jobs: 
   build:
     runs-on: windows-latest
@@ -43,7 +44,7 @@ jobs:
           uses: appleboy/ssh-action@master
           with:
             host: ${{secrets.IP}}
-            username:       
+            username:
             key: ${{secrets.SSHPASS}}
             script: |
               cd /home/p1oadmin/p1bot
