@@ -5,18 +5,38 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using P1_Api.ErrorHandling;
 using P1_Api.Util;
 using P1_Application.UseCases;
 using P1_Application;
-using P1_Core.Entities;
+using P1_Core.Interfaces;
 using P1_Infrastructure;
+using Serilog;
+
+using ILogger = Serilog.ILogger;
+using P1_Core.Services;
+
+
+// Setup the logger.
+var logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .WriteTo.File("../Logs/P1-Application.log", rollingInterval: RollingInterval.Day)
+    .CreateLogger();
+
+logger.Information("Starting up...");
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddAuthentication(options => { 
+builder.Logging.AddSerilog(logger);
+builder.Services.AddSingleton<Serilog.Extensions.Hosting.DiagnosticContext>(); // Add this line
+builder.Services.AddSingleton(typeof(ILogger), logger);
+
+builder.Services.AddAuthentication(options =>
+{
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;    
-}).AddJwtBearer(options => {
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options =>
+{
     builder.Configuration.Bind("JwtSettings", options);
     options.TokenValidationParameters = new TokenValidationParameters
     {
@@ -34,7 +54,8 @@ builder.Services.AddAuthentication(options => {
         // IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:SecretKey"]))
     };
 });
-builder.Services.AddMediatR(config => {
+builder.Services.AddMediatR(config =>
+{
     config.RegisterServicesFromAssemblies(typeof(UpdateEntityUseCase<>).Assembly, typeof(BaseEntity).Assembly);
     config.RegisterGenericHandlers = true;
 });
@@ -49,7 +70,8 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.CustomSchemaIds(type => type.ToString());
     c.SwaggerDoc("v1", new() { Title = "P1_Api", Version = "v1" });
-    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme {
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
         Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
         Name = "Authorization",
         In = ParameterLocation.Header,
@@ -71,10 +93,14 @@ builder.Services.AddSwaggerGen(c =>
 
 builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddApplicationServices();
+
 builder.Services.RunMigrations();
 
 var app = builder.Build();
 
+app.UseSerilogRequestLogging();
+
+app.UseMiddleware<ExceptionBarrierMiddleware>();
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();

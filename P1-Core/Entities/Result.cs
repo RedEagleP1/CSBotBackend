@@ -1,4 +1,4 @@
-namespace P1_Core.Entities
+namespace P1_Core.Interfaces
 {
     public class Result : BaseEntity
     {
@@ -6,6 +6,6 @@ namespace P1_Core.Entities
         public string? Description { get; set; }
         public ICollection<ItemResult> ItemResults { get; set; }
         public virtual ICollection<Rule>? Rules { get; set; }
-        
+
     }
 }

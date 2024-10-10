@@ -1,4 +1,4 @@
-using P1_Core.Entities;
+using P1_Core.Interfaces;
 
 namespace P1_Core
 {

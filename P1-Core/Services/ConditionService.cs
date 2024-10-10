@@ -1,8 +1,8 @@
-using P1_Core.Entities;
+using P1_Core.Interfaces;
 
 namespace P1_Core.Services
 {
-    public class ConditionService
+    public class ConditionService : IConditionService
     {
         public bool EvaluateCondition(Condition condition, object target)
         {
@@ -23,7 +23,7 @@ namespace P1_Core.Services
 
                 default:
                     return false;
-                
+
             } // end switch
         }
 

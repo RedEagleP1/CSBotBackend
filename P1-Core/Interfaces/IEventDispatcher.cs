@@ -1,4 +1,4 @@
-namespace P1_Core
+namespace P1_Core.Interfaces
 {
     public interface IEventDispatcher<TEvent> where TEvent : BaseEvent
     {

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Update;
 using Microsoft.Extensions.Logging;
 using P1_Application.Boundaries;
-using P1_Core.Entities;
+using P1_Core.Interfaces;
 using P1_Infrastructure.Identity;
 
 namespace P1_Infrastructure.Database
@@ -18,13 +18,13 @@ namespace P1_Infrastructure.Database
         public virtual DbSet<Result> Results { get; set; }
         public virtual DbSet<Trigger> Triggers { get; set; }
         public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<UserMetaData> UserMetaData {get;set;}
+        public virtual DbSet<UserMetaData> UserMetaData { get; set; }
 
         private readonly ApplicationContext _customContext;
         private readonly ILogger<P1DatabaseContext> _logger;
         private readonly IHttpContextAccessor _accessor;
-        public P1DatabaseContext(DbContextOptions<P1DatabaseContext> options, 
-        ApplicationContext customContext, 
+        public P1DatabaseContext(DbContextOptions<P1DatabaseContext> options,
+        ApplicationContext customContext,
         ILogger<P1DatabaseContext> logger, IHttpContextAccessor accessor) : base(options)
         {
             _customContext = customContext;
@@ -54,7 +54,7 @@ namespace P1_Infrastructure.Database
         public override int SaveChanges()
         {
 
-            var entries = ChangeTracker.Entries().Where(e => e.Entity is BaseEntity && 
+            var entries = ChangeTracker.Entries().Where(e => e.Entity is BaseEntity &&
             (e.State == EntityState.Added || e.State == EntityState.Modified));
 
             foreach (var entityEntry in entries)
@@ -66,7 +66,9 @@ namespace P1_Infrastructure.Database
                 {
                     entity.CreatedAt = now;
                     entity.CreatedBy = userId;
-                } else {
+                }
+                else
+                {
                     entity.UpdatedAt = now;
                     entity.UpdatedBy = userId;
                 }

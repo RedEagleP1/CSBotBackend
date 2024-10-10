@@ -1,13 +1,13 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace P1_Core.Entities
+namespace P1_Core.Interfaces
 {
     public class UserItem : BaseEntity
     {
 
         public int UserId { get; set; }
-        
+
         public int ItemId { get; set; }
 
         [ForeignKey("UserId")]
