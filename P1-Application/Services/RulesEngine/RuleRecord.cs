@@ -5,4 +5,5 @@ public class RuleRecord
     public string? Description { get; set; }
     public int TriggerId { get; set; }
     public int ResponseId { get; set; }
+    public int ConditionId { get; set; }
 }

@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Moq;
+using P1_Core.Entities;
 using P1_Core.Interfaces;
 using P1_Infrastructure;
 using P1_Infrastructure.Database;
