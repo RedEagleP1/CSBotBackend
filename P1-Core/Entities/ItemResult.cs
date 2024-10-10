@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace P1_Core.Interfaces
+namespace P1_Core.Entities
 {
     public class ItemResult : BaseEntity
     {

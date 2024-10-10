@@ -8,8 +8,7 @@ using P1_Application.Boundaries;
 using P1_Application.Exceptions;
 using P1_Application.UseCases;
 using P1_Application.UseCases.Rules.EvaluateRule;
-
-
+using P1_Core.Entities;
 using P1_Core.Interfaces;
 
 namespace P1_Api.Controllers
@@ -111,7 +110,7 @@ namespace P1_Api.Controllers
 
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        [HttpDelete("delete-condition/{id}")]
+        [HttpDelete("delete-rule/{id}")]
         public async Task<IActionResult> DeleteCondition([FromRoute] int id)
         {
             try

@@ -1,7 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using P1_Application;
-using P1_Api.Models.Conditions;
+using P1_Api.Models.Legions;
 using AutoMapper;
 using System.Diagnostics;
 using P1_Application.UseCases;
@@ -12,12 +12,12 @@ using P1_Core.Entities;
 
 namespace P1_Api.Controllers
 {
-    public class ConditionController : BaseController
+    public class LegionController : BaseController
     {
         private readonly IMediator _mediator;
         private readonly IMapper _mapper;
 
-        public ConditionController(ILogger<ConditionController> logger, IMediator mediator, IMapper mapper, ApplicationContext context) : base(logger, context)
+        public LegionController(ILogger<LegionController> logger, IMediator mediator, IMapper mapper, ApplicationContext context) : base(logger, context)
         {
             _mediator = mediator;
             _mapper = mapper;
@@ -25,8 +25,8 @@ namespace P1_Api.Controllers
 
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        [HttpPost("create-condition")]
-        public async Task<IActionResult> CreateCondition([FromBody] AddOneEntityRequest<Condition> request)
+        [HttpPost("create-legion")]
+        public async Task<IActionResult> CreateLegion([FromBody] AddOneEntityRequest<Legion> request)
         {
             try
             {
@@ -35,24 +35,24 @@ namespace P1_Api.Controllers
             }
             catch (P1Exception e)
             {
-                _logger.LogError(e, $"An error occurred while creating condition: \"{e.Message}\"");
+                _logger.LogError(e, $"An error occurred while creating legion: \"{e.Message}\"");
                 return BadRequest();
             }
         }
 
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        [HttpGet("get-condition/{id}")]
-        public async Task<IActionResult> GetCondition([FromRoute] int id)
+        [HttpGet("get-legion/{id}")]
+        public async Task<IActionResult> GetLegion([FromRoute] int id)
         {
             try
             {
-                var response = await _mediator.Send(new GetOneEntityRequest<Condition>(id));
+                var response = await _mediator.Send(new GetOneEntityRequest<Legion>(id));
                 return Ok(response);
             }
             catch (P1Exception e)
             {
-                _logger.LogError(e, $"An error occurred while getting the condition with Id {id}. \"{e.Message}\"");
+                _logger.LogError(e, $"An error occurred while getting the legion with Id {id}. \"{e.Message}\"");
                 return BadRequest();
             }
         }
@@ -60,25 +60,25 @@ namespace P1_Api.Controllers
 
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        [HttpGet("get-all-conditions")]
-        public async Task<IActionResult> GetAllConditions()
+        [HttpGet("get-all-legions")]
+        public async Task<IActionResult> GetAllLegions()
         {
             try
             {
-                var response = await _mediator.Send(new GetAllEntitiesRequest<Condition>());
+                var response = await _mediator.Send(new GetAllEntitiesRequest<Legion>());
                 return Ok(response);
             }
             catch (P1Exception e)
             {
-                _logger.LogError(e, $"An error occurred while getting all conditions: \"{e.Message}\"");
+                _logger.LogError(e, $"An error occurred while getting all legions: \"{e.Message}\"");
                 return BadRequest();
             }
         }
 
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        [HttpPut("update-condition")]
-        public async Task<IActionResult> UpdateCondition([FromBody] UpdateOneEntityRequest<Condition> request)
+        [HttpPut("update-legion")]
+        public async Task<IActionResult> UpdateLegion([FromBody] UpdateOneEntityRequest<Legion> request)
         {
             try
             {
@@ -87,15 +87,15 @@ namespace P1_Api.Controllers
             }
             catch (P1Exception e)
             {
-                _logger.LogError(e, $"An error occurred while updating the condition with id {request.Entity.Id}. \"{e.Message}\"");
+                _logger.LogError(e, $"An error occurred while updating the legion with id {request.Entity.Id}. \"{e.Message}\"");
                 return BadRequest();
             }
         }
 
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        [HttpDelete("delete-condition/{id}")]
-        public async Task<IActionResult> DeleteCondition([FromRoute] int id)
+        [HttpDelete("delete-legion/{id}")]
+        public async Task<IActionResult> DeleteLegion([FromRoute] int id)
         {
             try
             {
@@ -104,7 +104,7 @@ namespace P1_Api.Controllers
             }
             catch (P1Exception e)
             {
-                _logger.LogError(e, $"An error occurred while deleting the condition with Id {id}");
+                _logger.LogError(e, $"An error occurred while deleting the legion with Id {id}");
                 return BadRequest();
             }
         }

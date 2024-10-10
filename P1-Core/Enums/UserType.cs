@@ -5,5 +5,5 @@ namespace P1_Core.Enums
         User = 0,
         Admin = 1
     }
-    
+
 }
