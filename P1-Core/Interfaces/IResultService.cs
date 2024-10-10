@@ -5,6 +5,6 @@ namespace P1_Core.Interfaces
 {
     public interface IResultService
     {
-        void ApplyResults(User user, ICollection<Result> results);
+        void ApplyResults(DiscordUser user, ICollection<Result> results);
     }
 }

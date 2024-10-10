@@ -15,16 +15,16 @@ namespace P1_Application.UseCases.Rules.EvaluateRule
         private readonly IRepository<Rule> _RuleRepository;
         private readonly IRuleService _RuleService;
         private readonly IResultService _ResultService;
-        private readonly IRepository<User> _UserRepository;
+        private readonly IRepository<DiscordUser> _UserRepository;
         private readonly ILogger _Logger;
 
 
-        public EvaluateRuleUseCase(IRepository<Rule> ruleRepository, IRuleService ruleService, IResultService resultService, IRepository<User> userRepositor, ILogger logger)
+        public EvaluateRuleUseCase(IRepository<Rule> ruleRepository, IRuleService ruleService, IResultService resultService, IRepository<DiscordUser> userRepository, ILogger logger)
         {
             _RuleRepository = ruleRepository;
             _RuleService = ruleService;
             _ResultService = resultService;
-            _UserRepository = userRepositor;
+            _UserRepository = userRepository;
             _Logger = logger;
         }
 

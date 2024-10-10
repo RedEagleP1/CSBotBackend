@@ -10,8 +10,8 @@ namespace P1_Core.Entities
 
         public int ItemId { get; set; }
 
-        [ForeignKey("UserId")]
-        public virtual User User { get; set; }
+        [ForeignKey("DiscordUserId")]
+        public virtual DiscordUser User { get; set; }
 
         [ForeignKey("ItemId")]
         public virtual Item Item { get; set; }

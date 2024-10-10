@@ -6,7 +6,7 @@ namespace P1_Application.Services.RulesEngine
     public class RuleFactory<TTrigger, TCondition, TResponse>
     {
         private readonly TriggerFactory<TTrigger> _triggerFactory;
-        private readonly ResponseFactory<TResponse> _responseFactory;
+        private readonly ResultFactory<TResponse> _responseFactory;
         private readonly ConditionFactory<TCondition> _conditionFactory;
 
         private readonly IRepository<Trigger> _triggerRepository;
@@ -16,7 +16,7 @@ namespace P1_Application.Services.RulesEngine
 
         public RuleFactory(
             TriggerFactory<TTrigger> triggerFactory,
-            ResponseFactory<TResponse> responseFactory,
+            ResultFactory<TResponse> responseFactory,
             ConditionFactory<TCondition> conditionFactory,
             
             IRepository<Trigger> triggerRepository,
@@ -40,11 +40,11 @@ namespace P1_Application.Services.RulesEngine
             var conditionEntity = await _conditionRepository.GetByIdAsync(ruleRecord.ConditionId);
 
             var triggerRecord = new TriggerRecord();
-            var responseRecord = new ResponseRecord();
+            var responseRecord = new ResultRecord();
             var conditionRecord = new ConditionRecord();
 
             var trigger = _triggerFactory.CreateTriggerFromRecord(triggerRecord);
-            var response = _responseFactory.CreateResponseFromRecord(responseRecord);
+            var result = _responseFactory.CreateResponseFromRecord(responseRecord);
             var condition = _conditionFactory.CreateConditionFromRecord(conditionRecord);
 
             return new Rule<TTrigger, TCondition, TResponse>
@@ -53,7 +53,7 @@ namespace P1_Application.Services.RulesEngine
                 Description = ruleRecord.Description,
                 Trigger = trigger,
                 Condition = condition, 
-                Response = response
+                Result = result
             };
         }
     }

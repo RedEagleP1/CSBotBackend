@@ -6,13 +6,13 @@ namespace P1_Core.Services
     public class ResultService : IResultService
     {
         private readonly IRepository<UserItem> _userItemRepository;
-        public ResultService(IRepository<UserItem> userItemRepository, IRepository<User> userRepository)
+        public ResultService(IRepository<UserItem> userItemRepository, IRepository<DiscordUser> userRepository)
         {
             _userItemRepository = userItemRepository;
         }
 
         // we'll need the user Id, the Item Id, and then increment the quantity of the item in the UserItem table
-        public async void ApplyResults(User user, ICollection<Result> results)
+        public async void ApplyResults(DiscordUser user, ICollection<Result> results)
         {
             foreach (Result result in results)
             {

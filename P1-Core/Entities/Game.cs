@@ -4,6 +4,6 @@ namespace P1_Core.Entities
     {
         public string Name { get; set; }
         public string Description { get; set; }
-        public ICollection<User>? TeamMembers { get; set; }
+        public ICollection<DiscordUser>? TeamMembers { get; set; }
     }
 }

@@ -6,6 +6,6 @@ namespace P1_Infrastructure.Identity
 {
     public class ApplicationUser : IdentityUser
     {
-        public User User { get; set; }
+        public DiscordUser DiscordUser { get; set; }
     }
 }

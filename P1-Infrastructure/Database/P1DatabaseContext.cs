@@ -15,11 +15,17 @@ namespace P1_Infrastructure.Database
     public class P1DatabaseContext : IdentityDbContext<ApplicationUser>
     {
         public virtual DbSet<Rule> Rules { get; set; }
-        public virtual DbSet<Rule> Conditions { get; set; }
+        public virtual DbSet<Condition> Conditions { get; set; }
         public virtual DbSet<Result> Results { get; set; }
         public virtual DbSet<Trigger> Triggers { get; set; }
-        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<DiscordUser> DiscordUsers { get; set; }
         public virtual DbSet<UserMetaData> UserMetaData { get; set; }
+        public virtual DbSet<UserItem> UserItems { get; set; }
+        public virtual DbSet<Item> Items { get; set; }
+        public virtual DbSet<Organization> Organizations { get; set; }
+        public virtual DbSet<Game> Games { get; set; }
+        public virtual DbSet<ItemResult> ItemResults { get; set; }
+        public virtual DbSet<Organization> OrganizationUsers { get; set; }
 
         private readonly ApplicationContext _customContext;
         private readonly ILogger<P1DatabaseContext> _logger;
@@ -48,6 +54,8 @@ namespace P1_Infrastructure.Database
             modelBuilder.Entity<UserItem>().HasKey(ui => new { ui.UserId, ui.ItemId });
 
             modelBuilder.Entity<ItemResult>().HasKey(ir => new { ir.ItemId, ir.ResultId });
+
+
 
         }
 

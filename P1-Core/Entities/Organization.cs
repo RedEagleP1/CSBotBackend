@@ -5,7 +5,7 @@ namespace P1_Core.Entities
         public string Name { get; set; }
         public string Description { get; set; }
         public ICollection<Team>? MemberTeams { get; set; }
-        public int LeadingTeamId { get; set; } // The Id of the team that is leading this organization
-        public int OrganizationLeaderId { get; set; } // The user Id of the organization leader
+        public Team Team {get;set;} // The Id of the team that is leading this organization
+        public DiscordUser DiscordUser {get; set; } // The user Id of the organization leader
     }
 }
