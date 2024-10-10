@@ -31,7 +31,8 @@ namespace P1_Application.Services.RulesEngine
             _responseRepository = responseRepository;
             _conditionRepository = conditionRepository;
         }
-
+        // TODO implement conversion from RuleRecord to Rule, ConditionRecord to Condition, etc
+        // TODO use generic builder for factories
         public async Task<IRule<TTrigger, TCondition, TResponse>> CreateRuleAsync(RuleRecord ruleRecord)
         {
             var triggerEntity = await _triggerRepository.GetByIdAsync(ruleRecord.TriggerId);
@@ -51,7 +52,7 @@ namespace P1_Application.Services.RulesEngine
                 Name = ruleRecord.Name,
                 Description = ruleRecord.Description,
                 Trigger = trigger,
-                Condition = condition, //TODO implement condition factory
+                Condition = condition, 
                 Response = response
             };
         }
