@@ -677,3 +677,307 @@ SELECT `MigrationId`, `ProductVersion`
 FROM `__EFMigrationsHistory`
 ORDER BY `MigrationId`;
 2024-10-10 11:30:47.749 -05:00 [INF] No migrations were applied. The database is already up to date.
+2024-10-10 14:46:37.648 -05:00 [INF] Starting up...
+2024-10-10 14:46:40.670 -05:00 [INF] Executed DbCommand (155ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='P1' AND TABLE_NAME='__EFMigrationsHistory';
+2024-10-10 14:46:40.682 -05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='P1' AND TABLE_NAME='__EFMigrationsHistory';
+2024-10-10 14:46:40.719 -05:00 [INF] Executed DbCommand (25ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `MigrationId`, `ProductVersion`
+FROM `__EFMigrationsHistory`
+ORDER BY `MigrationId`;
+2024-10-10 14:46:40.765 -05:00 [INF] Applying migration '20241010162958_UpdadatedForRuleEngineAndOrgs'.
+2024-10-10 14:46:40.946 -05:00 [INF] Executed DbCommand (69ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DROP PROCEDURE IF EXISTS `POMELO_BEFORE_DROP_PRIMARY_KEY`;
+CREATE PROCEDURE `POMELO_BEFORE_DROP_PRIMARY_KEY`(IN `SCHEMA_NAME_ARGUMENT` VARCHAR(255), IN `TABLE_NAME_ARGUMENT` VARCHAR(255))
+BEGIN
+	DECLARE HAS_AUTO_INCREMENT_ID TINYINT(1);
+	DECLARE PRIMARY_KEY_COLUMN_NAME VARCHAR(255);
+	DECLARE PRIMARY_KEY_TYPE VARCHAR(255);
+	DECLARE SQL_EXP VARCHAR(1000);
+	SELECT COUNT(*)
+		INTO HAS_AUTO_INCREMENT_ID
+		FROM `information_schema`.`COLUMNS`
+		WHERE `TABLE_SCHEMA` = (SELECT IFNULL(SCHEMA_NAME_ARGUMENT, SCHEMA()))
+			AND `TABLE_NAME` = TABLE_NAME_ARGUMENT
+			AND `Extra` = 'auto_increment'
+			AND `COLUMN_KEY` = 'PRI'
+			LIMIT 1;
+	IF HAS_AUTO_INCREMENT_ID THEN
+		SELECT `COLUMN_TYPE`
+			INTO PRIMARY_KEY_TYPE
+			FROM `information_schema`.`COLUMNS`
+			WHERE `TABLE_SCHEMA` = (SELECT IFNULL(SCHEMA_NAME_ARGUMENT, SCHEMA()))
+				AND `TABLE_NAME` = TABLE_NAME_ARGUMENT
+				AND `COLUMN_KEY` = 'PRI'
+			LIMIT 1;
+		SELECT `COLUMN_NAME`
+			INTO PRIMARY_KEY_COLUMN_NAME
+			FROM `information_schema`.`COLUMNS`
+			WHERE `TABLE_SCHEMA` = (SELECT IFNULL(SCHEMA_NAME_ARGUMENT, SCHEMA()))
+				AND `TABLE_NAME` = TABLE_NAME_ARGUMENT
+				AND `COLUMN_KEY` = 'PRI'
+			LIMIT 1;
+		SET SQL_EXP = CONCAT('ALTER TABLE `', (SELECT IFNULL(SCHEMA_NAME_ARGUMENT, SCHEMA())), '`.`', TABLE_NAME_ARGUMENT, '` MODIFY COLUMN `', PRIMARY_KEY_COLUMN_NAME, '` ', PRIMARY_KEY_TYPE, ' NOT NULL;');
+		SET @SQL_EXP = SQL_EXP;
+		PREPARE SQL_EXP_EXECUTE FROM @SQL_EXP;
+		EXECUTE SQL_EXP_EXECUTE;
+		DEALLOCATE PREPARE SQL_EXP_EXECUTE;
+	END IF;
+END;
+2024-10-10 14:46:40.976 -05:00 [INF] Executed DbCommand (30ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DROP PROCEDURE IF EXISTS `POMELO_AFTER_ADD_PRIMARY_KEY`;
+CREATE PROCEDURE `POMELO_AFTER_ADD_PRIMARY_KEY`(IN `SCHEMA_NAME_ARGUMENT` VARCHAR(255), IN `TABLE_NAME_ARGUMENT` VARCHAR(255), IN `COLUMN_NAME_ARGUMENT` VARCHAR(255))
+BEGIN
+	DECLARE HAS_AUTO_INCREMENT_ID INT(11);
+	DECLARE PRIMARY_KEY_COLUMN_NAME VARCHAR(255);
+	DECLARE PRIMARY_KEY_TYPE VARCHAR(255);
+	DECLARE SQL_EXP VARCHAR(1000);
+	SELECT COUNT(*)
+		INTO HAS_AUTO_INCREMENT_ID
+		FROM `information_schema`.`COLUMNS`
+		WHERE `TABLE_SCHEMA` = (SELECT IFNULL(SCHEMA_NAME_ARGUMENT, SCHEMA()))
+			AND `TABLE_NAME` = TABLE_NAME_ARGUMENT
+			AND `COLUMN_NAME` = COLUMN_NAME_ARGUMENT
+			AND `COLUMN_TYPE` LIKE '%int%'
+			AND `COLUMN_KEY` = 'PRI';
+	IF HAS_AUTO_INCREMENT_ID THEN
+		SELECT `COLUMN_TYPE`
+			INTO PRIMARY_KEY_TYPE
+			FROM `information_schema`.`COLUMNS`
+			WHERE `TABLE_SCHEMA` = (SELECT IFNULL(SCHEMA_NAME_ARGUMENT, SCHEMA()))
+				AND `TABLE_NAME` = TABLE_NAME_ARGUMENT
+				AND `COLUMN_NAME` = COLUMN_NAME_ARGUMENT
+				AND `COLUMN_TYPE` LIKE '%int%'
+				AND `COLUMN_KEY` = 'PRI';
+		SELECT `COLUMN_NAME`
+			INTO PRIMARY_KEY_COLUMN_NAME
+			FROM `information_schema`.`COLUMNS`
+			WHERE `TABLE_SCHEMA` = (SELECT IFNULL(SCHEMA_NAME_ARGUMENT, SCHEMA()))
+				AND `TABLE_NAME` = TABLE_NAME_ARGUMENT
+				AND `COLUMN_NAME` = COLUMN_NAME_ARGUMENT
+				AND `COLUMN_TYPE` LIKE '%int%'
+				AND `COLUMN_KEY` = 'PRI';
+		SET SQL_EXP = CONCAT('ALTER TABLE `', (SELECT IFNULL(SCHEMA_NAME_ARGUMENT, SCHEMA())), '`.`', TABLE_NAME_ARGUMENT, '` MODIFY COLUMN `', PRIMARY_KEY_COLUMN_NAME, '` ', PRIMARY_KEY_TYPE, ' NOT NULL AUTO_INCREMENT;');
+		SET @SQL_EXP = SQL_EXP;
+		PREPARE SQL_EXP_EXECUTE FROM @SQL_EXP;
+		EXECUTE SQL_EXP_EXECUTE;
+		DEALLOCATE PREPARE SQL_EXP_EXECUTE;
+	END IF;
+END;
+2024-10-10 14:46:41.143 -05:00 [INF] Executed DbCommand (166ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE `AspNetUsers` DROP FOREIGN KEY `FK_AspNetUsers_Users_UserId`;
+2024-10-10 14:46:41.197 -05:00 [INF] Executed DbCommand (54ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE `ConditionRule` DROP FOREIGN KEY `FK_ConditionRule_Condition_ConditionsId`;
+2024-10-10 14:46:41.229 -05:00 [INF] Executed DbCommand (31ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE `ConditionRule` DROP FOREIGN KEY `FK_ConditionRule_Rule_RulesId`;
+2024-10-10 14:46:41.304 -05:00 [INF] Executed DbCommand (75ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE `ResultRule` DROP FOREIGN KEY `FK_ResultRule_Rule_RulesId`;
+2024-10-10 14:46:41.362 -05:00 [INF] Executed DbCommand (57ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE `RuleTrigger` DROP FOREIGN KEY `FK_RuleTrigger_Rule_RulesId`;
+2024-10-10 14:46:41.434 -05:00 [INF] Executed DbCommand (72ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE `UserItem` DROP FOREIGN KEY `FK_UserItem_Item_ItemId`;
+2024-10-10 14:46:41.456 -05:00 [INF] Executed DbCommand (23ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE `UserItem` DROP FOREIGN KEY `FK_UserItem_Users_UserId`;
+2024-10-10 14:46:41.485 -05:00 [INF] Executed DbCommand (28ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE `UserMetaData` DROP FOREIGN KEY `FK_UserMetaData_Users_UserId`;
+2024-10-10 14:46:41.517 -05:00 [INF] Executed DbCommand (32ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DROP TABLE `Users`;
+2024-10-10 14:46:41.690 -05:00 [INF] Executed DbCommand (172ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CALL POMELO_BEFORE_DROP_PRIMARY_KEY(NULL, 'UserItem');
+ALTER TABLE `UserItem` DROP PRIMARY KEY;
+2024-10-10 14:46:42.213 -05:00 [INF] Executed DbCommand (523ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CALL POMELO_BEFORE_DROP_PRIMARY_KEY(NULL, 'Rule');
+ALTER TABLE `Rule` DROP PRIMARY KEY;
+2024-10-10 14:46:42.392 -05:00 [INF] Executed DbCommand (179ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CALL POMELO_BEFORE_DROP_PRIMARY_KEY(NULL, 'Item');
+ALTER TABLE `Item` DROP PRIMARY KEY;
+2024-10-10 14:46:42.573 -05:00 [INF] Executed DbCommand (181ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CALL POMELO_BEFORE_DROP_PRIMARY_KEY(NULL, 'Condition');
+ALTER TABLE `Condition` DROP PRIMARY KEY;
+2024-10-10 14:46:42.612 -05:00 [INF] Executed DbCommand (38ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE `Results` DROP COLUMN `Value`;
+2024-10-10 14:46:42.644 -05:00 [INF] Executed DbCommand (32ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE `AspNetUsers` DROP COLUMN `DiscordId`;
+2024-10-10 14:46:42.666 -05:00 [INF] Executed DbCommand (22ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE `UserItem` RENAME `UserItems`;
+2024-10-10 14:46:42.685 -05:00 [INF] Executed DbCommand (19ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE `Rule` RENAME `Rules`;
+2024-10-10 14:46:42.707 -05:00 [INF] Executed DbCommand (21ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE `Item` RENAME `Items`;
+2024-10-10 14:46:42.728 -05:00 [INF] Executed DbCommand (21ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE `Condition` RENAME `Conditions`;
+2024-10-10 14:46:42.750 -05:00 [INF] Executed DbCommand (22ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE `UserMetaData` RENAME COLUMN `UserId` TO `DiscordUserId`;
+2024-10-10 14:46:42.781 -05:00 [INF] Executed DbCommand (31ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE `UserMetaData` RENAME INDEX `IX_UserMetaData_UserId` TO `IX_UserMetaData_DiscordUserId`;
+2024-10-10 14:46:42.814 -05:00 [INF] Executed DbCommand (33ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE `AspNetUsers` RENAME COLUMN `UserId` TO `DiscordUserId`;
+2024-10-10 14:46:42.837 -05:00 [INF] Executed DbCommand (23ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE `AspNetUsers` RENAME INDEX `IX_AspNetUsers_UserId` TO `IX_AspNetUsers_DiscordUserId`;
+2024-10-10 14:46:42.885 -05:00 [INF] Executed DbCommand (22ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE `UserItems` RENAME INDEX `IX_UserItem_ItemId` TO `IX_UserItems_ItemId`;
+2024-10-10 14:46:42.966 -05:00 [INF] Executed DbCommand (81ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE `Triggers` MODIFY COLUMN `Description` longtext CHARACTER SET utf8mb4 NULL;
+2024-10-10 14:46:42.986 -05:00 [INF] Executed DbCommand (19ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE `UserItems` ADD `DiscordUserId` int NOT NULL DEFAULT 0;
+2024-10-10 14:46:43.008 -05:00 [INF] Executed DbCommand (22ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE `UserItems` ADD `Quantity` int NOT NULL DEFAULT 0;
+2024-10-10 14:46:43.032 -05:00 [INF] Executed DbCommand (24ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE `Items` ADD `Type` longtext CHARACTER SET utf8mb4 NULL;
+2024-10-10 14:46:43.059 -05:00 [INF] Executed DbCommand (26ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE `Conditions` ADD `ExpectedResult` longtext CHARACTER SET utf8mb4 NOT NULL;
+2024-10-10 14:46:43.080 -05:00 [INF] Executed DbCommand (21ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE `Conditions` ADD `ExpectedValue` longtext CHARACTER SET utf8mb4 NOT NULL;
+2024-10-10 14:46:43.099 -05:00 [INF] Executed DbCommand (18ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE `Conditions` ADD `Operation` longtext CHARACTER SET utf8mb4 NOT NULL;
+2024-10-10 14:46:43.221 -05:00 [INF] Executed DbCommand (122ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE `UserItems` ADD CONSTRAINT `PK_UserItems` PRIMARY KEY (`UserId`, `ItemId`);
+2024-10-10 14:46:43.390 -05:00 [INF] Executed DbCommand (168ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE `Rules` ADD CONSTRAINT `PK_Rules` PRIMARY KEY (`Id`);
+CALL POMELO_AFTER_ADD_PRIMARY_KEY(NULL, 'Rules', 'Id');
+2024-10-10 14:46:43.557 -05:00 [INF] Executed DbCommand (167ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE `Items` ADD CONSTRAINT `PK_Items` PRIMARY KEY (`Id`);
+CALL POMELO_AFTER_ADD_PRIMARY_KEY(NULL, 'Items', 'Id');
+2024-10-10 14:46:43.696 -05:00 [INF] Executed DbCommand (139ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE `Conditions` ADD CONSTRAINT `PK_Conditions` PRIMARY KEY (`Id`);
+CALL POMELO_AFTER_ADD_PRIMARY_KEY(NULL, 'Conditions', 'Id');
+2024-10-10 14:46:43.749 -05:00 [INF] Executed DbCommand (52ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE `ItemResults` (
+    `ItemId` int NOT NULL,
+    `ResultId` int NOT NULL,
+    `Quantity` int NOT NULL,
+    `CreatedAt` datetime(6) NOT NULL,
+    `CreatedBy` int NOT NULL,
+    `UpdatedAt` datetime(6) NOT NULL,
+    `UpdatedBy` int NOT NULL,
+    CONSTRAINT `PK_ItemResults` PRIMARY KEY (`ItemId`, `ResultId`),
+    CONSTRAINT `FK_ItemResults_Items_ItemId` FOREIGN KEY (`ItemId`) REFERENCES `Items` (`Id`) ON DELETE CASCADE,
+    CONSTRAINT `FK_ItemResults_Results_ResultId` FOREIGN KEY (`ResultId`) REFERENCES `Results` (`Id`) ON DELETE CASCADE
+) CHARACTER SET=utf8mb4;
+2024-10-10 14:46:43.783 -05:00 [INF] Executed DbCommand (34ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE `DiscordUsers` (
+    `Id` int NOT NULL AUTO_INCREMENT,
+    `DiscordId` bigint unsigned NOT NULL,
+    `GameId` int NULL,
+    `TeamId` int NULL,
+    `CreatedAt` datetime(6) NOT NULL,
+    `CreatedBy` int NOT NULL,
+    `UpdatedAt` datetime(6) NOT NULL,
+    `UpdatedBy` int NOT NULL,
+    CONSTRAINT `PK_DiscordUsers` PRIMARY KEY (`Id`)
+) CHARACTER SET=utf8mb4;
+2024-10-10 14:46:43.831 -05:00 [INF] Executed DbCommand (48ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE `Games` (
+    `Id` int NOT NULL AUTO_INCREMENT,
+    `Name` longtext CHARACTER SET utf8mb4 NOT NULL,
+    `Description` longtext CHARACTER SET utf8mb4 NOT NULL,
+    `TeamId` int NULL,
+    `CreatedAt` datetime(6) NOT NULL,
+    `CreatedBy` int NOT NULL,
+    `UpdatedAt` datetime(6) NOT NULL,
+    `UpdatedBy` int NOT NULL,
+    CONSTRAINT `PK_Games` PRIMARY KEY (`Id`)
+) CHARACTER SET=utf8mb4;
+2024-10-10 14:46:43.882 -05:00 [INF] Executed DbCommand (51ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE `Organization` (
+    `Id` int NOT NULL AUTO_INCREMENT,
+    `Name` longtext CHARACTER SET utf8mb4 NOT NULL,
+    `Description` longtext CHARACTER SET utf8mb4 NOT NULL,
+    `TeamId` int NOT NULL,
+    `DiscordUserId` int NOT NULL,
+    `CreatedAt` datetime(6) NOT NULL,
+    `CreatedBy` int NOT NULL,
+    `UpdatedAt` datetime(6) NOT NULL,
+    `UpdatedBy` int NOT NULL,
+    CONSTRAINT `PK_Organization` PRIMARY KEY (`Id`),
+    CONSTRAINT `FK_Organization_DiscordUsers_DiscordUserId` FOREIGN KEY (`DiscordUserId`) REFERENCES `DiscordUsers` (`Id`) ON DELETE CASCADE
+) CHARACTER SET=utf8mb4;
+2024-10-10 14:46:43.949 -05:00 [INF] Executed DbCommand (67ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE `Team` (
+    `Id` int NOT NULL AUTO_INCREMENT,
+    `Name` longtext CHARACTER SET utf8mb4 NOT NULL,
+    `Description` longtext CHARACTER SET utf8mb4 NOT NULL,
+    `TeamLeaderId` int NOT NULL,
+    `CurrentGameId` int NOT NULL,
+    `OrganizationId` int NULL,
+    `CreatedAt` datetime(6) NOT NULL,
+    `CreatedBy` int NOT NULL,
+    `UpdatedAt` datetime(6) NOT NULL,
+    `UpdatedBy` int NOT NULL,
+    CONSTRAINT `PK_Team` PRIMARY KEY (`Id`),
+    CONSTRAINT `FK_Team_Organization_OrganizationId` FOREIGN KEY (`OrganizationId`) REFERENCES `Organization` (`Id`)
+) CHARACTER SET=utf8mb4;
+2024-10-10 14:46:43.973 -05:00 [INF] Executed DbCommand (24ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX `IX_UserItems_DiscordUserId` ON `UserItems` (`DiscordUserId`);
+2024-10-10 14:46:43.995 -05:00 [INF] Executed DbCommand (22ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX `IX_DiscordUsers_GameId` ON `DiscordUsers` (`GameId`);
+2024-10-10 14:46:44.017 -05:00 [INF] Executed DbCommand (22ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX `IX_DiscordUsers_TeamId` ON `DiscordUsers` (`TeamId`);
+2024-10-10 14:46:44.043 -05:00 [INF] Executed DbCommand (25ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX `IX_Games_TeamId` ON `Games` (`TeamId`);
+2024-10-10 14:46:44.075 -05:00 [INF] Executed DbCommand (32ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX `IX_ItemResults_ResultId` ON `ItemResults` (`ResultId`);
+2024-10-10 14:46:44.114 -05:00 [INF] Executed DbCommand (39ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX `IX_Organization_DiscordUserId` ON `Organization` (`DiscordUserId`);
+2024-10-10 14:46:44.137 -05:00 [INF] Executed DbCommand (24ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX `IX_Organization_TeamId` ON `Organization` (`TeamId`);
+2024-10-10 14:46:44.176 -05:00 [INF] Executed DbCommand (39ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX `IX_Team_OrganizationId` ON `Team` (`OrganizationId`);
+2024-10-10 14:46:44.331 -05:00 [INF] Executed DbCommand (154ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE `AspNetUsers` ADD CONSTRAINT `FK_AspNetUsers_DiscordUsers_DiscordUserId` FOREIGN KEY (`DiscordUserId`) REFERENCES `DiscordUsers` (`Id`) ON DELETE CASCADE;
+2024-10-10 14:46:44.446 -05:00 [INF] Executed DbCommand (114ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE `ConditionRule` ADD CONSTRAINT `FK_ConditionRule_Conditions_ConditionsId` FOREIGN KEY (`ConditionsId`) REFERENCES `Conditions` (`Id`) ON DELETE CASCADE;
+2024-10-10 14:46:44.541 -05:00 [INF] Executed DbCommand (95ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE `ConditionRule` ADD CONSTRAINT `FK_ConditionRule_Rules_RulesId` FOREIGN KEY (`RulesId`) REFERENCES `Rules` (`Id`) ON DELETE CASCADE;
+2024-10-10 14:46:44.668 -05:00 [INF] Executed DbCommand (127ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE `ResultRule` ADD CONSTRAINT `FK_ResultRule_Rules_RulesId` FOREIGN KEY (`RulesId`) REFERENCES `Rules` (`Id`) ON DELETE CASCADE;
+2024-10-10 14:46:44.780 -05:00 [INF] Executed DbCommand (111ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE `RuleTrigger` ADD CONSTRAINT `FK_RuleTrigger_Rules_RulesId` FOREIGN KEY (`RulesId`) REFERENCES `Rules` (`Id`) ON DELETE CASCADE;
+2024-10-10 14:46:44.891 -05:00 [INF] Executed DbCommand (111ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE `UserItems` ADD CONSTRAINT `FK_UserItems_DiscordUsers_DiscordUserId` FOREIGN KEY (`DiscordUserId`) REFERENCES `DiscordUsers` (`Id`) ON DELETE CASCADE;
+2024-10-10 14:46:45.041 -05:00 [INF] Executed DbCommand (150ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE `UserItems` ADD CONSTRAINT `FK_UserItems_Items_ItemId` FOREIGN KEY (`ItemId`) REFERENCES `Items` (`Id`) ON DELETE CASCADE;
+2024-10-10 14:46:45.152 -05:00 [INF] Executed DbCommand (110ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE `UserMetaData` ADD CONSTRAINT `FK_UserMetaData_DiscordUsers_DiscordUserId` FOREIGN KEY (`DiscordUserId`) REFERENCES `DiscordUsers` (`Id`) ON DELETE CASCADE;
+2024-10-10 14:46:45.272 -05:00 [INF] Executed DbCommand (120ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE `DiscordUsers` ADD CONSTRAINT `FK_DiscordUsers_Games_GameId` FOREIGN KEY (`GameId`) REFERENCES `Games` (`Id`);
+2024-10-10 14:46:45.406 -05:00 [INF] Executed DbCommand (134ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE `DiscordUsers` ADD CONSTRAINT `FK_DiscordUsers_Team_TeamId` FOREIGN KEY (`TeamId`) REFERENCES `Team` (`Id`);
+2024-10-10 14:46:45.526 -05:00 [INF] Executed DbCommand (119ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE `Games` ADD CONSTRAINT `FK_Games_Team_TeamId` FOREIGN KEY (`TeamId`) REFERENCES `Team` (`Id`);
+2024-10-10 14:46:45.634 -05:00 [INF] Executed DbCommand (109ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE `Organization` ADD CONSTRAINT `FK_Organization_Team_TeamId` FOREIGN KEY (`TeamId`) REFERENCES `Team` (`Id`) ON DELETE CASCADE;
+2024-10-10 14:46:45.643 -05:00 [INF] Executed DbCommand (8ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `__EFMigrationsHistory` (`MigrationId`, `ProductVersion`)
+VALUES ('20241010162958_UpdadatedForRuleEngineAndOrgs', '8.0.8');
+2024-10-10 14:46:45.662 -05:00 [INF] Executed DbCommand (19ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DROP PROCEDURE `POMELO_BEFORE_DROP_PRIMARY_KEY`;
+2024-10-10 14:46:45.670 -05:00 [INF] Executed DbCommand (8ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DROP PROCEDURE `POMELO_AFTER_ADD_PRIMARY_KEY`;
+2024-10-10 14:46:45.910 -05:00 [INF] User profile is available. Using 'C:\Users\megaf\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2024-10-10 14:46:46.072 -05:00 [INF] Now listening on: http://localhost:5252
+2024-10-10 14:46:46.074 -05:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-10-10 14:46:46.075 -05:00 [INF] Hosting environment: Development
+2024-10-10 14:46:46.075 -05:00 [INF] Content root path: F:\GameDev Projects\P1OC\P1 Discord Bot\Back End\CSBotBackend\P1-Api
+2024-10-10 14:46:46.453 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5252/ - null null
+2024-10-10 14:46:46.490 -05:00 [WRN] Failed to determine the https port for redirect.
+2024-10-10 14:46:46.551 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5252/ - 301 0 null 98.8567ms
+2024-10-10 14:46:46.557 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5252/index.html - null null
+2024-10-10 14:46:46.643 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5252/index.html - 200 null text/html;charset=utf-8 85.8457ms
+2024-10-10 14:46:46.705 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5252/swagger-ui.css - null null
+2024-10-10 14:46:46.709 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5252/index.css - null null
+2024-10-10 14:46:46.709 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5252/swagger-ui-bundle.js - null null
+2024-10-10 14:46:46.710 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5252/swagger-ui-standalone-preset.js - null null
+2024-10-10 14:46:46.711 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5252/index.js - null null
+2024-10-10 14:46:46.711 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5252/index.js - 200 null application/javascript;charset=utf-8 0.7153ms
+2024-10-10 14:46:46.726 -05:00 [INF] Sending file. Request path: '/index.css'. Physical path: 'N/A'
+2024-10-10 14:46:46.726 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5252/index.css - 200 202 text/css 17.2053ms
+2024-10-10 14:46:46.769 -05:00 [INF] Sending file. Request path: '/swagger-ui.css'. Physical path: 'N/A'
+2024-10-10 14:46:46.772 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5252/swagger-ui.css - 200 152034 text/css 67.0279ms
+2024-10-10 14:46:46.791 -05:00 [INF] Sending file. Request path: '/swagger-ui-standalone-preset.js'. Physical path: 'N/A'
+2024-10-10 14:46:46.791 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5252/swagger-ui-standalone-preset.js - 200 230293 text/javascript 80.9519ms
+2024-10-10 14:46:46.817 -05:00 [INF] Sending file. Request path: '/swagger-ui-bundle.js'. Physical path: 'N/A'
+2024-10-10 14:46:46.818 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5252/swagger-ui-bundle.js - 200 1452753 text/javascript 108.2527ms
+2024-10-10 14:46:47.107 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5252/swagger/v1/swagger.json - null null
+2024-10-10 14:46:47.234 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5252/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 126.1919ms

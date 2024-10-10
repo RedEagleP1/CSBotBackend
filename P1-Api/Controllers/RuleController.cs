@@ -125,6 +125,39 @@ namespace P1_Api.Controllers
             }
         }
 
+        [ProducesResponseType(200)]
+        [ProducesResponseType(500)]
+        [HttpPut("add-condition/")]
+        public async Task<IActionResult> AddCondition([FromRoute] AddConditionToRuleRequestModel request)
+        {
+            try
+            {
+                await _mediator.Send(request);
+                return Ok();
+            }
+            catch (P1Exception e)
+            {
+                _logger.LogError(e, $"An error occurred while trying to add condition with id {request.ConditionId} to rule with id {request.RuleId}. \"{e.Message}\"");
+                return BadRequest();
+            }
+        }
+
+        [ProducesResponseType(200)]
+        [ProducesResponseType(500)]
+        [HttpPut("remove-condition/")]
+        public async Task<IActionResult> RemoveCondition([FromRoute] RemoveConditionFromRuleRequestModel request)
+        {
+            try
+            {
+                await _mediator.Send(request);
+                return Ok();
+            }
+            catch (P1Exception e)
+            {
+                _logger.LogError(e, $"An error occurred while trying to remove condition with id {request.ConditionId} from rule with id {request.RuleId}. \"{e.Message}\"");
+                return BadRequest();
+            }
+        }
     }
 
 
