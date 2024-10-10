@@ -1,14 +1,15 @@
+using P1_Core;
+using P1_Core.Entities;
+
 public class WeatherRuleSystem
 {
     private readonly TriggerFactory<WeatherEvent> _triggerFactory = new();
     private readonly ResponseFactory<string> _responseFactory = new();
     private readonly RuleFactory<WeatherEvent, object, string> _ruleFactory;
     private readonly RuleEngine<WeatherEvent, object, string> _ruleEngine = new();
-    private readonly IDatabase _database;
 
-    public WeatherRuleSystem(IDatabase database)
+    public WeatherRuleSystem(IRepository<Rule> database)
     {
-        _database = database;
         _ruleFactory = new RuleFactory<WeatherEvent, object, string>(_triggerFactory, _responseFactory, database);
         RegisterBuilders();
     }
