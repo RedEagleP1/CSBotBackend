@@ -21,7 +21,7 @@ namespace P1_Application.Services.RulesEngine
             {
                 if (rule.Trigger.Check(@event) && rule.Condition.Evaluate(context))
                 {
-                    responses.Add(rule.Response.Execute());
+                    responses.Add(rule.Result.Execute());
                 }
             }
 

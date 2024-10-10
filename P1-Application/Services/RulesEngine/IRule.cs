@@ -1,12 +1,12 @@
 namespace P1_Application.Services.RulesEngine
 {
     // Core interfaces
-    public interface IRule<TTrigger, TContext, TResponse>
+    public interface IRule<TTrigger, TCondition, TResult>
     {
         string Name { get; }
         string? Description { get; }
         ITrigger<TTrigger> Trigger { get; }
-        ICondition<TContext> Condition { get; }
-        IResponse<TResponse> Response { get; }
+        ICondition<TCondition> Condition { get; }
+        IResult<TResult> Result { get; }
     }
 }
