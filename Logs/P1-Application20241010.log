@@ -981,3 +981,25 @@ DROP PROCEDURE `POMELO_AFTER_ADD_PRIMARY_KEY`;
 2024-10-10 14:46:46.818 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5252/swagger-ui-bundle.js - 200 1452753 text/javascript 108.2527ms
 2024-10-10 14:46:47.107 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5252/swagger/v1/swagger.json - null null
 2024-10-10 14:46:47.234 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5252/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 126.1919ms
+2024-10-10 15:24:09.348 -05:00 [INF] Starting up...
+2024-10-10 15:24:10.549 -05:00 [INF] Executed DbCommand (11ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='P1' AND TABLE_NAME='__EFMigrationsHistory';
+2024-10-10 15:24:10.565 -05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='P1' AND TABLE_NAME='__EFMigrationsHistory';
+2024-10-10 15:24:10.583 -05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `MigrationId`, `ProductVersion`
+FROM `__EFMigrationsHistory`
+ORDER BY `MigrationId`;
+2024-10-10 15:24:10.601 -05:00 [INF] No migrations were applied. The database is already up to date.
+2024-10-10 15:24:10.768 -05:00 [INF] User profile is available. Using 'C:\Users\megaf\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2024-10-10 15:24:10.849 -05:00 [INF] Now listening on: http://localhost:5252
+2024-10-10 15:24:10.853 -05:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-10-10 15:24:10.853 -05:00 [INF] Hosting environment: Development
+2024-10-10 15:24:10.854 -05:00 [INF] Content root path: F:\GameDev Projects\P1OC\P1 Discord Bot\Back End\CSBotBackend\P1-Api
+2024-10-10 15:24:11.091 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5252/index.html - null null
+2024-10-10 15:24:11.130 -05:00 [WRN] Failed to determine the https port for redirect.
+2024-10-10 15:24:11.227 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5252/index.html - 200 null text/html;charset=utf-8 138.7737ms
+2024-10-10 15:24:11.255 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5252/index.js - null null
+2024-10-10 15:24:11.259 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5252/index.js - 200 null application/javascript;charset=utf-8 3.8096ms
+2024-10-10 15:24:11.645 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5252/swagger/v1/swagger.json - null null
+2024-10-10 15:24:11.785 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5252/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 139.8058ms

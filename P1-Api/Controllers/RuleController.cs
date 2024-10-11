@@ -24,7 +24,7 @@ namespace P1_Api.Controllers
         }
 
         [ProducesResponseType(200)]
-        //[ProducesResponseType(500)]
+        [ProducesResponseType(500)]
         [HttpPost("evaluate-rule/{userId}")]
         public async Task<IActionResult> EvaluateRule([FromRoute] int userId, [FromBody] IEnumerable<int> ruleId)
         {
@@ -111,7 +111,7 @@ namespace P1_Api.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
         [HttpDelete("delete-rule/{id}")]
-        public async Task<IActionResult> DeleteCondition([FromRoute] int id)
+        public async Task<IActionResult> DeleteRule([FromRoute] int id)
         {
             try
             {
@@ -121,6 +121,23 @@ namespace P1_Api.Controllers
             catch (P1Exception e)
             {
                 _logger.LogError(e, $"An error occurred while deleting the rule with Id {id}");
+                return BadRequest();
+            }
+        }
+
+        [ProducesResponseType(200)]
+        [ProducesResponseType(500)]
+        [HttpPut("set-enabled-state/")]
+        public async Task<IActionResult> SetEnabledState([FromRoute] SetRuleEnabledStateRequestModel request)
+        {
+            try
+            {
+                await _mediator.Send(request);
+                return Ok();
+            }
+            catch (P1Exception e)
+            {
+                _logger.LogError(e, $"An error occurred while trying to set the enabled state of rule with id {request.RuleId} to {request.EnabledState}. \"{e.Message}\"");
                 return BadRequest();
             }
         }
@@ -155,6 +172,74 @@ namespace P1_Api.Controllers
             catch (P1Exception e)
             {
                 _logger.LogError(e, $"An error occurred while trying to remove condition with id {request.ConditionId} from rule with id {request.RuleId}. \"{e.Message}\"");
+                return BadRequest();
+            }
+        }
+
+        [ProducesResponseType(200)]
+        [ProducesResponseType(500)]
+        [HttpPut("add-result/")]
+        public async Task<IActionResult> AddResult([FromRoute] AddResultToRuleRequestModel request)
+        {
+            try
+            {
+                await _mediator.Send(request);
+                return Ok();
+            }
+            catch (P1Exception e)
+            {
+                _logger.LogError(e, $"An error occurred while trying to add result with id {request.ResultId} to rule with id {request.RuleId}. \"{e.Message}\"");
+                return BadRequest();
+            }
+        }
+
+        [ProducesResponseType(200)]
+        [ProducesResponseType(500)]
+        [HttpPut("remove-result/")]
+        public async Task<IActionResult> RemoveResult([FromRoute] RemoveResultFromRuleRequestModel request)
+        {
+            try
+            {
+                await _mediator.Send(request);
+                return Ok();
+            }
+            catch (P1Exception e)
+            {
+                _logger.LogError(e, $"An error occurred while trying to remove result with id {request.ResultId} from rule with id {request.RuleId}. \"{e.Message}\"");
+                return BadRequest();
+            }
+        }
+
+        [ProducesResponseType(200)]
+        [ProducesResponseType(500)]
+        [HttpPut("add-trigger/")]
+        public async Task<IActionResult> AddTrigger([FromRoute] AddTriggerToRuleRequestModel request)
+        {
+            try
+            {
+                await _mediator.Send(request);
+                return Ok();
+            }
+            catch (P1Exception e)
+            {
+                _logger.LogError(e, $"An error occurred while trying to add trigger with id {request.TriggerId} to rule with id {request.RuleId}. \"{e.Message}\"");
+                return BadRequest();
+            }
+        }
+
+        [ProducesResponseType(200)]
+        [ProducesResponseType(500)]
+        [HttpPut("remove-trigger/")]
+        public async Task<IActionResult> RemoveTrigger([FromRoute] RemoveTriggerFromRuleRequestModel request)
+        {
+            try
+            {
+                await _mediator.Send(request);
+                return Ok();
+            }
+            catch (P1Exception e)
+            {
+                _logger.LogError(e, $"An error occurred while trying to remove trigger with id {request.TriggerId} from rule with id {request.RuleId}. \"{e.Message}\"");
                 return BadRequest();
             }
         }
