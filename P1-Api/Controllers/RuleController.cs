@@ -7,6 +7,7 @@ using P1_Application;
 using P1_Application.Boundaries;
 using P1_Application.Exceptions;
 using P1_Application.UseCases;
+using P1_Application.UseCases.Rules.AddResultToRule;
 using P1_Application.UseCases.Rules.EvaluateRule;
 using P1_Core.Entities;
 using P1_Core.Interfaces;
@@ -17,10 +18,12 @@ namespace P1_Api.Controllers
     public class RuleController : BaseController
     {
         private readonly IMediator _mediator;
+        private readonly IMapper _mapper;
 
-        public RuleController(ILogger<RuleController> logger, IMediator mediator, ApplicationContext context) : base(logger, context)
+        public RuleController(ILogger<RuleController> logger, IMediator mediator, ApplicationContext context, IMapper mapper) : base(logger, context)
         {
             _mediator = mediator;
+            _mapper = mapper;
         }
 
         [ProducesResponseType(200)]
@@ -127,8 +130,8 @@ namespace P1_Api.Controllers
 
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        [HttpPut("set-enabled-state/")]
-        public async Task<IActionResult> SetEnabledState([FromRoute] SetRuleEnabledStateRequestModel request)
+        [HttpPut("set-enabled-state")]
+        public async Task<IActionResult> SetEnabledState([FromBody] SetRuleEnabledStateRequestModel request)
         {
             try
             {
@@ -144,8 +147,8 @@ namespace P1_Api.Controllers
 
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        [HttpPut("add-condition/")]
-        public async Task<IActionResult> AddCondition([FromRoute] AddConditionToRuleRequestModel request)
+        [HttpPut("add-condition")]
+        public async Task<IActionResult> AddCondition([FromBody] AddConditionToRuleRequestModel request)
         {
             try
             {
@@ -161,8 +164,8 @@ namespace P1_Api.Controllers
 
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        [HttpPut("remove-condition/")]
-        public async Task<IActionResult> RemoveCondition([FromRoute] RemoveConditionFromRuleRequestModel request)
+        [HttpPut("remove-condition")]
+        public async Task<IActionResult> RemoveCondition([FromBody] RemoveConditionFromRuleRequestModel request)
         {
             try
             {
@@ -178,12 +181,13 @@ namespace P1_Api.Controllers
 
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        [HttpPut("add-result/")]
-        public async Task<IActionResult> AddResult([FromRoute] AddResultToRuleRequestModel request)
+        [HttpPut("add-result")]
+        public async Task<IActionResult> AddResult([FromBody] AddResultToRuleRequestModel request)
         {
             try
             {
-                await _mediator.Send(request);
+                var requestModel = _mapper.Map<AddResultToRuleCommand>(request);
+                await _mediator.Send(requestModel);
                 return Ok();
             }
             catch (P1Exception e)
@@ -195,8 +199,8 @@ namespace P1_Api.Controllers
 
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        [HttpPut("remove-result/")]
-        public async Task<IActionResult> RemoveResult([FromRoute] RemoveResultFromRuleRequestModel request)
+        [HttpPut("remove-result")]
+        public async Task<IActionResult> RemoveResult([FromBody] RemoveResultFromRuleRequestModel request)
         {
             try
             {
@@ -212,8 +216,8 @@ namespace P1_Api.Controllers
 
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        [HttpPut("add-trigger/")]
-        public async Task<IActionResult> AddTrigger([FromRoute] AddTriggerToRuleRequestModel request)
+        [HttpPut("add-trigger")]
+        public async Task<IActionResult> AddTrigger([FromBody] AddTriggerToRuleRequestModel request)
         {
             try
             {
@@ -229,8 +233,8 @@ namespace P1_Api.Controllers
 
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        [HttpPut("remove-trigger/")]
-        public async Task<IActionResult> RemoveTrigger([FromRoute] RemoveTriggerFromRuleRequestModel request)
+        [HttpPut("remove-trigger")]
+        public async Task<IActionResult> RemoveTrigger([FromBody] RemoveTriggerFromRuleRequestModel request)
         {
             try
             {
