@@ -26,6 +26,7 @@ namespace P1_Infrastructure.Database
         public virtual DbSet<Game> Games { get; set; }
         public virtual DbSet<ItemResult> ItemResults { get; set; }
         public virtual DbSet<Organization> OrganizationUsers { get; set; }
+        public virtual DbSet<ResultRule> ResultRules { get; set; }
 
         private readonly ApplicationContext _customContext;
         private readonly ILogger<P1DatabaseContext> _logger;
@@ -44,8 +45,13 @@ namespace P1_Infrastructure.Database
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Rule>()
-            .HasMany(r => r.Conditions)
-            .WithMany(c => c.Rules);
+                .HasMany(r => r.Conditions)
+                .WithMany(c => c.Rules)
+                .UsingEntity<Dictionary<string, object>>(
+                    "ConditionRule",
+                    j => j.HasOne<Condition>().WithMany().HasForeignKey("ConditionsId"),
+                    j => j.HasOne<Rule>().WithMany().HasForeignKey("RulesId"),
+                    j => j.HasOne<Result>().WithMany().HasForeignKey("ResultsId"));
 
             modelBuilder.Entity<Condition>()
             .HasMany(c => c.Rules)
@@ -55,7 +61,7 @@ namespace P1_Infrastructure.Database
 
             modelBuilder.Entity<ItemResult>().HasKey(ir => new { ir.ItemId, ir.ResultId });
 
-
+            modelBuilder.Entity<ResultRule>().HasKey(rr => new { rr.ResultsId, rr.RulesId });
 
         }
 
