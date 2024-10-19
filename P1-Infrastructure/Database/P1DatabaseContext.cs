@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore.Update;
 using Microsoft.Extensions.Logging;
 using P1_Application.Boundaries;
 using P1_Core.Entities;
+using P1_Core.Entities.JoinTables;
 using P1_Core.Interfaces;
 using P1_Infrastructure.Identity;
 
@@ -44,25 +45,56 @@ namespace P1_Infrastructure.Database
         {
             base.OnModelCreating(modelBuilder);
 
+
             modelBuilder.Entity<Rule>()
                 .HasMany(r => r.Conditions)
                 .WithMany(c => c.Rules)
-                .UsingEntity<Dictionary<string, object>>(
-                    "ConditionRule",
-                    j => j.HasOne<Condition>().WithMany().HasForeignKey("ConditionsId"),
-                    j => j.HasOne<Rule>().WithMany().HasForeignKey("RulesId"),
-                    j => j.HasOne<Result>().WithMany().HasForeignKey("ResultsId"));
+                .UsingEntity<ConditionRule>(
+                    j => j.ToTable("ConditionRule"))
+                .HasMany(r => r.Results)
+                .WithMany(c => c.Rules)
+                .UsingEntity<ResultRule>(
+                    j => j.ToTable("ResultRule"))
+                .HasMany(r => r.Triggers)
+                .WithMany(c => c.Rules)
+                .UsingEntity<TriggerRule>(
+                    j => j.ToTable("TriggerRule"));
+
 
             modelBuilder.Entity<Condition>()
             .HasMany(c => c.Rules)
             .WithMany(r => r.Conditions);
 
-            modelBuilder.Entity<UserItem>().HasKey(ui => new { ui.UserId, ui.ItemId });
+            modelBuilder.Entity<Result>()
+            .HasMany(c => c.Rules)
+            .WithMany(r => r.Results);
+
+            modelBuilder.Entity<Trigger>()
+            .HasMany(c => c.Rules)
+            .WithMany(r => r.Triggers);
+
+
+            modelBuilder.Entity<ConditionRule>().HasKey(cr => new { cr.ConditionId, cr.RuleId });
+
+            modelBuilder.Entity<ResultRule>().HasKey(rr => new { rr.ResultId, rr.RuleId });
+
+            modelBuilder.Entity<TriggerRule>().HasKey(tr => new { tr.TriggerId, tr.RuleId });
+
+
+            modelBuilder.Entity<DiscordUserTeam>().HasKey(ir => new { ir.TeamId, ir.DiscordUserId });
+
+            modelBuilder.Entity<GameTeam>().HasKey(ir => new { ir.TeamId, ir.GameId });
+
+            modelBuilder.Entity<TeamOrganization>().HasKey(ir => new { ir.OrganizationId, ir.TeamId });
+
+            modelBuilder.Entity<OrganizationLegion>().HasKey(ir => new { ir.LegionId, ir.OrganizationId });
+
 
             modelBuilder.Entity<ItemResult>().HasKey(ir => new { ir.ItemId, ir.ResultId });
 
-            modelBuilder.Entity<ResultRule>().HasKey(rr => new { rr.ResultsId, rr.RulesId });
+            modelBuilder.Entity<UserItem>().HasKey(ui => new { ui.UserId, ui.ItemId });
 
+            modelBuilder.Entity<ItemResult>().HasKey(ir => new { ir.ItemId, ir.ResultId });
         }
 
         //TODO add error handling

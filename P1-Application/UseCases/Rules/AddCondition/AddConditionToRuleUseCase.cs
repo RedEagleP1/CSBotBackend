@@ -6,40 +6,25 @@ using P1_Core.Services;
 using P1_Application.Exceptions;
 
 using ILogger = Serilog.ILogger;
-using P1_Core.Entities;
+using P1_Core.Entities.JoinTables;
 
 namespace P1_Application.UseCases.Rules.AddConditionToRule
 {
     public class AddConditionToRuleUseCase : IRequestHandler<AddConditionToRuleCommand>
     {
-        private readonly IRepository<Rule> _RuleRepository;
-        private readonly IRepository<Condition> _ConditionRepository;
+        private readonly IRepository<ConditionRule> _ConditionRuleRepository;
         private readonly ILogger _Logger;
 
 
-        public AddConditionToRuleUseCase(IRepository<Rule> ruleRepository, IRepository<Condition> conditionRepository, ILogger logger)
+        public AddConditionToRuleUseCase(IRepository<ConditionRule> conditionRuleRepository, ILogger logger)
         {
-            _RuleRepository = ruleRepository;
-            _ConditionRepository = conditionRepository;
+            _ConditionRuleRepository = conditionRuleRepository;
             _Logger = logger;
         }
 
         public async Task Handle(AddConditionToRuleCommand request, CancellationToken cancellationToken)
         {
-            // Find the rule and the condition to add.
-            var rule = await _RuleRepository.GetByIdAsync(request.RuleId);
-            if (rule == null) throw new P1Exception(_Logger, $"Rule with id {request.RuleId} not found");
-
-            var condition = await _ConditionRepository.GetByIdAsync(request.ConditionId);
-            if (condition == null) throw new P1Exception(_Logger, $"Condition with id {request.ConditionId} not found");
-
-            if (!rule.Conditions.Contains(condition)) throw new P1Exception(_Logger, $"Rule with id {request.RuleId} already contains condition with id {request.ConditionId} not found");
-
-            // Add the condition to the rule
-            rule.Conditions.Add(condition);
-
-            // Save the changes
-            await _RuleRepository.UpdateAsync(rule);
+            await _ConditionRuleRepository.AddAsync(new ConditionRule { RuleId = request.RuleId, ConditionId = request.ConditionId });
         }
 
     }

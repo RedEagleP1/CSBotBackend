@@ -6,41 +6,25 @@ using P1_Core.Services;
 using P1_Application.Exceptions;
 
 using ILogger = Serilog.ILogger;
-using P1_Core.Entities;
+using P1_Core.Entities.JoinTables;
 
 namespace P1_Application.UseCases.Rules.AddResultToRule
 {
     public class AddResultToRuleUseCase : IRequestHandler<AddResultToRuleCommand>
     {
         private readonly IRepository<ResultRule> _RuleRepository;
-        private readonly IRepository<Result> _ResultRepository;
         private readonly ILogger _Logger;
 
 
-        public AddResultToRuleUseCase(IRepository<ResultRule> ruleRepository, IRepository<Result> ResultRepository, ILogger logger)
+        public AddResultToRuleUseCase(IRepository<ResultRule> ruleRepository, ILogger logger)
         {
             _RuleRepository = ruleRepository;
-            _ResultRepository = ResultRepository;
             _Logger = logger;
         }
 
         public async Task Handle(AddResultToRuleCommand request, CancellationToken cancellationToken)
         {
-            // Find the rule and the result to add.
-            // var rule = await _RuleRepository.GetByIdAsync(request.RuleId);
-            // if (rule == null) throw new P1Exception(_Logger, $"Rule with id {request.RuleId} not found");
-
-            // var result = await _ResultRepository.GetByIdAsync(request.ResultId);
-            // if (result == null) throw new P1Exception(_Logger, $"Result with id {request.ResultId} not found");
-
-            // if (!rule.Results.Contains(result)) throw new P1Exception(_Logger, $"Rule with id {request.RuleId} already contains result with id {request.ResultId} not found");
-
-            // // Add the result to the rule
-            // rule.Results.Add(result);
-            await _RuleRepository.AddAsync(new ResultRule { RulesId = request.RuleId, ResultsId = request.ResultId });
-
-            // // Save the changes
-            // await _RuleRepository.UpdateAsync(rule);
+            await _RuleRepository.AddAsync(new ResultRule { RuleId = request.RuleId, ResultId = request.ResultId });
         }
 
     }

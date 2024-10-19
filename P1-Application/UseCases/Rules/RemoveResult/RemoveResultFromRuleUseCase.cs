@@ -7,38 +7,26 @@ using P1_Application.Exceptions;
 
 using ILogger = Serilog.ILogger;
 using P1_Core.Entities;
+using P1_Core.Entities.JoinTables;
 
 namespace P1_Application.UseCases.Rules.RemoveResultFromRule
 {
     public class RemoveResultFromRuleUseCase : IRequestHandler<RemoveResultFromRuleCommand>
     {
-        private readonly IRepository<Rule> _RuleRepository;
-        private readonly IRepository<Result> _ResultRepository;
+        private readonly IRepository<ResultRule> _ResultRuleRepository;
         private readonly ILogger _Logger;
 
 
-        public RemoveResultFromRuleUseCase(IRepository<Rule> ruleRepository, IRepository<Result> ResultRepository, ILogger logger)
+        public RemoveResultFromRuleUseCase(IRepository<ResultRule> resultRuleRepository, ILogger logger)
         {
-            _RuleRepository = ruleRepository;
-            _ResultRepository = ResultRepository;
+            _ResultRuleRepository = resultRuleRepository;
             _Logger = logger;
         }
 
         public async Task Handle(RemoveResultFromRuleCommand request, CancellationToken cancellationToken)
         {
-            // Find the rule and the result to add.
-            var rule = await _RuleRepository.GetByIdAsync(request.RuleId);
-            if (rule == null) throw new P1Exception(_Logger, $"Rule with id {request.RuleId} not found");
+            await _ResultRuleRepository.DeleteAsync(new ResultRule { RuleId = request.RuleId, ResultId = request.ResultId });
 
-            var Result = await _ResultRepository.GetByIdAsync(request.ResultId);
-            if (Result == null) throw new P1Exception(_Logger, $"Result with id {request.ResultId} not found");
-
-
-            // Remove the result from the rule
-            rule.Results.Remove(Result);
-
-            // Save the changes
-            await _RuleRepository.UpdateAsync(rule);
         }
 
     }

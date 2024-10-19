@@ -1,0 +1,157 @@
+2024-10-18 15:41:21.334 -05:00 [INF] Starting up...
+2024-10-18 15:47:34.458 -05:00 [INF] Starting up...
+2024-10-18 16:10:18.707 -05:00 [INF] Starting up...
+2024-10-18 16:10:21.114 -05:00 [INF] Executed DbCommand (267ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='P1' AND TABLE_NAME='__EFMigrationsHistory';
+2024-10-18 16:10:21.133 -05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='P1' AND TABLE_NAME='__EFMigrationsHistory';
+2024-10-18 16:10:21.213 -05:00 [INF] Executed DbCommand (43ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `MigrationId`, `ProductVersion`
+FROM `__EFMigrationsHistory`
+ORDER BY `MigrationId`;
+2024-10-18 16:10:21.265 -05:00 [INF] Applying migration '20241018190740_jointableentity'.
+2024-10-18 16:10:21.499 -05:00 [INF] Executed DbCommand (114ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE `ResultRules` (
+    `ResultsId` int NOT NULL,
+    `RulesId` int NOT NULL,
+    `CreatedAt` datetime(6) NOT NULL,
+    `CreatedBy` int NOT NULL,
+    `UpdatedAt` datetime(6) NOT NULL,
+    `UpdatedBy` int NOT NULL,
+    CONSTRAINT `PK_ResultRules` PRIMARY KEY (`ResultsId`, `RulesId`)
+) CHARACTER SET=utf8mb4;
+2024-10-18 16:10:21.505 -05:00 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `__EFMigrationsHistory` (`MigrationId`, `ProductVersion`)
+VALUES ('20241018190740_jointableentity', '8.0.8');
+2024-10-18 16:10:21.857 -05:00 [INF] User profile is available. Using 'C:\Users\megaf\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2024-10-18 16:10:22.240 -05:00 [INF] Now listening on: http://localhost:5252
+2024-10-18 16:10:22.244 -05:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-10-18 16:10:22.245 -05:00 [INF] Hosting environment: Development
+2024-10-18 16:10:22.245 -05:00 [INF] Content root path: F:\GameDev Projects\P1OC\P1 Discord Bot\Back End\CSBotBackend\P1-Api
+2024-10-18 16:10:22.645 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5252/ - null null
+2024-10-18 16:10:22.682 -05:00 [WRN] Failed to determine the https port for redirect.
+2024-10-18 16:10:22.868 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5252/ - 301 0 null 224.2567ms
+2024-10-18 16:10:22.885 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5252/index.html - null null
+2024-10-18 16:10:22.951 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5252/index.html - 200 null text/html;charset=utf-8 66.3405ms
+2024-10-18 16:10:22.981 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5252/swagger-ui.css - null null
+2024-10-18 16:10:22.994 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5252/index.css - null null
+2024-10-18 16:10:22.994 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5252/swagger-ui-bundle.js - null null
+2024-10-18 16:10:22.994 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5252/swagger-ui-standalone-preset.js - null null
+2024-10-18 16:10:22.995 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5252/index.js - null null
+2024-10-18 16:10:23.004 -05:00 [INF] Sending file. Request path: '/index.css'. Physical path: 'N/A'
+2024-10-18 16:10:23.004 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5252/index.css - 200 202 text/css 9.5996ms
+2024-10-18 16:10:23.008 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5252/index.js - 200 null application/javascript;charset=utf-8 13.5321ms
+2024-10-18 16:10:23.015 -05:00 [INF] Sending file. Request path: '/swagger-ui.css'. Physical path: 'N/A'
+2024-10-18 16:10:23.017 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5252/swagger-ui.css - 200 152034 text/css 35.6907ms
+2024-10-18 16:10:23.032 -05:00 [INF] Sending file. Request path: '/swagger-ui-standalone-preset.js'. Physical path: 'N/A'
+2024-10-18 16:10:23.033 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5252/swagger-ui-standalone-preset.js - 200 230293 text/javascript 38.4037ms
+2024-10-18 16:10:23.067 -05:00 [INF] Sending file. Request path: '/swagger-ui-bundle.js'. Physical path: 'N/A'
+2024-10-18 16:10:23.068 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5252/swagger-ui-bundle.js - 200 1452753 text/javascript 73.3286ms
+2024-10-18 16:10:23.452 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5252/swagger/v1/swagger.json - null null
+2024-10-18 16:10:23.456 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5252/favicon-32x32.png - null null
+2024-10-18 16:10:23.457 -05:00 [INF] Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A'
+2024-10-18 16:10:23.457 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5252/favicon-32x32.png - 200 628 image/png 0.7213ms
+2024-10-18 16:10:23.628 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5252/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 175.6943ms
+2024-10-18 17:33:34.315 -05:00 [INF] Starting up...
+2024-10-18 17:33:35.717 -05:00 [INF] Executed DbCommand (81ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='P1' AND TABLE_NAME='__EFMigrationsHistory';
+2024-10-18 17:33:35.733 -05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='P1' AND TABLE_NAME='__EFMigrationsHistory';
+2024-10-18 17:33:35.755 -05:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `MigrationId`, `ProductVersion`
+FROM `__EFMigrationsHistory`
+ORDER BY `MigrationId`;
+2024-10-18 17:33:35.769 -05:00 [INF] No migrations were applied. The database is already up to date.
+2024-10-18 17:33:35.892 -05:00 [INF] User profile is available. Using 'C:\Users\megaf\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2024-10-18 17:33:35.964 -05:00 [INF] Now listening on: http://localhost:5252
+2024-10-18 17:33:35.967 -05:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-10-18 17:33:35.968 -05:00 [INF] Hosting environment: Development
+2024-10-18 17:33:35.968 -05:00 [INF] Content root path: F:\GameDev Projects\P1OC\P1 Discord Bot\Back End\CSBotBackend\P1-Api
+2024-10-18 17:33:36.246 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5252/ - null null
+2024-10-18 17:33:36.273 -05:00 [WRN] Failed to determine the https port for redirect.
+2024-10-18 17:33:36.307 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5252/ - 301 0 null 62.3651ms
+2024-10-18 17:33:36.314 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5252/index.html - null null
+2024-10-18 17:33:36.375 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5252/index.html - 200 null text/html;charset=utf-8 61.3453ms
+2024-10-18 17:33:36.397 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5252/swagger-ui.css - null null
+2024-10-18 17:33:36.403 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5252/index.css - null null
+2024-10-18 17:33:36.406 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5252/swagger-ui-bundle.js - null null
+2024-10-18 17:33:36.407 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5252/index.js - null null
+2024-10-18 17:33:36.407 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5252/swagger-ui-standalone-preset.js - null null
+2024-10-18 17:33:36.411 -05:00 [INF] Sending file. Request path: '/index.css'. Physical path: 'N/A'
+2024-10-18 17:33:36.411 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5252/index.css - 200 202 text/css 8.4157ms
+2024-10-18 17:33:36.420 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5252/index.js - 200 null application/javascript;charset=utf-8 12.8274ms
+2024-10-18 17:33:36.424 -05:00 [INF] Sending file. Request path: '/swagger-ui-standalone-preset.js'. Physical path: 'N/A'
+2024-10-18 17:33:36.426 -05:00 [INF] Sending file. Request path: '/swagger-ui.css'. Physical path: 'N/A'
+2024-10-18 17:33:36.428 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5252/swagger-ui-standalone-preset.js - 200 230293 text/javascript 21.2235ms
+2024-10-18 17:33:36.428 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5252/swagger-ui.css - 200 152034 text/css 30.5144ms
+2024-10-18 17:33:36.429 -05:00 [INF] Sending file. Request path: '/swagger-ui-bundle.js'. Physical path: 'N/A'
+2024-10-18 17:33:36.429 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5252/swagger-ui-bundle.js - 200 1452753 text/javascript 22.8332ms
+2024-10-18 17:33:36.832 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5252/swagger/v1/swagger.json - null null
+2024-10-18 17:33:36.991 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5252/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 158.9241ms
+2024-10-18 18:51:08.376 -05:00 [INF] Starting up...
+2024-10-18 18:51:11.026 -05:00 [INF] Executed DbCommand (117ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='P1' AND TABLE_NAME='__EFMigrationsHistory';
+2024-10-18 18:51:11.061 -05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='P1' AND TABLE_NAME='__EFMigrationsHistory';
+2024-10-18 18:51:11.075 -05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `MigrationId`, `ProductVersion`
+FROM `__EFMigrationsHistory`
+ORDER BY `MigrationId`;
+2024-10-18 18:51:11.087 -05:00 [INF] No migrations were applied. The database is already up to date.
+2024-10-18 18:51:11.199 -05:00 [INF] User profile is available. Using 'C:\Users\megaf\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2024-10-18 18:51:11.286 -05:00 [INF] Now listening on: http://localhost:5252
+2024-10-18 18:51:11.289 -05:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-10-18 18:51:11.289 -05:00 [INF] Hosting environment: Development
+2024-10-18 18:51:11.289 -05:00 [INF] Content root path: F:\GameDev Projects\P1OC\P1 Discord Bot\Back End\CSBotBackend\P1-Api
+2024-10-18 18:51:11.533 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5252/index.html - null null
+2024-10-18 18:51:11.566 -05:00 [WRN] Failed to determine the https port for redirect.
+2024-10-18 18:51:11.654 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5252/index.html - 200 null text/html;charset=utf-8 121.9354ms
+2024-10-18 18:51:11.709 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5252/index.js - null null
+2024-10-18 18:51:11.715 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5252/index.js - 200 null application/javascript;charset=utf-8 5.6774ms
+2024-10-18 18:51:12.114 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5252/swagger/v1/swagger.json - null null
+2024-10-18 18:51:12.273 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5252/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 158.4741ms
+2024-10-18 19:05:41.398 -05:00 [INF] Starting up...
+2024-10-18 19:07:36.890 -05:00 [INF] Starting up...
+2024-10-18 19:07:38.067 -05:00 [INF] Executed DbCommand (55ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='P1' AND TABLE_NAME='__EFMigrationsHistory';
+2024-10-18 19:07:38.079 -05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='P1' AND TABLE_NAME='__EFMigrationsHistory';
+2024-10-18 19:07:38.092 -05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `MigrationId`, `ProductVersion`
+FROM `__EFMigrationsHistory`
+ORDER BY `MigrationId`;
+2024-10-18 19:07:38.103 -05:00 [INF] No migrations were applied. The database is already up to date.
+2024-10-18 19:07:38.205 -05:00 [INF] User profile is available. Using 'C:\Users\megaf\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2024-10-18 19:07:38.257 -05:00 [INF] Now listening on: http://localhost:5252
+2024-10-18 19:07:38.260 -05:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-10-18 19:07:38.260 -05:00 [INF] Hosting environment: Development
+2024-10-18 19:07:38.261 -05:00 [INF] Content root path: F:\GameDev Projects\P1OC\P1 Discord Bot\Back End\CSBotBackend\P1-Api
+2024-10-18 19:07:38.480 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5252/index.html - null null
+2024-10-18 19:07:38.515 -05:00 [WRN] Failed to determine the https port for redirect.
+2024-10-18 19:07:38.601 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5252/index.html - 200 null text/html;charset=utf-8 121.6875ms
+2024-10-18 19:07:38.625 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5252/index.js - null null
+2024-10-18 19:07:38.628 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5252/index.js - 200 null application/javascript;charset=utf-8 3.187ms
+2024-10-18 19:07:38.811 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5252/swagger/v1/swagger.json - null null
+2024-10-18 19:07:38.977 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5252/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 165.4225ms
+2024-10-18 19:17:18.491 -05:00 [INF] Starting up...
+2024-10-18 19:17:19.883 -05:00 [INF] Executed DbCommand (36ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='P1' AND TABLE_NAME='__EFMigrationsHistory';
+2024-10-18 19:17:19.968 -05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='P1' AND TABLE_NAME='__EFMigrationsHistory';
+2024-10-18 19:17:19.982 -05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `MigrationId`, `ProductVersion`
+FROM `__EFMigrationsHistory`
+ORDER BY `MigrationId`;
+2024-10-18 19:17:19.993 -05:00 [INF] No migrations were applied. The database is already up to date.
+2024-10-18 19:17:20.096 -05:00 [INF] User profile is available. Using 'C:\Users\megaf\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2024-10-18 19:17:20.142 -05:00 [INF] Now listening on: http://localhost:5252
+2024-10-18 19:17:20.145 -05:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-10-18 19:17:20.145 -05:00 [INF] Hosting environment: Development
+2024-10-18 19:17:20.145 -05:00 [INF] Content root path: F:\GameDev Projects\P1OC\P1 Discord Bot\Back End\CSBotBackend\P1-Api
+2024-10-18 19:17:20.378 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5252/index.html - null null
+2024-10-18 19:17:20.410 -05:00 [WRN] Failed to determine the https port for redirect.
+2024-10-18 19:17:20.501 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5252/index.html - 200 null text/html;charset=utf-8 125.2852ms
+2024-10-18 19:17:20.531 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5252/index.js - null null
+2024-10-18 19:17:20.535 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5252/index.js - 200 null application/javascript;charset=utf-8 3.7501ms
+2024-10-18 19:17:20.716 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5252/swagger/v1/swagger.json - null null
+2024-10-18 19:17:20.912 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5252/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 196.4303ms

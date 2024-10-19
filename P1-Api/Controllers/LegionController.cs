@@ -9,6 +9,8 @@ using P1_Core.Interfaces;
 using P1_Application.Exceptions;
 using P1_Application.Boundaries;
 using P1_Core.Entities;
+using P1_Application.UseCases.Teams.AddMemberToLegion;
+using P1_Application.UseCases.Teams.RemoveMemberFromLegion;
 
 namespace P1_Api.Controllers
 {
@@ -109,5 +111,40 @@ namespace P1_Api.Controllers
             }
         }
 
+        [ProducesResponseType(200)]
+        [ProducesResponseType(500)]
+        [HttpPost("add-member")]
+        public async Task<IActionResult> AddMember([FromBody] AddMemberToLegionRequestModel request)
+        {
+            try
+            {
+                var requestModel = _mapper.Map<AddMemberToLegionCommand>(request);
+                await _mediator.Send(requestModel);
+                return Ok();
+            }
+            catch (P1Exception e)
+            {
+                _logger.LogError(e, $"An error occurred while trying to add organization with id {request.LegionId} to legion with id {request.LegionId}. \"{e.Message}\"");
+                return BadRequest();
+            }
+        }
+
+        [ProducesResponseType(200)]
+        [ProducesResponseType(500)]
+        [HttpDelete("remove-member")]
+        public async Task<IActionResult> RemoveCondition([FromBody] RemoveMemberFromLegionRequestModel request)
+        {
+            try
+            {
+                var requestModel = _mapper.Map<RemoveMemberFromLegionCommand>(request);
+                await _mediator.Send(request);
+                return Ok();
+            }
+            catch (P1Exception e)
+            {
+                _logger.LogError(e, $"An error occurred while trying to remove organization with id {request.OrganizationId} from legion with id {request.LegionId}. \"{e.Message}\"");
+                return BadRequest();
+            }
+        }
     }
 }

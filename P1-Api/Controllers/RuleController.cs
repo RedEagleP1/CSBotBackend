@@ -7,7 +7,9 @@ using P1_Application;
 using P1_Application.Boundaries;
 using P1_Application.Exceptions;
 using P1_Application.UseCases;
+using P1_Application.UseCases.Rules.AddConditionToRule;
 using P1_Application.UseCases.Rules.AddResultToRule;
+using P1_Application.UseCases.Rules.AddTriggerToRule;
 using P1_Application.UseCases.Rules.EvaluateRule;
 using P1_Core.Entities;
 using P1_Core.Interfaces;
@@ -147,12 +149,13 @@ namespace P1_Api.Controllers
 
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        [HttpPut("add-condition")]
+        [HttpPost("add-condition")]
         public async Task<IActionResult> AddCondition([FromBody] AddConditionToRuleRequestModel request)
         {
             try
             {
-                await _mediator.Send(request);
+                var requestModel = _mapper.Map<AddConditionToRuleCommand>(request);
+                await _mediator.Send(requestModel);
                 return Ok();
             }
             catch (P1Exception e)
@@ -164,7 +167,7 @@ namespace P1_Api.Controllers
 
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        [HttpPut("remove-condition")]
+        [HttpDelete("remove-condition")]
         public async Task<IActionResult> RemoveCondition([FromBody] RemoveConditionFromRuleRequestModel request)
         {
             try
@@ -179,9 +182,10 @@ namespace P1_Api.Controllers
             }
         }
 
+
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        [HttpPut("add-result")]
+        [HttpPost("add-result")]
         public async Task<IActionResult> AddResult([FromBody] AddResultToRuleRequestModel request)
         {
             try
@@ -199,7 +203,7 @@ namespace P1_Api.Controllers
 
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        [HttpPut("remove-result")]
+        [HttpDelete("remove-result")]
         public async Task<IActionResult> RemoveResult([FromBody] RemoveResultFromRuleRequestModel request)
         {
             try
@@ -216,12 +220,13 @@ namespace P1_Api.Controllers
 
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        [HttpPut("add-trigger")]
+        [HttpPost("add-trigger")]
         public async Task<IActionResult> AddTrigger([FromBody] AddTriggerToRuleRequestModel request)
         {
             try
             {
-                await _mediator.Send(request);
+                var requestModel = _mapper.Map<AddTriggerToRuleCommand>(request);
+                await _mediator.Send(requestModel);
                 return Ok();
             }
             catch (P1Exception e)
@@ -233,7 +238,7 @@ namespace P1_Api.Controllers
 
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        [HttpPut("remove-trigger")]
+        [HttpDelete("remove-trigger")]
         public async Task<IActionResult> RemoveTrigger([FromBody] RemoveTriggerFromRuleRequestModel request)
         {
             try
