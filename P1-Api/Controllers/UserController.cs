@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.Infrastructure;
 using P1_Api.Models.Users;
 using P1_Application.Boundaries;
 using P1_Application.Exceptions;
+using P1_Application.UseCases.Users.AddUserClaim;
 using P1_Infrastructure.Identity;
 using P1_Infrastructure.Services;
 
@@ -21,7 +22,7 @@ namespace P1_Api.Controllers {
         }
 
         [HttpPut("addClaimToUser/{userId}")]
-        public async Task<IActionResult> AddClaimToUser([FromRoute] string userId, [FromBody]UserClaimRequestModel model){
+        public async Task<IActionResult> AddClaimToUser([FromRoute] string userId, [FromBody] AddUserClaimRequestModel model){
             
             try
             {
@@ -63,7 +64,7 @@ namespace P1_Api.Controllers {
 
 
         [HttpDelete("deleteUserClaim/{userId}")]
-        public async Task<IActionResult> DeleteClaimFromUser([FromRoute] string userId,[FromBody]UserClaimRequestModel claimRequest)
+        public async Task<IActionResult> DeleteClaimFromUser([FromRoute] string userId,[FromBody] AddUserClaimRequestModel claimRequest)
         {
             try
             {

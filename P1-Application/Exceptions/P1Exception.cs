@@ -1,5 +1,3 @@
-
-
 using Microsoft.Extensions.Logging;
 
 namespace P1_Application.Exceptions
