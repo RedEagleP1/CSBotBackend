@@ -9,6 +9,10 @@ using P1_Core.Interfaces;
 using P1_Application.Exceptions;
 using P1_Application.Boundaries;
 using P1_Core.Entities;
+using P1_Application.UseCases.Teams.AddMemberToTeam;
+using P1_Application.UseCases.Teams.RemoveMemberFromTeam;
+using P1_Application.UseCases.Teams.AddGameToTeam;
+using P1_Application.UseCases.Teams.RemoveGameFromTeam;
 
 namespace P1_Api.Controllers
 {
@@ -109,5 +113,76 @@ namespace P1_Api.Controllers
             }
         }
 
+        [ProducesResponseType(200)]
+        [ProducesResponseType(500)]
+        [HttpPost("add-game")]
+        public async Task<IActionResult> AddMember([FromBody] AddGameToTeamRequestModel request)
+        {
+            try
+            {
+                var requestModel = _mapper.Map<AddGameToTeamCommand>(request);
+                await _mediator.Send(requestModel);
+                return Ok();
+            }
+            catch (P1Exception e)
+            {
+                _logger.LogError(e, $"An error occurred while trying to add game with id {request.GameId} to team with id {request.TeamId}. \"{e.Message}\"");
+                return BadRequest();
+            }
+        }
+
+        [ProducesResponseType(200)]
+        [ProducesResponseType(500)]
+        [HttpDelete("remove-game")]
+        public async Task<IActionResult> RemoveCondition([FromBody] RemoveGameFromTeamRequestModel request)
+        {
+            try
+            {
+                var requestModel = _mapper.Map<RemoveGameFromTeamCommand>(request);
+                await _mediator.Send(request);
+                return Ok();
+            }
+            catch (P1Exception e)
+            {
+                _logger.LogError(e, $"An error occurred while trying to remove game with id {request.GameId} from team with id {request.TeamId}. \"{e.Message}\"");
+                return BadRequest();
+            }
+        }
+
+        [ProducesResponseType(200)]
+        [ProducesResponseType(500)]
+        [HttpPost("add-member")]
+        public async Task<IActionResult> AddMember([FromBody] AddMemberToTeamRequestModel request)
+        {
+            try
+            {
+                var requestModel = _mapper.Map<AddMemberToTeamCommand>(request);
+                await _mediator.Send(requestModel);
+                return Ok();
+            }
+            catch (P1Exception e)
+            {
+                _logger.LogError(e, $"An error occurred while trying to add discord user with id {request.DiscordUserId} to team with id {request.TeamId}. \"{e.Message}\"");
+                return BadRequest();
+            }
+        }
+
+        [ProducesResponseType(200)]
+        [ProducesResponseType(500)]
+        [HttpDelete("remove-member")]
+        public async Task<IActionResult> RemoveCondition([FromBody] RemoveMemberFromTeamRequestModel request)
+        {
+            try
+            {
+                var requestModel = _mapper.Map<RemoveMemberFromTeamCommand>(request);
+                await _mediator.Send(request);
+                return Ok();
+            }
+            catch (P1Exception e)
+            {
+                _logger.LogError(e, $"An error occurred while trying to remove discord user with id {request.DiscordUserId} from team with id {request.TeamId}. \"{e.Message}\"");
+                return BadRequest();
+            }
+        }
     }
 }

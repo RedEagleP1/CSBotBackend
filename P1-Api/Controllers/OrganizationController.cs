@@ -9,6 +9,8 @@ using P1_Core.Interfaces;
 using P1_Application.Exceptions;
 using P1_Application.Boundaries;
 using P1_Core.Entities;
+using P1_Application.UseCases.Teams.AddMemberToOrganization;
+using P1_Application.UseCases.Teams.RemoveMemberFromOrganization;
 
 namespace P1_Api.Controllers
 {
@@ -105,6 +107,42 @@ namespace P1_Api.Controllers
             catch (P1Exception e)
             {
                 _logger.LogError(e, $"An error occurred while deleting the organization with Id {id}");
+                return BadRequest();
+            }
+        }
+
+        [ProducesResponseType(200)]
+        [ProducesResponseType(500)]
+        [HttpPost("add-member")]
+        public async Task<IActionResult> AddMember([FromBody] AddMemberToOrganizationRequestModel request)
+        {
+            try
+            {
+                var requestModel = _mapper.Map<AddMemberToOrganizationCommand>(request);
+                await _mediator.Send(requestModel);
+                return Ok();
+            }
+            catch (P1Exception e)
+            {
+                _logger.LogError(e, $"An error occurred while trying to add team with id {request.TeamId} to organization with id {request.OrganizationId}. \"{e.Message}\"");
+                return BadRequest();
+            }
+        }
+
+        [ProducesResponseType(200)]
+        [ProducesResponseType(500)]
+        [HttpDelete("remove-member")]
+        public async Task<IActionResult> RemoveCondition([FromBody] RemoveMemberFromOrganizationRequestModel request)
+        {
+            try
+            {
+                var requestModel = _mapper.Map<RemoveMemberFromOrganizationCommand>(request);
+                await _mediator.Send(request);
+                return Ok();
+            }
+            catch (P1Exception e)
+            {
+                _logger.LogError(e, $"An error occurred while trying to remove team with id {request.TeamId} from organization with id {request.OrganizationId}. \"{e.Message}\"");
                 return BadRequest();
             }
         }

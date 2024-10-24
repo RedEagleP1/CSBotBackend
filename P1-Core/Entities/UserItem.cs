@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace P1_Core.Entities
 {
+    
     public class UserItem : BaseEntity
     {
 

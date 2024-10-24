@@ -4,9 +4,8 @@ using P1_Core;
 using P1_Core.Interfaces;
 using P1_Core.Services;
 using P1_Application.Exceptions;
-
-using ILogger = Serilog.ILogger;
 using P1_Core.Entities;
+using Microsoft.Extensions.Logging;
 
 namespace P1_Application.UseCases.Rules.EvaluateRule
 {
