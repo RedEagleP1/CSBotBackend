@@ -1,11 +1,12 @@
 ## Getting Started
 
-- Repository set up
+- Repository setup
 	- Clone the repository: `git clone git@github.com:RedEagleP1/CSBotBackend.git`
+- Skip if you don't want to switch to **development** branch
 	- Switch to the **development** branch: `git checkout -b development`
 	- Set local branch to track remote branch `git branch --set-upstream-to=origin/development`
 	- Pull the changes `git pull`
-- Set up database docker container
+- Set up the database docker container
 	- Navigate to the **docker** folder: `cd docker`
 	- Run `docker-compose up -d` from inside the **docker** folder to start the container in detached mode.
 	- To stop the container, run the command `docker-compose down`.
@@ -20,5 +21,5 @@
 	- Navigate to **CSBotBackend/P1-Api** directory
 	- Open **appsettings.json** and add the database string
 		- `"DefaultConnection": "Server=localhost; Port=3306; Database=my_database; Uid=root; Pwd=<password>"`
-	- From **CSBotBackend/P1-Api** directory, the run `dotnet run`
+	- From **CSBotBackend/P1-Api** directory, run the command `dotnet run`
 	- Afterward, you can access all API endpoints at `http://localhost:<port>` (the port is **5252** for now).
