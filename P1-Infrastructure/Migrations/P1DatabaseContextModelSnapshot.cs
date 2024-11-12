@@ -429,6 +429,31 @@ namespace P1_Infrastructure.Migrations
                     b.ToTable("Results");
                 });
 
+            modelBuilder.Entity("P1_Core.Entities.ResultRule", b =>
+                {
+                    b.Property<int>("ResultsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RulesId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("UpdatedBy")
+                        .HasColumnType("int");
+
+                    b.HasKey("ResultsId", "RulesId");
+
+                    b.ToTable("ResultRules");
+                });
+
             modelBuilder.Entity("P1_Core.Entities.Rule", b =>
                 {
                     b.Property<int>("Id")

@@ -99,7 +99,7 @@ namespace P1_Api.Controllers
         {
             try
             {
-                await _mediator.Send(id);
+                await _mediator.Send(new DeleteOneEntityRequest<DiscordCommand>(id));
                 return Ok();
             }
             catch (P1Exception e)

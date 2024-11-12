@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore.Update;
 using Microsoft.Extensions.Logging;
 using P1_Application.Boundaries;
 using P1_Core.Entities;
+using P1_Core.Entities.JoinTables;
 using P1_Core.Interfaces;
 using P1_Infrastructure.Identity;
 
@@ -26,6 +27,9 @@ namespace P1_Infrastructure.Database
         public virtual DbSet<Game> Games { get; set; }
         public virtual DbSet<ItemResult> ItemResults { get; set; }
         public virtual DbSet<Organization> OrganizationUsers { get; set; }
+        public virtual DbSet<ResultRule> ResultRules { get; set; }
+        public virtual DbSet<DiscordCommand> DiscordCommands { get; set; }
+        public virtual DbSet<DiscordCommandOptions> DiscordCommandOptions { get; set; }
 
         private readonly ApplicationContext _customContext;
         private readonly ILogger<P1DatabaseContext> _logger;
@@ -43,19 +47,60 @@ namespace P1_Infrastructure.Database
         {
             base.OnModelCreating(modelBuilder);
 
+
+            modelBuilder.Entity<DiscordCommand>()
+                .HasMany<DiscordCommandOptions>()
+                .WithOne()
+                .OnDelete(DeleteBehavior.Cascade);
+
             modelBuilder.Entity<Rule>()
-            .HasMany(r => r.Conditions)
-            .WithMany(c => c.Rules);
+                .HasMany(r => r.Conditions)
+                .WithMany(c => c.Rules)
+                .UsingEntity<ConditionRule>(
+                    j => j.ToTable("ConditionRule"))
+                .HasMany(r => r.Results)
+                .WithMany(c => c.Rules)
+                .UsingEntity<ResultRule>(
+                    j => j.ToTable("ResultRule"))
+                .HasMany(r => r.Triggers)
+                .WithMany(c => c.Rules)
+                .UsingEntity<TriggerRule>(
+                    j => j.ToTable("TriggerRule"));
 
             modelBuilder.Entity<Condition>()
             .HasMany(c => c.Rules)
             .WithMany(r => r.Conditions);
 
-            modelBuilder.Entity<UserItem>().HasKey(ui => new { ui.UserId, ui.ItemId });
+            modelBuilder.Entity<Result>()
+            .HasMany(c => c.Rules)
+            .WithMany(r => r.Results);
+
+            modelBuilder.Entity<Trigger>()
+            .HasMany(c => c.Rules)
+            .WithMany(r => r.Triggers);
+
+
+            modelBuilder.Entity<ConditionRule>().HasKey(cr => new { cr.ConditionId, cr.RuleId });
+
+            modelBuilder.Entity<ResultRule>().HasKey(rr => new { rr.ResultId, rr.RuleId });
+
+            modelBuilder.Entity<TriggerRule>().HasKey(tr => new { tr.TriggerId, tr.RuleId });
+
+
+            modelBuilder.Entity<DiscordUserTeam>().HasKey(ir => new { ir.TeamId, ir.DiscordUserId });
+
+            modelBuilder.Entity<GameTeam>().HasKey(ir => new { ir.TeamId, ir.GameId });
+
+            modelBuilder.Entity<TeamOrganization>().HasKey(ir => new { ir.OrganizationId, ir.TeamId });
+
+            modelBuilder.Entity<OrganizationLegion>().HasKey(ir => new { ir.LegionId, ir.OrganizationId });
+
 
             modelBuilder.Entity<ItemResult>().HasKey(ir => new { ir.ItemId, ir.ResultId });
 
+            modelBuilder.Entity<UserItem>().HasKey(ui => new { ui.UserId, ui.ItemId });
 
+            modelBuilder.Entity<ItemResult>().HasKey(ir => new { ir.ItemId, ir.ResultId });
 
         }
 
@@ -70,6 +115,7 @@ namespace P1_Infrastructure.Database
             {
                 var entity = (BaseEntity)entityEntry.Entity;
                 var now = DateTime.UtcNow;
+                //todo We need additional testing around this in order to identify the correct user ID is being retrieved on multiple requests across users
                 var userId = _customContext.UserId;
                 if (entityEntry.State == EntityState.Added)
                 {
