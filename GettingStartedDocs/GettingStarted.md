@@ -1,0 +1,25 @@
+## Getting Started
+
+- Repository setup
+	- Clone the repository: `git clone git@github.com:RedEagleP1/CSBotBackend.git`
+- Skip if you don't want to switch to **development** branch
+	- Switch to the **development** branch: `git checkout -b development`
+	- Set local branch to track remote branch `git branch --set-upstream-to=origin/development`
+	- Pull the changes `git pull`
+- Set up the database docker container
+	- Navigate to the **docker** folder: `cd docker`
+	- Run `docker-compose up -d` from inside the **docker** folder to start the container in detached mode.
+	- To stop the container, run the command `docker-compose down`.
+	- To check active containers, run `docker ps`.
+	- If you see `error during connect...`, make sure **Docker Desktop** is running or that you have **docker-compose** running as a background service.
+- Test the database
+	- Once the container is active, use `docker exec -it docker-db-1 mysql -u root -p` to access the database in the Docker container. You’ll be prompted for the username and password. The user is **root**; the password can be found in **docker-compose.yaml**.
+	- You won’t get any feedback while typing the password, but it’s working. Type the entire password and press Enter. You should then have access to the database.
+	- This shouldn’t be an issue, but ensure that the port used by Docker inside the container is enabled and not restricted on your physical computer. Docker maps virtual ports within the container to your computer’s ports.
+	- If you have **MySQL** installed on your computer, ensure that the default MySQL port doesn't conflict with the port used by the container.
+- Run the app
+	- Navigate to **CSBotBackend/P1-Api** directory
+	- Open **appsettings.json** and add the database string
+		- `"DefaultConnection": "Server=localhost; Port=3306; Database=my_database; Uid=root; Pwd=<password>"`
+	- From **CSBotBackend/P1-Api** directory, run the command `dotnet run`
+	- Afterward, you can access all API endpoints at `http://localhost:<port>` (the port is **5252** for now).
