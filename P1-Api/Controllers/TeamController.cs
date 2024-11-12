@@ -103,7 +103,7 @@ namespace P1_Api.Controllers
         {
             try
             {
-                await _mediator.Send(id);
+                await _mediator.Send(new DeleteOneEntityRequest<DiscordCommand>(id));
                 return Ok();
             }
             catch (P1Exception e)
@@ -115,72 +115,76 @@ namespace P1_Api.Controllers
 
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        [HttpPost("add-game")]
-        public async Task<IActionResult> AddMember([FromBody] AddGameToTeamRequestModel request)
+        [HttpPost("{teamId}/add-game/{gameId}")]
+        public async Task<IActionResult> AddMember([FromRoute] int teamId, [FromRoute] int gameId)
         {
             try
             {
+                var request = new AddMemberToTeamRequestModel { GameId = gameId, TeamId = teamId };
                 var requestModel = _mapper.Map<AddGameToTeamCommand>(request);
                 await _mediator.Send(requestModel);
                 return Ok();
             }
             catch (P1Exception e)
             {
-                _logger.LogError(e, $"An error occurred while trying to add game with id {request.GameId} to team with id {request.TeamId}. \"{e.Message}\"");
+                _logger.LogError(e, $"An error occurred while trying to add game with id {gameId} to team with id {teamId}. \"{e.Message}\"");
                 return BadRequest();
             }
         }
 
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        [HttpDelete("remove-game")]
-        public async Task<IActionResult> RemoveCondition([FromBody] RemoveGameFromTeamRequestModel request)
+        [HttpDelete("{teamId}/remove-game/{gameId}")]
+        public async Task<IActionResult> RemoveCondition([FromRoute] int teamId, [FromRoute] int gameId)
         {
             try
             {
+                var request = new AddMemberToTeamRequestModel { GameId = gameId, TeamId = teamId };
                 var requestModel = _mapper.Map<RemoveGameFromTeamCommand>(request);
                 await _mediator.Send(request);
                 return Ok();
             }
             catch (P1Exception e)
             {
-                _logger.LogError(e, $"An error occurred while trying to remove game with id {request.GameId} from team with id {request.TeamId}. \"{e.Message}\"");
+                _logger.LogError(e, $"An error occurred while trying to remove game with id {gameId} from team with id {teamId}. \"{e.Message}\"");
                 return BadRequest();
             }
         }
 
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        [HttpPost("add-member")]
-        public async Task<IActionResult> AddMember([FromBody] AddMemberToTeamRequestModel request)
+        [HttpPost("{teamId}/add-member/{userId}")]
+        public async Task<IActionResult> AddMember([FromRoute] int teamId, [FromRoute] ulong discordUserId)
         {
             try
             {
+                var request = new AddMemberToTeamRequestModel{TeamId = teamId, DiscordUserId = discordUserId};
                 var requestModel = _mapper.Map<AddMemberToTeamCommand>(request);
                 await _mediator.Send(requestModel);
                 return Ok();
             }
             catch (P1Exception e)
             {
-                _logger.LogError(e, $"An error occurred while trying to add discord user with id {request.DiscordUserId} to team with id {request.TeamId}. \"{e.Message}\"");
+                _logger.LogError(e, $"An error occurred while trying to add discord user with id {discordUserId} to team with id {teamId}. \"{e.Message}\"");
                 return BadRequest();
             }
         }
 
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        [HttpDelete("remove-member")]
-        public async Task<IActionResult> RemoveCondition([FromBody] RemoveMemberFromTeamRequestModel request)
+        [HttpDelete("{teamId}/remove-member/{userId}")]
+        public async Task<IActionResult> RemoveCondition([FromRoute] int teamId, [FromRoute] ulong discordUserId)
         {
             try
             {
+                var request = new RemoveMemberFromTeamRequestModel{TeamId = teamId, DiscordUserId = discordUserId};
                 var requestModel = _mapper.Map<RemoveMemberFromTeamCommand>(request);
                 await _mediator.Send(request);
                 return Ok();
             }
             catch (P1Exception e)
             {
-                _logger.LogError(e, $"An error occurred while trying to remove discord user with id {request.DiscordUserId} from team with id {request.TeamId}. \"{e.Message}\"");
+                _logger.LogError(e, $"An error occurred while trying to remove discord user with id {discordUserId} from team with id {teamId}. \"{e.Message}\"");
                 return BadRequest();
             }
         }

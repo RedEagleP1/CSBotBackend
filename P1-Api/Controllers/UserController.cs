@@ -62,7 +62,6 @@ namespace P1_Api.Controllers {
             }
         }
 
-
         [HttpDelete("deleteUserClaim/{userId}")]
         public async Task<IActionResult> DeleteClaimFromUser([FromRoute] string userId,[FromBody] AddUserClaimRequestModel claimRequest)
         {

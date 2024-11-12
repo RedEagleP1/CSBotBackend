@@ -21,6 +21,7 @@ using P1_Api.Models.Organizations;
 using P1_Api.Models.Legions;
 using P1_Application.UseCases.Teams.AddGameToTeam;
 using P1_Application.UseCases.Teams.RemoveGameFromTeam;
+using P1_Api.Controllers;
 
 
 namespace P1_Api.Util
@@ -52,6 +53,8 @@ namespace P1_Api.Util
             CreateMap<RemoveMemberFromLegionRequestModel, RemoveMemberFromLegionCommand>();
 
 
+            CreateMap<CreateCommandRequest, CreateCommandCommand>();
         }
     }
+
 }

@@ -101,7 +101,7 @@ namespace P1_Api.Controllers
         {
             try
             {
-                await _mediator.Send(id);
+                await _mediator.Send(new DeleteOneEntityRequest<DiscordCommand>(id));
                 return Ok();
             }
             catch (P1Exception e)
@@ -113,36 +113,38 @@ namespace P1_Api.Controllers
 
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        [HttpPost("add-member")]
-        public async Task<IActionResult> AddMember([FromBody] AddMemberToLegionRequestModel request)
+        [HttpPost("{legionId}/add-organization/{orgId}")]
+        public async Task<IActionResult> AddOrganization([FromRoute] int legionId, [FromRoute] int orgId)
         {
             try
             {
+                var request = new AddOrgToLegionRequestModel { OrganizationId = orgId, TeamId = teamId };
                 var requestModel = _mapper.Map<AddMemberToLegionCommand>(request);
                 await _mediator.Send(requestModel);
                 return Ok();
             }
             catch (P1Exception e)
             {
-                _logger.LogError(e, $"An error occurred while trying to add organization with id {request.LegionId} to legion with id {request.LegionId}. \"{e.Message}\"");
+                _logger.LogError(e, $"An error occurred while trying to add organization with id {orgId} to legion with id {legionId}. \"{e.Message}\"");
                 return BadRequest();
             }
         }
 
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        [HttpDelete("remove-member")]
-        public async Task<IActionResult> RemoveCondition([FromBody] RemoveMemberFromLegionRequestModel request)
+        [HttpDelete("{legionId}/remove-organization/{orgId}")]
+        public async Task<IActionResult> RemoveOrganization([FromRoute] int legionId, [FromRoute] int orgId)
         {
             try
             {
+                var request = new RemoveOrgFromLegionRequestModel { OrganizationId = orgId, TeamId = teamId };
                 var requestModel = _mapper.Map<RemoveMemberFromLegionCommand>(request);
                 await _mediator.Send(request);
                 return Ok();
             }
             catch (P1Exception e)
             {
-                _logger.LogError(e, $"An error occurred while trying to remove organization with id {request.OrganizationId} from legion with id {request.LegionId}. \"{e.Message}\"");
+                _logger.LogError(e, $"An error occurred while trying to remove organization with id {orgId} from legion with id {legionId}. \"{e.Message}\"");
                 return BadRequest();
             }
         }

@@ -6,6 +6,6 @@ namespace P1_Api.Models.Teams
 	public class RemoveMemberFromTeamRequestModel
 	{
 		public int TeamId { get; set; }
-		public int DiscordUserId { get; set; }
+		public ulong DiscordUserId { get; set; }
 	}
 }

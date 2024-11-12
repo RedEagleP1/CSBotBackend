@@ -79,8 +79,8 @@ namespace P1_Api.Controllers
 
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        [HttpPut("update-organization")]
-        public async Task<IActionResult> UpdateOrganization([FromBody] UpdateOneEntityRequest<Organization> request)
+        [HttpPut("update-organization/{id}")]
+        public async Task<IActionResult> UpdateOrganization([FromRoute] int id, [FromBody] UpdateOneEntityRequest<Organization> request)
         {
             try
             {
@@ -101,7 +101,7 @@ namespace P1_Api.Controllers
         {
             try
             {
-                await _mediator.Send(id);
+                await _mediator.Send(new DeleteOneEntityRequest<DiscordCommand>(id));
                 return Ok();
             }
             catch (P1Exception e)
@@ -111,38 +111,50 @@ namespace P1_Api.Controllers
             }
         }
 
+        /// <summary>
+        /// Add a Team to an Organization
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        [HttpPost("add-member")]
-        public async Task<IActionResult> AddMember([FromBody] AddMemberToOrganizationRequestModel request)
+        [HttpPost("{orgId}/add-team/{teamId}")]
+        public async Task<IActionResult> AddTeam([FromRoute] int orgId, [FromRoute] int teamId)
         {
             try
             {
+                var request = new AddTeamToOrganizationRequestModel { OrganizationId = orgId, TeamId = teamId };
                 var requestModel = _mapper.Map<AddMemberToOrganizationCommand>(request);
                 await _mediator.Send(requestModel);
                 return Ok();
             }
             catch (P1Exception e)
             {
-                _logger.LogError(e, $"An error occurred while trying to add team with id {request.TeamId} to organization with id {request.OrganizationId}. \"{e.Message}\"");
+                _logger.LogError(e, $"An error occurred while trying to add team with id {teamId} to organization with id {orgId}. \"{e.Message}\"");
                 return BadRequest();
             }
         }
 
+        /// <summary>
+        /// Remove a Team from an Organization
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        [HttpDelete("remove-member")]
-        public async Task<IActionResult> RemoveCondition([FromBody] RemoveMemberFromOrganizationRequestModel request)
+        [HttpDelete("{orgId}/remove-team/{teamId}")]
+        public async Task<IActionResult> RemoveTeam([FromRoute]int orgId, [FromRoute]int teamId)
         {
             try
             {
-                var requestModel = _mapper.Map<RemoveMemberFromOrganizationCommand>(request);
-                await _mediator.Send(request);
+                var request = new RemoveTeamFromOrganizationRequestModel { OrganizationId = orgId, TeamId = teamId };
+                var requestModel = _mapper.Map<RemoveTeamFromOrganizationCommand>(request);
+                await _mediator.Send(requestModel);
                 return Ok();
             }
             catch (P1Exception e)
             {
-                _logger.LogError(e, $"An error occurred while trying to remove team with id {request.TeamId} from organization with id {request.OrganizationId}. \"{e.Message}\"");
+                _logger.LogError(e, $"An error occurred while trying to remove team with id {teamId} from organization with id {orgId}. \"{e.Message}\"");
                 return BadRequest();
             }
         }

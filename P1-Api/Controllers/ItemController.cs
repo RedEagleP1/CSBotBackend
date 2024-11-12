@@ -48,7 +48,7 @@ namespace P1_Api.Controllers
             try
             {
                 var response = await _mediator.Send(new GetOneEntityRequest<Item>(id));
-                return Ok(response);
+                return Ok(response != null ? response : null);
             }
             catch (P1Exception e)
             {
@@ -66,7 +66,7 @@ namespace P1_Api.Controllers
             try
             {
                 var response = await _mediator.Send(new GetAllEntitiesRequest<Item>());
-                return Ok(response);
+                return Ok(response != null ? response : null);
             }
             catch (P1Exception e)
             {
@@ -99,7 +99,7 @@ namespace P1_Api.Controllers
         {
             try
             {
-                await _mediator.Send(id);
+                await _mediator.Send(new DeleteOneEntityRequest<DiscordCommand>(id));
                 return Ok();
             }
             catch (P1Exception e)

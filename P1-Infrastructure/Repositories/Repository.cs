@@ -25,8 +25,7 @@ namespace P1_Infrastructure.Repositories
 
         public async Task DeleteAsync(T entity)
         {
-            _dbSet.Remove(entity);
-            await _context.SaveChangesAsync();
+            await DeleteAsync(entity.Id);
         }
 
         public async Task DeleteAsync(int id)
@@ -37,6 +36,7 @@ namespace P1_Infrastructure.Repositories
                 _dbSet.Remove(foundEntity);
                 await _context.SaveChangesAsync();
             }
+            //todo need to throw exception on null
         }
 
         public async Task<IEnumerable<T>> GetAllAsync()

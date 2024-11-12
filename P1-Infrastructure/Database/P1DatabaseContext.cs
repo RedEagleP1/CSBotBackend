@@ -28,6 +28,8 @@ namespace P1_Infrastructure.Database
         public virtual DbSet<ItemResult> ItemResults { get; set; }
         public virtual DbSet<Organization> OrganizationUsers { get; set; }
         public virtual DbSet<ResultRule> ResultRules { get; set; }
+        public virtual DbSet<DiscordCommand> DiscordCommands { get; set; }
+        public virtual DbSet<DiscordCommandOptions> DiscordCommandOptions { get; set; }
 
         private readonly ApplicationContext _customContext;
         private readonly ILogger<P1DatabaseContext> _logger;
@@ -46,6 +48,11 @@ namespace P1_Infrastructure.Database
             base.OnModelCreating(modelBuilder);
 
 
+            modelBuilder.Entity<DiscordCommand>()
+                .HasMany<DiscordCommandOptions>()
+                .WithOne()
+                .OnDelete(DeleteBehavior.Cascade);
+
             modelBuilder.Entity<Rule>()
                 .HasMany(r => r.Conditions)
                 .WithMany(c => c.Rules)
@@ -59,7 +66,6 @@ namespace P1_Infrastructure.Database
                 .WithMany(c => c.Rules)
                 .UsingEntity<TriggerRule>(
                     j => j.ToTable("TriggerRule"));
-
 
             modelBuilder.Entity<Condition>()
             .HasMany(c => c.Rules)
@@ -95,6 +101,7 @@ namespace P1_Infrastructure.Database
             modelBuilder.Entity<UserItem>().HasKey(ui => new { ui.UserId, ui.ItemId });
 
             modelBuilder.Entity<ItemResult>().HasKey(ir => new { ir.ItemId, ir.ResultId });
+
         }
 
         //TODO add error handling
@@ -108,6 +115,7 @@ namespace P1_Infrastructure.Database
             {
                 var entity = (BaseEntity)entityEntry.Entity;
                 var now = DateTime.UtcNow;
+                //todo We need additional testing around this in order to identify the correct user ID is being retrieved on multiple requests across users
                 var userId = _customContext.UserId;
                 if (entityEntry.State == EntityState.Added)
                 {
