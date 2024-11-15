@@ -41,29 +41,6 @@ graph TB
     BND --> |Interfaces| UC
 ```
 
-```mermaid
-gitGraph
-    commit
-    commit
-    branch feature1
-    checkout feature1
-    commit
-    commit
-    checkout main
-    merge feature1
-    branch feature2
-    checkout feature2
-    commit
-    checkout main
-    merge feature2
-    commit
-    branch feature3
-    checkout feature3
-    commit
-    commit
-    checkout main
-    merge feature3
-```
 
 Here's a diagram showing trunk-based development along with an explanation:
 

@@ -26,8 +26,8 @@ namespace P1_Application.UseCases.Teams.RemoveMemberFromOrganization
 
         public async Task Handle(RemoveTeamFromOrganizationCommand request, CancellationToken cancellationToken)
         {
-            var mappedValue = _mapper.Map<>();
-            await _TeamDiscordUserRepository.DeleteAsync(mappedValue);
+            //var mappedValue = _mapper.Map<>();
+            //await _TeamDiscordUserRepository.DeleteAsync(mappedValue);
         }
     }
 }

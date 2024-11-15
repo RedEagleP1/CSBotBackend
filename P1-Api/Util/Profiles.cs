@@ -22,6 +22,8 @@ using P1_Api.Models.Legions;
 using P1_Application.UseCases.Teams.AddGameToTeam;
 using P1_Application.UseCases.Teams.RemoveGameFromTeam;
 using P1_Api.Controllers;
+using P1_Api.Models.ContainerRegistry;
+using P1_Application.UseCases.ContainerRegistry.CreateContainer;
 
 
 namespace P1_Api.Util
@@ -46,15 +48,16 @@ namespace P1_Api.Util
             CreateMap<AddMemberToTeamRequestModel, AddMemberToTeamCommand>();
             CreateMap<RemoveMemberFromTeamRequestModel, RemoveMemberFromTeamCommand>();
 
-            CreateMap<AddMemberToOrganizationRequestModel, AddMemberToOrganizationCommand>();
-            CreateMap<RemoveMemberFromOrganizationRequestModel, RemoveMemberFromOrganizationCommand>();
+            CreateMap<ContainerRequestModel, ContainerRequestCommand>();
 
-            CreateMap<AddMemberToLegionRequestModel, AddMemberToLegionCommand>();
-            CreateMap<RemoveMemberFromLegionRequestModel, RemoveMemberFromLegionCommand>();
+            // CreateMap<AddMemberToOrganizationRequestModel, AddMemberToOrganizationCommand>();
+            // CreateMap<RemoveMemberFromOrganizationRequestModel, RemoveMemberFromOrganizationCommand>();
+
+            // CreateMap<AddMemberToLegionRequestModel, AddMemberToLegionCommand>();
+            // CreateMap<RemoveMemberFromLegionRequestModel, RemoveMemberFromLegionCommand>();
 
 
-            CreateMap<CreateCommandRequest, CreateCommandCommand>();
+            // CreateMap<CreateCommandRequest, CreateCommandCommand>();
         }
     }
-
 }
