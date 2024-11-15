@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using P1_Core.Entities.Interfaces;
 
 namespace P1_Core.Entities
 {
@@ -11,5 +10,8 @@ namespace P1_Core.Entities
         public string? Description { get; set; }
         public virtual ICollection<Rule>? Rules { get; set; }
 
+        public string Operation { get; set; }
+        public string ExpectedValue { get; set; }
+        public string ExpectedResult { get; set; }
     }
 }

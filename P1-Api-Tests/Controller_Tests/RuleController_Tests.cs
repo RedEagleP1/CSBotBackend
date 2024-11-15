@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using P1_Api.Controllers;
-using P1_Core.Entities;
+using P1_Core.Interfaces;
 //using P1_Application.UseCases.Rules;
 using System;
 using System.Threading.Tasks;

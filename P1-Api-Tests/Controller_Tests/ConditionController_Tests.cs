@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using P1_Api.Controllers;
 using P1_Api.Models;
 using P1_Application;
-using P1_Core.Entities;
+using P1_Core.Interfaces;
 //using P1_Application.UseCases.Conditions;
 using System;
 using System.Threading.Tasks;

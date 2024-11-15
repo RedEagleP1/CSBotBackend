@@ -1,6 +1,7 @@
 using MediatR;
 using P1_Core;
 using P1_Core.Entities;
+using P1_Core.Interfaces;
 
 namespace P1_Application.UseCases
 {

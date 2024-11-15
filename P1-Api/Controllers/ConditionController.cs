@@ -5,9 +5,10 @@ using P1_Api.Models.Conditions;
 using AutoMapper;
 using System.Diagnostics;
 using P1_Application.UseCases;
-using P1_Core.Entities;
+using P1_Core.Interfaces;
 using P1_Application.Exceptions;
 using P1_Application.Boundaries;
+using P1_Core.Entities;
 
 namespace P1_Api.Controllers
 {
@@ -93,12 +94,12 @@ namespace P1_Api.Controllers
 
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        [HttpDelete("delete-condition")]
+        [HttpDelete("delete-condition/{id}")]
         public async Task<IActionResult> DeleteCondition([FromRoute] int id)
         {
             try
             {
-                await _mediator.Send(id);
+                await _mediator.Send(new DeleteOneEntityRequest<DiscordCommand>(id));
                 return Ok();
             }
             catch (P1Exception e)

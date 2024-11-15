@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using P1_Core;
 using P1_Core.Entities;
+using P1_Core.Interfaces;
 using P1_Infrastructure.Database;
 
 namespace P1_Infrastructure.Repositories
@@ -22,6 +23,22 @@ namespace P1_Infrastructure.Repositories
             return entity.Id;
         }
 
+        public async Task DeleteAsync(T entity)
+        {
+            await DeleteAsync(entity.Id);
+        }
+
+        public async Task DeleteAsync(Tuple<int, int> ids)
+        {
+            var foundEntity = await _dbSet.FindAsync(ids.Item1, ids.Item2);
+            if (foundEntity != null)
+            {
+                _dbSet.Remove(foundEntity);
+                await _context.SaveChangesAsync();
+            }
+            //todo need to throw exception on null
+        }
+
         public async Task DeleteAsync(int id)
         {
             var foundEntity = await _dbSet.FindAsync(id);
@@ -30,6 +47,7 @@ namespace P1_Infrastructure.Repositories
                 _dbSet.Remove(foundEntity);
                 await _context.SaveChangesAsync();
             }
+            //todo need to throw exception on null
         }
 
         public async Task<IEnumerable<T>> GetAllAsync()

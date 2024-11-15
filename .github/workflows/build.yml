@@ -37,13 +37,13 @@ jobs:
             # Folder to upload from, must end with trailing slash /
             local-dir: P1-Api/bin/Release/net8.0/
             # Path to upload to on the server. Must end with trailing slash /
-            server-dir: /home/p1oadmin/p1bot
+            server-dir: /home/p1oadmin/p1bot/
 
         - name: SSH Deploy
           uses: appleboy/ssh-action@master
           with:
             host: ${{secrets.IP}}
-            username:       
+            username:
             key: ${{secrets.SSHPASS}}
             script: |
               cd /home/p1oadmin/p1bot

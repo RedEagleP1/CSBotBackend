@@ -186,7 +186,19 @@ namespace P1_Infrastructure.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("longtext");
 
+                    b.Property<string>("ExpectedResult")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("ExpectedValue")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Operation")
                         .IsRequired()
                         .HasColumnType("longtext");
 
@@ -198,7 +210,83 @@ namespace P1_Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Condition");
+                    b.ToTable("Conditions");
+                });
+
+            modelBuilder.Entity("P1_Core.Entities.DiscordUser", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<ulong>("DiscordId")
+                        .HasColumnType("bigint unsigned");
+
+                    b.Property<int?>("GameId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TeamId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("UpdatedBy")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GameId");
+
+                    b.HasIndex("TeamId");
+
+                    b.ToTable("DiscordUsers");
+                });
+
+            modelBuilder.Entity("P1_Core.Entities.Game", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int?>("TeamId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("UpdatedBy")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TeamId");
+
+                    b.ToTable("Games");
                 });
 
             modelBuilder.Entity("P1_Core.Entities.Item", b =>
@@ -222,6 +310,9 @@ namespace P1_Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<string>("Type")
+                        .HasColumnType("longtext");
+
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime(6)");
 
@@ -230,7 +321,80 @@ namespace P1_Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Item");
+                    b.ToTable("Items");
+                });
+
+            modelBuilder.Entity("P1_Core.Entities.ItemResult", b =>
+                {
+                    b.Property<int>("ItemId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ResultId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("UpdatedBy")
+                        .HasColumnType("int");
+
+                    b.HasKey("ItemId", "ResultId");
+
+                    b.HasIndex("ResultId");
+
+                    b.ToTable("ItemResults");
+                });
+
+            modelBuilder.Entity("P1_Core.Entities.Organization", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("DiscordUserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("TeamId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("UpdatedBy")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DiscordUserId");
+
+                    b.HasIndex("TeamId");
+
+                    b.ToTable("Organization");
                 });
 
             modelBuilder.Entity("P1_Core.Entities.Result", b =>
@@ -260,13 +424,34 @@ namespace P1_Infrastructure.Migrations
                     b.Property<int>("UpdatedBy")
                         .HasColumnType("int");
 
-                    b.Property<string>("Value")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
                     b.HasKey("Id");
 
                     b.ToTable("Results");
+                });
+
+            modelBuilder.Entity("P1_Core.Entities.ResultRule", b =>
+                {
+                    b.Property<int>("ResultsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RulesId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("UpdatedBy")
+                        .HasColumnType("int");
+
+                    b.HasKey("ResultsId", "RulesId");
+
+                    b.ToTable("ResultRules");
                 });
 
             modelBuilder.Entity("P1_Core.Entities.Rule", b =>
@@ -301,7 +486,51 @@ namespace P1_Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Rule");
+                    b.ToTable("Rules");
+                });
+
+            modelBuilder.Entity("P1_Core.Entities.Team", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CurrentGameId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int?>("OrganizationId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TeamLeaderId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("UpdatedBy")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrganizationId");
+
+                    b.ToTable("Team");
                 });
 
             modelBuilder.Entity("P1_Core.Entities.Trigger", b =>
@@ -319,7 +548,6 @@ namespace P1_Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<bool>("IsEnabled")
@@ -340,34 +568,6 @@ namespace P1_Infrastructure.Migrations
                     b.ToTable("Triggers");
                 });
 
-            modelBuilder.Entity("P1_Core.Entities.User", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
-
-                    b.Property<ulong>("DiscordId")
-                        .HasColumnType("bigint unsigned");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<int>("UpdatedBy")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Users");
-                });
-
             modelBuilder.Entity("P1_Core.Entities.UserItem", b =>
                 {
                     b.Property<int>("UserId")
@@ -382,6 +582,12 @@ namespace P1_Infrastructure.Migrations
                     b.Property<int>("CreatedBy")
                         .HasColumnType("int");
 
+                    b.Property<int>("DiscordUserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime(6)");
 
@@ -390,9 +596,11 @@ namespace P1_Infrastructure.Migrations
 
                     b.HasKey("UserId", "ItemId");
 
+                    b.HasIndex("DiscordUserId");
+
                     b.HasIndex("ItemId");
 
-                    b.ToTable("UserItem");
+                    b.ToTable("UserItems");
                 });
 
             modelBuilder.Entity("P1_Core.Entities.UserMetaData", b =>
@@ -409,18 +617,18 @@ namespace P1_Infrastructure.Migrations
                     b.Property<int>("CreatedBy")
                         .HasColumnType("int");
 
+                    b.Property<int>("DiscordUserId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime(6)");
 
                     b.Property<int>("UpdatedBy")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("DiscordUserId");
 
                     b.ToTable("UserMetaData");
                 });
@@ -437,8 +645,8 @@ namespace P1_Infrastructure.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("longtext");
 
-                    b.Property<ulong>("DiscordId")
-                        .HasColumnType("bigint unsigned");
+                    b.Property<int>("DiscordUserId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -476,14 +684,13 @@ namespace P1_Infrastructure.Migrations
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("varchar(256)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DiscordUserId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -491,8 +698,6 @@ namespace P1_Infrastructure.Migrations
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("AspNetUsers", (string)null);
                 });
@@ -593,17 +798,80 @@ namespace P1_Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("P1_Core.Entities.UserItem", b =>
+            modelBuilder.Entity("P1_Core.Entities.DiscordUser", b =>
+                {
+                    b.HasOne("P1_Core.Entities.Game", null)
+                        .WithMany("TeamMembers")
+                        .HasForeignKey("GameId");
+
+                    b.HasOne("P1_Core.Entities.Team", null)
+                        .WithMany("TeamMembers")
+                        .HasForeignKey("TeamId");
+                });
+
+            modelBuilder.Entity("P1_Core.Entities.Game", b =>
+                {
+                    b.HasOne("P1_Core.Entities.Team", null)
+                        .WithMany("Games")
+                        .HasForeignKey("TeamId");
+                });
+
+            modelBuilder.Entity("P1_Core.Entities.ItemResult", b =>
                 {
                     b.HasOne("P1_Core.Entities.Item", "Item")
-                        .WithMany("UserItems")
+                        .WithMany()
                         .HasForeignKey("ItemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("P1_Core.Entities.User", "User")
+                    b.HasOne("P1_Core.Entities.Result", "Result")
+                        .WithMany("ItemResults")
+                        .HasForeignKey("ResultId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Item");
+
+                    b.Navigation("Result");
+                });
+
+            modelBuilder.Entity("P1_Core.Entities.Organization", b =>
+                {
+                    b.HasOne("P1_Core.Entities.DiscordUser", "DiscordUser")
+                        .WithMany()
+                        .HasForeignKey("DiscordUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("P1_Core.Entities.Team", "Team")
+                        .WithMany()
+                        .HasForeignKey("TeamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DiscordUser");
+
+                    b.Navigation("Team");
+                });
+
+            modelBuilder.Entity("P1_Core.Entities.Team", b =>
+                {
+                    b.HasOne("P1_Core.Entities.Organization", null)
+                        .WithMany("MemberTeams")
+                        .HasForeignKey("OrganizationId");
+                });
+
+            modelBuilder.Entity("P1_Core.Entities.UserItem", b =>
+                {
+                    b.HasOne("P1_Core.Entities.DiscordUser", "User")
                         .WithMany("UserItems")
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("DiscordUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("P1_Core.Entities.Item", "Item")
+                        .WithMany("UserItems")
+                        .HasForeignKey("ItemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -614,24 +882,24 @@ namespace P1_Infrastructure.Migrations
 
             modelBuilder.Entity("P1_Core.Entities.UserMetaData", b =>
                 {
-                    b.HasOne("P1_Core.Entities.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
+                    b.HasOne("P1_Core.Entities.DiscordUser", "DiscordUser")
+                        .WithMany("UserMetaData")
+                        .HasForeignKey("DiscordUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
+                    b.Navigation("DiscordUser");
                 });
 
             modelBuilder.Entity("P1_Infrastructure.Identity.ApplicationUser", b =>
                 {
-                    b.HasOne("P1_Core.Entities.User", "User")
+                    b.HasOne("P1_Core.Entities.DiscordUser", "DiscordUser")
                         .WithMany()
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("DiscordUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
+                    b.Navigation("DiscordUser");
                 });
 
             modelBuilder.Entity("ResultRule", b =>
@@ -664,14 +932,38 @@ namespace P1_Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("P1_Core.Entities.DiscordUser", b =>
+                {
+                    b.Navigation("UserItems");
+
+                    b.Navigation("UserMetaData");
+                });
+
+            modelBuilder.Entity("P1_Core.Entities.Game", b =>
+                {
+                    b.Navigation("TeamMembers");
+                });
+
             modelBuilder.Entity("P1_Core.Entities.Item", b =>
                 {
                     b.Navigation("UserItems");
                 });
 
-            modelBuilder.Entity("P1_Core.Entities.User", b =>
+            modelBuilder.Entity("P1_Core.Entities.Organization", b =>
                 {
-                    b.Navigation("UserItems");
+                    b.Navigation("MemberTeams");
+                });
+
+            modelBuilder.Entity("P1_Core.Entities.Result", b =>
+                {
+                    b.Navigation("ItemResults");
+                });
+
+            modelBuilder.Entity("P1_Core.Entities.Team", b =>
+                {
+                    b.Navigation("Games");
+
+                    b.Navigation("TeamMembers");
                 });
 #pragma warning restore 612, 618
         }
