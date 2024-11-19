@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-namespace P1_Application.Services.RulesEngine
+using P1_Core.Interfaces;
+namespace P1_Application.RulesEngine
 {
     // Rule engine
     public class RuleEngine<TTrigger, TContext, TResponse>

@@ -1,4 +1,6 @@
-namespace P1_Application.Services.RulesEngine
+using P1_Core.Interfaces;
+
+namespace P1_Application.RulesEngine
 {
 
     public class ResultFactory<TResult>

@@ -1,7 +1,6 @@
-
 // Implementation classes
-using P1_Application.Services.RulesEngine;
-namespace P1_Application.Services.RulesEngine
+using P1_Core.Interfaces;
+namespace P1_Application.RulesEngine
 {
     public class Rule<TTrigger, TCondition, TResult> : IRule<TTrigger, TCondition, TResult>
     {

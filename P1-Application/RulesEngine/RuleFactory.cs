@@ -1,7 +1,8 @@
 using P1_Application.Services.RulesEngine;
 using P1_Core.Entities;
 using P1_Core.Interfaces;
-namespace P1_Application.Services.RulesEngine
+
+namespace P1_Application.RulesEngine
 {
     public class RuleFactory<TTrigger, TCondition, TResponse>
     {

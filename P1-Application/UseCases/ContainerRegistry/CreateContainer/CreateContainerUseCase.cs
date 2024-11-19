@@ -1,10 +1,10 @@
 using AutoMapper;
 using MediatR;
 using P1_Core.Entities;
-using P1_Core.Enums;
 using P1_Core.Interfaces;
 
-namespace P1_Application.UseCases.ContainerRegistry.CreateContainer {
+namespace P1_Application.UseCases.ContainerRegistry.CreateContainer
+{
 
 
     public class CreateContainerUseCase : IRequestHandler<ContainerRequestCommand>
@@ -22,14 +22,5 @@ namespace P1_Application.UseCases.ContainerRegistry.CreateContainer {
             var mappedValue = _mapper.Map<Container>(request);
             await _repository.AddAsync(mappedValue);
         }
-    }
-
-    public class ContainerRequestCommand : IRequest
-    {
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public ContainerType Type { get; set; }
-        public IList<int>? Members { get; set; }
-        public int? ParentId { get; set; }
     }
 }

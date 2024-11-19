@@ -1,4 +1,4 @@
-namespace P1_Application.Services.RulesEngine
+namespace P1_Core.Interfaces
 {
     // Core interfaces
     public interface IRule<TTrigger, TCondition, TResult>

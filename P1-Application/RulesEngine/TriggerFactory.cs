@@ -1,4 +1,6 @@
 
+using P1_Core.Interfaces;
+
 namespace P1_Application.Services.RulesEngine
 {
     // Factory classes

@@ -1,4 +1,4 @@
-namespace P1_Application.Services.RulesEngine
+namespace P1_Application.RulesEngine
 {
     public class RuleComponentFactory<T>
     {
