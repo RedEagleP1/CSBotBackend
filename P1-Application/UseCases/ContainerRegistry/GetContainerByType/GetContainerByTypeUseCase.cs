@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using P1_Application.Exceptions;
 using P1_Core.Entities;
-using P1_Core.Enums;
 using P1_Core.Interfaces;
 
 namespace P1_Application.UseCases.ContainerRegistry.GetContainerByType
@@ -32,20 +31,6 @@ namespace P1_Application.UseCases.ContainerRegistry.GetContainerByType
                 throw new P1Exception(_logger, "Container could not found");
             }
         }
-    }
-
-    public class ContainerQuery : IRequest<ContainerQueryResponse>
-    {
-        public ContainerType Type { get; set; }
-    }
-
-    public class ContainerQueryResponse
-    {
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public ContainerType Type { get; set; }
-        public IList<int>? Members { get; set; }
-        public IList<ContainerQueryResponse>? Children { get; set; }
     }
 
 }
