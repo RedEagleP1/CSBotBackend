@@ -9,7 +9,8 @@ namespace P1_Application.UseCases.ContainerRegistry.CreateContainer
 {
 
 
-    public class CreateContainerUseCase(IRepository<Container> repository, IMapper mapper, ILogger<CreateContainerUseCase> logger) : BaseUseCase<Container, ContainerRequestCommand>(repository, logger)
+    public class CreateContainerUseCase(IRepository<Container> repository, IMapper mapper, ILogger<CreateContainerUseCase> logger) :
+        BaseUseCase<Container, ContainerRequestCommand>(repository, logger)
     {
         IMapper _mapper = mapper;
 

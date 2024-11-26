@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using P1_Application.Boundaries;
 using P1_Core.Interfaces;
@@ -10,7 +11,7 @@ namespace P1_Application
     {
         public static void AddApplicationServices(this IServiceCollection services)
         {
-            
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(MappingBehavior<,>));
 
             services.AddScoped<ApplicationContext>();
         }
