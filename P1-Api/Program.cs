@@ -1,36 +1,30 @@
-using System.ComponentModel;
 using System.Text;
-using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using P1_Api.ErrorHandling;
 using P1_Api.Util;
 using P1_Application.UseCases;
 using P1_Application;
-using P1_Core.Interfaces;
 using P1_Infrastructure;
 using Serilog;
-
-using ILogger = Serilog.ILogger;
-using P1_Core.Services;
 using P1_Core.Entities;
 
 
 // Setup the logger.
 var logger = new LoggerConfiguration()
     .WriteTo.Console()
-    .WriteTo.File("../Logs/P1-Application.log", rollingInterval: RollingInterval.Day)
+    // .WriteTo.File("../Logs/P1-Application.log", rollingInterval: RollingInterval.Day)
     .CreateLogger();
 
 logger.Information("Starting up...");
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Logging.AddSerilog(logger);
-builder.Services.AddSingleton<Serilog.Extensions.Hosting.DiagnosticContext>(); // Add this line
-builder.Services.AddSingleton(typeof(ILogger), logger);
+builder.Host.UseSerilog((context, services, configuration) => configuration
+    .ReadFrom.Configuration(context.Configuration)
+    .ReadFrom.Services(services)
+    .WriteTo.Console());
 
 builder.Services.AddAuthentication(options =>
 {

@@ -7,10 +7,8 @@ namespace P1_Application.UseCases.Users.AddUserClaim
     public class AddUserClaimUseCase : IRequestHandler<AddUserClaimCommand>
     {
         private readonly IUserClaimsService _userClaimsService;
-        public AddUserClaimUseCase(IUserClaimsService userClaimsService)
-        {
-            _userClaimsService = userClaimsService;
-        }
+        public AddUserClaimUseCase( )
+        { }
         
         public async Task Handle(AddUserClaimCommand request, CancellationToken cancellationToken)
         {

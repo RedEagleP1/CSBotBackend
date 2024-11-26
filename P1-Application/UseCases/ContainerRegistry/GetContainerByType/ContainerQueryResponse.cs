@@ -1,8 +1,9 @@
+using MediatR;
 using P1_Core.Enums;
 
 namespace P1_Application.UseCases.ContainerRegistry.GetContainerByType
 {
-    public class ContainerQueryResponse
+    public class ContainerQueryResponse : IRequest
     {
         public string Name { get; set; }
         public string Description { get; set; }

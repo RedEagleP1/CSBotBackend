@@ -39,14 +39,6 @@ namespace P1_Api.Util
 
             CreateMap<ContainerRequestModel, ContainerRequestCommand>();
 
-            // CreateMap<AddMemberToOrganizationRequestModel, AddMemberToOrganizationCommand>();
-            // CreateMap<RemoveMemberFromOrganizationRequestModel, RemoveMemberFromOrganizationCommand>();
-
-            // CreateMap<AddMemberToLegionRequestModel, AddMemberToLegionCommand>();
-            // CreateMap<RemoveMemberFromLegionRequestModel, RemoveMemberFromLegionCommand>();
-
-
-            // CreateMap<CreateCommandRequest, CreateCommandCommand>();
         }
     }
 }

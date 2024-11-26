@@ -16,7 +16,7 @@ namespace P1_Api.Controllers
     {
         private IMapper _mapper { get; set; }
         private readonly IMediator _mediator;
-        public ContainerRegistryController(ILogger<BaseController> logger, ApplicationContext context, IMapper mapper, IMediator mediatr) : base(logger, context)
+        public ContainerRegistryController(ILogger<DiscordCommandController> logger, ApplicationContext context, IMapper mapper, IMediator mediatr) : base(logger, context)
         {
             _mapper = mapper;
             _mediator = mediatr;

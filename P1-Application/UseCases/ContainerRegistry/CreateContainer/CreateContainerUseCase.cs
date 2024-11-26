@@ -1,5 +1,7 @@
 using AutoMapper;
 using MediatR;
+using Microsoft.Extensions.Logging;
+using P1_Application.UseCases.BaseUseCases;
 using P1_Core.Entities;
 using P1_Core.Interfaces;
 
@@ -7,20 +9,14 @@ namespace P1_Application.UseCases.ContainerRegistry.CreateContainer
 {
 
 
-    public class CreateContainerUseCase : IRequestHandler<ContainerRequestCommand>
+    public class CreateContainerUseCase(IRepository<Container> repository, IMapper mapper, ILogger<CreateContainerUseCase> logger) : BaseUseCase<Container, ContainerRequestCommand>(repository, logger)
     {
-        IRepository<Container> _repository;
-        IMapper _mapper;
+        IMapper _mapper = mapper;
 
-        public CreateContainerUseCase(IRepository<Container> repository, IMapper mapper){
-            _repository = repository;
-            _mapper = mapper;
-        }
-
-        public async Task Handle(ContainerRequestCommand request, CancellationToken cancellationToken)
+        public override async Task Handle(ContainerRequestCommand request, CancellationToken cancellationToken)
         {
             var mappedValue = _mapper.Map<Container>(request);
-            await _repository.AddAsync(mappedValue);
+            await Repository.AddAsync(mappedValue);
         }
     }
 }

@@ -1,14 +1,11 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using P1_Core.Interfaces;
 using P1_Infrastructure.Database;
 using P1_Infrastructure.Identity;
-using P1_Core;
 using P1_Infrastructure.Repositories;
-using P1_Core.Services;
 
 namespace P1_Infrastructure
 {

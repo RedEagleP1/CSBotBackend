@@ -18,7 +18,7 @@ namespace P1_Api.Controllers
         private readonly IMapper _mapper;
 
 
-        public DiscordCommandController(ILogger<BaseController> logger, ApplicationContext context, IMediator mediator, IMapper mapper) : base(logger, context)
+        public DiscordCommandController(ILogger<DiscordCommandController> logger, ApplicationContext context, IMediator mediator, IMapper mapper) : base(logger, context)
         {
             _mediator = mediator;
             _mapper = mapper;

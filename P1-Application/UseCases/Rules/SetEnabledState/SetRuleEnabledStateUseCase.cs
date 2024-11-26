@@ -2,7 +2,6 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using P1_Core;
 using P1_Core.Interfaces;
-using P1_Core.Services;
 using P1_Application.Exceptions;
 using P1_Core.Entities;
 using Microsoft.Extensions.Logging;
@@ -12,14 +11,12 @@ namespace P1_Application.UseCases.Rules.SetRuleEnabledState
     public class SetRuleEnabledStateUseCase : IRequestHandler<SetRuleEnabledStateCommand>
     {
         private readonly IRepository<Rule> _RuleRepository;
-        private readonly IRepository<Condition> _ConditionRepository;
         private readonly ILogger _Logger;
 
 
-        public SetRuleEnabledStateUseCase(IRepository<Rule> ruleRepository, IRepository<Condition> conditionRepository, ILogger logger)
+        public SetRuleEnabledStateUseCase(IRepository<Rule> ruleRepository, ILogger<SetRuleEnabledStateUseCase> logger)
         {
             _RuleRepository = ruleRepository;
-            _ConditionRepository = conditionRepository;
             _Logger = logger;
         }
 

@@ -10,7 +10,6 @@ using P1_Application.UseCases;
 using P1_Application.UseCases.Rules.AddConditionToRule;
 using P1_Application.UseCases.Rules.AddResultToRule;
 using P1_Application.UseCases.Rules.AddTriggerToRule;
-using P1_Application.UseCases.Rules.EvaluateRule;
 using P1_Core.Entities;
 using P1_Core.Interfaces;
 
@@ -28,22 +27,6 @@ namespace P1_Api.Controllers
             _mapper = mapper;
         }
 
-        [ProducesResponseType(200)]
-        [ProducesResponseType(500)]
-        [HttpPost("evaluate-rule/{userId}")]
-        public async Task<IActionResult> EvaluateRule([FromRoute] int userId, [FromBody] IEnumerable<int> ruleId)
-        {
-            try
-            {
-                await _mediator.Send(new EvaluateRuleCommand { UserId = userId, RuleId = ruleId });
-            }
-            catch (P1Exception e)
-            {
-                _logger.LogError(e, $"An error occurred while evaluating the rule with Id {ruleId}. \"{e.Message}\"");
-                return BadRequest(e.Message);
-            }
-            return Ok();
-        }
 
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]

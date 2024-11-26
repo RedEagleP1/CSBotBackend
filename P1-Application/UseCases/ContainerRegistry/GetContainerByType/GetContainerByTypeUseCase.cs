@@ -13,7 +13,7 @@ namespace P1_Application.UseCases.ContainerRegistry.GetContainerByType
         readonly IRepository<Container> _repository;
         readonly IMapper _mapper;
         readonly ILogger _logger;
-        public GetContainerByTypeUseCase(IRepository<Container> repository, IMapper mapper, ILogger logger)
+        public GetContainerByTypeUseCase(IRepository<Container> repository, IMapper mapper, ILogger<GetContainerByTypeUseCase> logger)
         {
             _repository = repository;
             _mapper = mapper;

@@ -3,7 +3,7 @@ using P1_Core;
 using P1_Core.Entities;
 using P1_Core.Interfaces;
 
-namespace P1_Application.UseCases
+namespace P1_Application.UseCases.BaseUseCases
 {
     public class AddEntityUseCase<T> : IRequestHandler<AddOneEntityRequest<T>, AddOneEntityResponse> where T : BaseEntity
     {

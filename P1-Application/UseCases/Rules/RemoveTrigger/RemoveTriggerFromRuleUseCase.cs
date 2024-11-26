@@ -1,12 +1,7 @@
 using MediatR;
-using Microsoft.EntityFrameworkCore;
-using P1_Core;
 using P1_Core.Interfaces;
-using P1_Core.Services;
-using P1_Application.Exceptions;
 using P1_Core.Entities.JoinTables;
-using ILogger = Serilog.ILogger;
-using P1_Core.Entities;
+using Microsoft.Extensions.Logging;
 
 namespace P1_Application.UseCases.Rules.RemoveTriggerFromRule
 {
@@ -16,7 +11,7 @@ namespace P1_Application.UseCases.Rules.RemoveTriggerFromRule
         private readonly ILogger _Logger;
 
 
-        public RemoveTriggerFromRuleUseCase(IRepository<TriggerRule> triggerRuleRepository, ILogger logger)
+        public RemoveTriggerFromRuleUseCase(IRepository<TriggerRule> triggerRuleRepository, ILogger<RemoveTriggerFromRuleUseCase> logger)
         {
             _TriggerRuleRepository = triggerRuleRepository;
             _Logger = logger;
@@ -25,7 +20,7 @@ namespace P1_Application.UseCases.Rules.RemoveTriggerFromRule
         public async Task Handle(RemoveTriggerFromRuleCommand request, CancellationToken cancellationToken)
         {
             await _TriggerRuleRepository.DeleteAsync(new TriggerRule { RuleId = request.RuleId, TriggerId = request.TriggerId });
-
+ 
         }
 
     }

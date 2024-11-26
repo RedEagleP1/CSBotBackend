@@ -8,9 +8,7 @@ namespace P1_Application.UseCases.Users.GetUserClaims
     }
 
     public class GetUserClaimsUseCase: IRequestHandler<GetUserQuery, GetUserResponse>
-    {
-
-        
+    {        
         // private readonly UserManager<IApplicationUser> _userManager;
         public async Task<GetUserResponse> Handle(GetUserQuery request, CancellationToken cancellationToken){
             return new GetUserResponse();
