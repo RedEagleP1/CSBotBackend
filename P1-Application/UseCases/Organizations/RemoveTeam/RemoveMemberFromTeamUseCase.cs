@@ -9,13 +9,11 @@ namespace P1_Application.UseCases.Teams.RemoveMemberFromOrganization
     public class RemoveTeamFromOrganizationUseCase : IRequestHandler<RemoveTeamFromOrganizationCommand>
     {
         private readonly IRepository<TeamOrganization> _TeamDiscordUserRepository;
-        private readonly ILogger _logger;
         private readonly IMapper _mapper; 
 
-        public RemoveTeamFromOrganizationUseCase(IRepository<TeamOrganization> teamDiscordUserRepository, ILogger logger, IMapper mapper)
+        public RemoveTeamFromOrganizationUseCase(IRepository<TeamOrganization> teamDiscordUserRepository, IMapper mapper)
         {
             _TeamDiscordUserRepository = teamDiscordUserRepository;
-            _logger = logger;
             _mapper = mapper;
         }
 

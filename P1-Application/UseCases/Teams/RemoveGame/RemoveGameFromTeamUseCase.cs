@@ -13,13 +13,10 @@ namespace P1_Application.UseCases.Teams.RemoveGameFromTeam
     public class RemoveGameFromTeamUseCase : IRequestHandler<RemoveGameFromTeamCommand>
     {
         private readonly IRepository<GameTeam> _GameTeamRepository;
-        private readonly ILogger _Logger;
 
-
-        public RemoveGameFromTeamUseCase(IRepository<GameTeam> gameTeamRepository, ILogger logger)
+        public RemoveGameFromTeamUseCase(IRepository<GameTeam> gameTeamRepository)
         {
             _GameTeamRepository = gameTeamRepository;
-            _Logger = logger;
         }
 
         public async Task Handle(RemoveGameFromTeamCommand request, CancellationToken cancellationToken)

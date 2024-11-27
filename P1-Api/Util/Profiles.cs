@@ -37,7 +37,7 @@ namespace P1_Api.Util
             CreateMap<AddMemberToTeamRequestModel, AddMemberToTeamCommand>();
             CreateMap<RemoveMemberFromTeamRequestModel, RemoveMemberFromTeamCommand>();
 
-            CreateMap<ContainerRequestModel, ContainerRequestCommand>();
+            CreateMap<ContainerRequestModel, ContainerRequestCommand>().ReverseMap();
 
         }
     }

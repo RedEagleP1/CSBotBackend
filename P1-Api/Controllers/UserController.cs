@@ -2,15 +2,13 @@ using System.Security.Claims;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
 using P1_Api.Models.Users;
 using P1_Application.Boundaries;
 using P1_Application.Exceptions;
-using P1_Application.UseCases.Users.AddUserClaim;
 using P1_Infrastructure.Identity;
-using P1_Infrastructure.Services;
 
-namespace P1_Api.Controllers {
+namespace P1_Api.Controllers
+{
 
     public class UserController : BaseController {
 
@@ -24,16 +22,16 @@ namespace P1_Api.Controllers {
         [HttpPut("addClaimToUser/{userId}")]
         public async Task<IActionResult> AddClaimToUser([FromRoute] string userId, [FromBody] AddUserClaimRequestModel model){
             
-            try
-            {
-                // Add claim to user
-                await _mediator.Send(new AddUserClaimCommand { UserId = userId, ClaimType = model.ClaimType, ClaimValue = model.ClaimValue });
-            }
-            catch (UserNotFoundException e)
-            {
-                _logger.LogError(e, $"An error occurred while adding claim to user with Id {userId}");
-                return NotFound(e.Message);
-            }
+            // try
+            // {
+            //     // Add claim to user
+            //     await _mediator.Send(new AddUserClaimCommand { UserId = userId, ClaimType = model.ClaimType, ClaimValue = model.ClaimValue });
+            // }
+            // catch (UserNotFoundException e)
+            // {
+            //     _logger.LogError(e, $"An error occurred while adding claim to user with Id {userId}");
+            //     return NotFound(e.Message);
+            // }
             return Ok();
         }
 

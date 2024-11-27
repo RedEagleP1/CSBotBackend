@@ -12,7 +12,7 @@ namespace P1_Application.UseCases.Rules.AddResultToRule
         private readonly IRepository<ResultRule> _RuleRepository;
 
 
-        public AddResultToRuleUseCase(IRepository<ResultRule> ruleRepository, ILogger<AddResultToRuleUseCase> logger)
+        public AddResultToRuleUseCase(IRepository<ResultRule> ruleRepository)
         {
             _RuleRepository = ruleRepository;
         }

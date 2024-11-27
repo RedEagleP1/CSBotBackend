@@ -12,13 +12,11 @@ namespace P1_Application.UseCases.Teams.AddMemberToLegion
     public class AddMemberToTeamUseCase : IRequestHandler<AddMemberToLegionCommand>
     {
         private readonly IRepository<OrganizationLegion> _OrganizationLegionRepository;
-        private readonly ILogger _Logger;
 
 
-        public AddMemberToTeamUseCase(IRepository<OrganizationLegion> organizationLegionRepository, ILogger logger)
+        public AddMemberToTeamUseCase(IRepository<OrganizationLegion> organizationLegionRepository)
         {
             _OrganizationLegionRepository = organizationLegionRepository;
-            _Logger = logger;
         }
 
         public async Task Handle(AddMemberToLegionCommand request, CancellationToken cancellationToken)

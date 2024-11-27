@@ -7,6 +7,7 @@ using P1_Application;
 using P1_Application.Boundaries;
 using P1_Application.Exceptions;
 using P1_Application.UseCases;
+using P1_Application.UseCases.BaseUseCases;
 using P1_Application.UseCases.Rules.AddConditionToRule;
 using P1_Application.UseCases.Rules.AddResultToRule;
 using P1_Application.UseCases.Rules.AddTriggerToRule;
@@ -19,12 +20,10 @@ namespace P1_Api.Controllers
     public class RuleController : BaseController
     {
         private readonly IMediator _mediator;
-        private readonly IMapper _mapper;
 
-        public RuleController(ILogger<RuleController> logger, IMediator mediator, ApplicationContext context, IMapper mapper) : base(logger, context)
+        public RuleController(ILogger<RuleController> logger, IMediator mediator, ApplicationContext context) : base(logger, context)
         {
             _mediator = mediator;
-            _mapper = mapper;
         }
 
 
@@ -137,8 +136,7 @@ namespace P1_Api.Controllers
         {
             try
             {
-                var requestModel = _mapper.Map<AddConditionToRuleCommand>(request);
-                await _mediator.Send(requestModel);
+                await _mediator.Send(request);
                 return Ok();
             }
             catch (P1Exception e)
@@ -173,8 +171,7 @@ namespace P1_Api.Controllers
         {
             try
             {
-                var requestModel = _mapper.Map<AddResultToRuleCommand>(request);
-                await _mediator.Send(requestModel);
+                await _mediator.Send(request);
                 return Ok();
             }
             catch (P1Exception e)
@@ -208,8 +205,7 @@ namespace P1_Api.Controllers
         {
             try
             {
-                var requestModel = _mapper.Map<AddTriggerToRuleCommand>(request);
-                await _mediator.Send(requestModel);
+                await _mediator.Send(request);
                 return Ok();
             }
             catch (P1Exception e)

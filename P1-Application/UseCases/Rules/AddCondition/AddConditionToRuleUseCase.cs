@@ -8,13 +8,11 @@ namespace P1_Application.UseCases.Rules.AddConditionToRule
     public class AddConditionToRuleUseCase : IRequestHandler<AddConditionToRuleCommand>
     {
         private readonly IRepository<ConditionRule> _ConditionRuleRepository;
-        private readonly ILogger _Logger;
 
 
-        public AddConditionToRuleUseCase(IRepository<ConditionRule> conditionRuleRepository, ILogger logger)
+        public AddConditionToRuleUseCase(IRepository<ConditionRule> conditionRuleRepository)
         {
             _ConditionRuleRepository = conditionRuleRepository;
-            _Logger = logger;
         }
 
         public async Task Handle(AddConditionToRuleCommand request, CancellationToken cancellationToken)

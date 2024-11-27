@@ -8,13 +8,11 @@ namespace P1_Application.UseCases.Teams.AddMemberToOrganization
     public class AddMemberToTeamUseCase : IRequestHandler<AddMemberToOrganizationCommand>
     {
         private readonly IRepository<TeamOrganization> _TeamOrganizationRepository;
-        private readonly ILogger _Logger;
 
 
-        public AddMemberToTeamUseCase(IRepository<TeamOrganization> teamOrganizationRepository, ILogger logger)
+        public AddMemberToTeamUseCase(IRepository<TeamOrganization> teamOrganizationRepository)
         {
             _TeamOrganizationRepository = teamOrganizationRepository;
-            _Logger = logger;
         }
 
         public async Task Handle(AddMemberToOrganizationCommand request, CancellationToken cancellationToken)

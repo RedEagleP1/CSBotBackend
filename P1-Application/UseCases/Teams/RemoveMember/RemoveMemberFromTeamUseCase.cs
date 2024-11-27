@@ -13,13 +13,11 @@ namespace P1_Application.UseCases.Teams.RemoveMemberFromTeam
     public class RemoveMemberFromTeamUseCase : IRequestHandler<RemoveMemberFromTeamCommand>
     {
         private readonly IRepository<DiscordUserTeam> _TeamDiscordUserRepository;
-        private readonly ILogger _Logger;
 
 
-        public RemoveMemberFromTeamUseCase(IRepository<DiscordUserTeam> teamDiscordUserRepository, ILogger logger)
+        public RemoveMemberFromTeamUseCase(IRepository<DiscordUserTeam> teamDiscordUserRepository)
         {
             _TeamDiscordUserRepository = teamDiscordUserRepository;
-            _Logger = logger;
         }
 
         public async Task Handle(RemoveMemberFromTeamCommand request, CancellationToken cancellationToken)

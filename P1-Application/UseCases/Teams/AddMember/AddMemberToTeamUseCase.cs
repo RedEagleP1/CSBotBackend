@@ -13,13 +13,11 @@ namespace P1_Application.UseCases.Teams.AddMemberToTeam
     public class AddMemberToTeamUseCase : IRequestHandler<AddMemberToTeamCommand>
     {
         private readonly IRepository<DiscordUserTeam> _DiscordUserTeamRepository;
-        private readonly ILogger _Logger;
 
 
-        public AddMemberToTeamUseCase(IRepository<DiscordUserTeam> discordUserTeamRepository, ILogger logger)
+        public AddMemberToTeamUseCase(IRepository<DiscordUserTeam> discordUserTeamRepository)
         {
             _DiscordUserTeamRepository = discordUserTeamRepository;
-            _Logger = logger;
         }
 
         public async Task Handle(AddMemberToTeamCommand request, CancellationToken cancellationToken)

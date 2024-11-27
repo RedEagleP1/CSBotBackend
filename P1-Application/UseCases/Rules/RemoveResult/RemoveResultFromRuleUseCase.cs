@@ -11,13 +11,11 @@ namespace P1_Application.UseCases.Rules.RemoveResultFromRule
     public class RemoveResultFromRuleUseCase : IRequestHandler<RemoveResultFromRuleCommand>
     {
         private readonly IRepository<ResultRule> _ResultRuleRepository;
-        private readonly ILogger _Logger;
 
 
-        public RemoveResultFromRuleUseCase(IRepository<ResultRule> resultRuleRepository, ILogger logger)
+        public RemoveResultFromRuleUseCase(IRepository<ResultRule> resultRuleRepository)
         {
             _ResultRuleRepository = resultRuleRepository;
-            _Logger = logger;
         }
 
         public async Task Handle(RemoveResultFromRuleCommand request, CancellationToken cancellationToken)

@@ -12,7 +12,7 @@ namespace P1_Application.UseCases.BaseUseCases
         protected readonly IRepository<TEntity> Repository;
         protected readonly ILogger Logger;
 
-        protected BaseUseCase(IRepository<TEntity> repository, ILogger logger)
+        protected BaseUseCase(IRepository<TEntity> repository, ILogger<BaseUseCase<TEntity, TCommand>> logger)
         {
             Repository = repository;
             Logger = logger;

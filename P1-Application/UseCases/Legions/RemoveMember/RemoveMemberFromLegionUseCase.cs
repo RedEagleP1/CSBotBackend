@@ -12,13 +12,11 @@ namespace P1_Application.UseCases.Teams.RemoveMemberFromLegion
     public class RemoveMemberFromLegionUseCase : IRequestHandler<RemoveMemberFromLegionCommand>
     {
         private readonly IRepository<OrganizationLegion> _OrganizationLegionRepository;
-        private readonly ILogger _Logger;
 
 
-        public RemoveMemberFromLegionUseCase(IRepository<OrganizationLegion> organizationLegionRepository, ILogger logger)
+        public RemoveMemberFromLegionUseCase(IRepository<OrganizationLegion> organizationLegionRepository)
         {
             _OrganizationLegionRepository = organizationLegionRepository;
-            _Logger = logger;
         }
 
         public async Task Handle(RemoveMemberFromLegionCommand request, CancellationToken cancellationToken)
